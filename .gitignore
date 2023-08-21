@@ -1,0 +1,13 @@
+# Rust
+/target
+
+# Jetbrains
+/.idea
+
+# OS
+.DS_Store
+
+# Project
+/assets
+/wgpu_trace
+*.json
