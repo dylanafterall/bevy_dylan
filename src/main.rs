@@ -1,55 +1,56 @@
+mod components;
 mod events;
+mod resources;
 mod systems;
 mod game;
 mod ui;
 
-use bevy::prelude::*;
-use bevy_rapier2d::prelude::*;
+use bevy::{
+    diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin},
+    prelude::*,
+    window::*,
+};
 
 fn main() {
     App::new()
-        // bevy itself
+        // resources
+        .insert_resource(ClearColor(Color::GRAY))
+        .insert_resource(resources::ResolutionSettings {
+            _large: Vec2::new(1920.0, 1080.0),
+            _medium: Vec2::new(800.0, 600.0),
+            _small: Vec2::new(640.0, 360.0),
+        })
+        // plugins
         .add_plugins((
-            DefaultPlugins,
-            RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(100.0),
-            RapierDebugRenderPlugin::default(),
+            DefaultPlugins.set(WindowPlugin {
+                primary_window: Some(Window {
+                    present_mode: PresentMode::AutoVsync,
+                    mode: WindowMode::Windowed,
+                    position: WindowPosition::Centered(MonitorSelection::Primary),
+                    resolution: (640.0, 480.0).into(),
+                    title: "".into(),
+                    resizable: false,
+                    ..default()
+                }),
+                ..default()
+            }),
+            LogDiagnosticsPlugin::default(),
+            FrameTimeDiagnosticsPlugin,
         ))
         // events
         // ...
-        // systems to run once at startup
+        // systems: startup
         .add_systems(Startup, (
-            setup_graphics,
-            setup_physics,
+            systems::spawn_camera,
         ))
-        // systems to run each frame
+        // systems: update
         .add_systems(Update, (
-            print_ball_altitude,
+            systems::toggle_resolution,
+            systems::toggle_vsync,
+            systems::toggle_cursor,
+            systems::change_clear_color,
+            systems::exit_game,
         ))
         // launch app
         .run();
-}
-
-fn setup_graphics(mut commands: Commands) {
-    // Add a camera so we can see the debug-render.
-    commands.spawn(Camera2dBundle::default());
-}
-
-fn setup_physics(mut commands: Commands) {
-    /* Create the ground. */
-    commands
-        .spawn(Collider::cuboid(500.0, 50.0))
-        .insert(TransformBundle::from(Transform::from_xyz(0.0, -100.0, 0.0)));
-
-    /* Create the bouncing ball. */
-    commands
-        .spawn(RigidBody::Dynamic)
-        .insert(Collider::ball(50.0))
-        .insert(Restitution::coefficient(0.7))
-        .insert(TransformBundle::from(Transform::from_xyz(0.0, 400.0, 0.0)));
-}
-
-fn print_ball_altitude(positions: Query<&Transform, With<RigidBody>>) {
-    for transform in positions.iter() {
-        println!("Ball altitude: {}", transform.translation.y);
-    }
 }

@@ -205,9 +205,6 @@ name = "arrayvec"
 version = "0.7.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "96d30a06541fbafbc7f82ed10c06164cfbd2c401138f6addd8404629c4b16711"
-dependencies = [
- "serde",
-]
 
 [[package]]
 name = "ash"
@@ -668,7 +665,6 @@ dependencies = [
  "bevy_ecs",
  "bevy_utils",
  "console_error_panic_hook",
- "tracing-chrome",
  "tracing-error",
  "tracing-log",
  "tracing-subscriber",
@@ -1947,7 +1943,6 @@ checksum = "bd070e393353796e801d209ad339e89596eb4c8d430d18ede6a1cced8fafbd99"
 dependencies = [
  "autocfg",
  "hashbrown 0.12.3",
- "serde",
 ]
 
 [[package]]
@@ -2308,7 +2303,6 @@ dependencies = [
  "num-traits",
  "pp-rs",
  "rustc-hash",
- "serde",
  "spirv",
  "termcolor",
  "thiserror",
@@ -3376,17 +3370,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "tracing-chrome"
-version = "0.7.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "496b3cd5447f7ff527bbbf19b071ad542a000adf297d4127078b4dfdb931f41a"
-dependencies = [
- "serde_json",
- "tracing-core",
- "tracing-subscriber",
-]
-
-[[package]]
 name = "tracing-core"
 version = "0.1.31"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3637,7 +3620,6 @@ dependencies = [
  "parking_lot",
  "profiling",
  "raw-window-handle",
- "serde",
  "smallvec",
  "static_assertions",
  "wasm-bindgen",
@@ -3663,9 +3645,7 @@ dependencies = [
  "parking_lot",
  "profiling",
  "raw-window-handle",
- "ron",
  "rustc-hash",
- "serde",
  "smallvec",
  "thiserror",
  "web-sys",
@@ -3723,7 +3703,6 @@ checksum = "d0c153280bb108c2979eb5c7391cb18c56642dd3c072e55f52065e13e2a1252a"
 dependencies = [
  "bitflags 2.4.0",
  "js-sys",
- "serde",
  "web-sys",
 ]
 
