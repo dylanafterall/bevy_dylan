@@ -10,6 +10,7 @@ Project to learn the Bevy game engine.
         <li><a href="https://crates.io/crates/bevy">bevy</a> </li>
         <li><a href="https://crates.io/crates/bevy_rapier2d">bevy_rapier2d</a> </li>
         <li><a href="https://crates.io/crates/bevy_salva2d">bevy_salva2d</a> </li>
+        <li><a href="https://crates.io/crates/bevy_prototype_lyon">bevy_prototype_lyon</a> </li>
         <li><a href="https://crates.io/crates/bevy_spine">bevy_spine</a> </li>
         <li><a href="https://crates.io/crates/big-brain">big-brain</a> </li>
     </ul>
