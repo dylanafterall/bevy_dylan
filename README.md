@@ -20,3 +20,16 @@ Project to learn the Bevy game engine.
         <li>Languages: <a href="https://www.rust-lang.org/">Rust</a></li>
         <li>IDE: <a href="https://www.jetbrains.com/clion/">Jetbrains CLion with Rust plugin</a></li>
     </ul>
+
+
+## Acknowledgements
+
+<p>Special thanks to the Rust and Bevy communities, in particular:<br>
+<ul> 
+    <li><a href="https://docs.rs/bevy/latest/bevy/">Official Bevy Documentation</a></li>
+    <li>The online reference <a href="https://bevy-cheatbook.github.io/">"Unofficial Bevy Cheat Book"</a></li>
+    <li>The YouTube channel <a href="https://www.youtube.com/@logicprojects">"Logic Projects"</a></li>
+    <li>The YouTube channel <a href="https://www.youtube.com/@chrisbiscardi/videos">"chris biscardi"</a></li>
+    <li>The YouTube channel <a href="https://www.youtube.com/@PhaestusFox/videos">"PhaestusFox"</a></li>
+    <li>The YouTube channel <a href="https://www.youtube.com/@jacques-dev">"Jacques"</a></li>
+</ul>

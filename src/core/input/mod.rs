@@ -2,6 +2,7 @@ use bevy::{
     prelude::*,
 };
 
+// -----------------------------------------------------------------------------
 pub struct CoreInputPlugin;
 
 impl Plugin for CoreInputPlugin {

@@ -6,6 +6,7 @@ use bevy::{
     window::*,
 };
 
+// -----------------------------------------------------------------------------
 pub struct CoreWindowPlugin;
 
 impl Plugin for CoreWindowPlugin {

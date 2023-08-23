@@ -8,6 +8,7 @@ use crate::game::GamePlugin;
 
 use bevy::prelude::*;
 
+// -----------------------------------------------------------------------------
 fn main() {
     App::new()
         // plugins
@@ -19,6 +20,8 @@ fn main() {
         .add_state::<AppState>()
         // systems: update
         .add_systems(Update, (
+            systems::transition_to_game_state,
+            systems::transition_to_main_menu_state,
             systems::exit_game,
         ))
         // launch app

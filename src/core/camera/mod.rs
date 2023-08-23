@@ -4,6 +4,7 @@ use bevy::{
     prelude::*,
 };
 
+// -----------------------------------------------------------------------------
 pub struct CoreCameraPlugin;
 
 impl Plugin for CoreCameraPlugin {

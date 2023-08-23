@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-// store window resolutions to choose between
+// -----------------------------------------------------------------------------
 #[derive(Resource)]
 pub struct ResolutionSettings {
     pub _800_x_1280: Vec2,

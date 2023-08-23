@@ -1,8 +1,12 @@
 use bevy::{
     prelude::*,
-    diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin},
+    diagnostic::{
+        FrameTimeDiagnosticsPlugin,
+        LogDiagnosticsPlugin,
+    },
 };
 
+// -----------------------------------------------------------------------------
 pub struct CoreDiagnosticPlugin;
 
 impl Plugin for CoreDiagnosticPlugin {

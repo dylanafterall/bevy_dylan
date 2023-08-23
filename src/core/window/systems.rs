@@ -5,16 +5,17 @@ use bevy::{
     window::*,
 };
 
+// -----------------------------------------------------------------------------
 pub fn setup_window(
     mut window_query: Query<&mut Window, With<PrimaryWindow>>,
     resolution: Res<ResolutionSettings>,
 ) {
     let mut window = window_query.single_mut();
 
-    WindowResolution::set_scale_factor(&mut window.resolution, 1.0);
-
     let res = resolution._2560_x_1440;
     window.resolution.set(res.x, res.y);
+
+    WindowResolution::set_scale_factor(&mut window.resolution, 1.0);
 }
 
 pub fn toggle_resolution(
@@ -56,7 +57,7 @@ pub fn toggle_vsync(input: Res<Input<KeyCode>>, mut windows: Query<&mut Window>)
 }
 
 pub fn toggle_cursor(mut windows: Query<&mut Window>, input: Res<Input<KeyCode>>) {
-    if input.just_pressed(KeyCode::Space) {
+    if input.just_pressed(KeyCode::Key0) {
         let mut window = windows.single_mut();
 
         window.cursor.visible = !window.cursor.visible;
