@@ -1,36 +1,46 @@
-use crate::AppState;
-use crate::game::SimulationState;
+use super::events::*;
+use crate::game::GameState;
 
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
 
 // -----------------------------------------------------------------------------
-pub fn pause_simulation(
-    mut simulation_state_next_state: ResMut<NextState<SimulationState>>
+pub fn _pause_game(
+    mut game_state_next_state: ResMut<NextState<GameState>>
 ) {
-    simulation_state_next_state.set(SimulationState::Paused);
+    game_state_next_state.set(GameState::Paused);
 }
 
-pub fn resume_simulation(
-    mut simulation_state_next_state: ResMut<NextState<SimulationState>>
+pub fn _resume_game(
+    mut game_state_next_state: ResMut<NextState<GameState>>
 ) {
-    simulation_state_next_state.set(SimulationState::Running);
+    game_state_next_state.set(GameState::Playing);
 }
 
-pub fn toggle_simulation(
+pub fn emit_toggle_pause(
+    mut keyboard_input: ResMut<Input<KeyCode>>,
+    mut event_source: EventWriter<TogglePause>,
+) {
+    if keyboard_input.just_pressed(KeyCode::Space) {
+        event_source.send(TogglePause {});
+        keyboard_input.reset(KeyCode::Space);
+    }
+}
+
+pub fn handle_toggle_pause(
     mut commands: Commands,
-    keyboard_input: Res<Input<KeyCode>>,
-    app_state: Res<State<AppState>>,
-    simulation_state: Res<State<SimulationState>>,
+    game_state: Res<State<GameState>>,
+    mut event_listener: EventReader<TogglePause>,
 ) {
-    if *app_state.get() == AppState::Game && keyboard_input.just_pressed(KeyCode::Space) {
-        if *simulation_state.get() == SimulationState::Running {
-            commands.insert_resource(NextState(Some(SimulationState::Paused)));
-            println!("Simulation Paused");
+    for _ in event_listener.iter() {
+        // toggle_pause run criteria is that GameState not be "inert"
+        if *game_state.get() == GameState::Playing {
+            commands.insert_resource(NextState(Some(GameState::Paused)));
+            println!("Game Paused");
         }
-        if *simulation_state.get() == SimulationState::Paused {
-            commands.insert_resource(NextState(Some(SimulationState::Running)));
-            println!("Simulation Running");
+        else {
+            commands.insert_resource(NextState(Some(GameState::Playing)));
+            println!("Game Playing");
         }
     }
 }

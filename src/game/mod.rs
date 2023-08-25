@@ -1,3 +1,4 @@
+mod events;
 mod systems;
 
 mod character;
@@ -19,7 +20,9 @@ impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
         app
             // states
-            .add_state::<SimulationState>()
+            .add_state::<GameState>()
+            // events
+            .add_event::<events::TogglePause>()
             // plugins
             .add_plugins((
                 CharacterPlugin,
@@ -28,24 +31,20 @@ impl Plugin for GamePlugin {
                 RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(100.0),
                 RapierDebugRenderPlugin::default(),
             ))
-            .add_systems(Startup, (
+            .add_systems(OnEnter(AppState::Game), (
                 systems::setup_physics,
             ))
-            .add_systems(OnEnter(AppState::Game), (
-                systems::pause_simulation,
-            ))
             .add_systems(Update, (
-                systems::toggle_simulation,
-            ))
-            .add_systems(OnExit(AppState::Game), (
-                systems::resume_simulation,
+                systems::emit_toggle_pause,
+                systems::handle_toggle_pause.run_if(not(in_state(GameState::Inert))),
             ));
     }
 }
 
 #[derive(States, Debug, Clone, Copy, Eq, PartialEq, Hash, Default)]
-pub enum SimulationState {
+pub enum GameState {
     #[default]
-    Running,
+    Inert,
+    Playing,
     Paused,
 }
