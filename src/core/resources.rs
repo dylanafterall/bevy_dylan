@@ -1,5 +1,5 @@
 use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
-#[derive(Event)]
-pub struct TogglePause {}
+#[derive(Resource)]
+pub struct DefaultSettings {}

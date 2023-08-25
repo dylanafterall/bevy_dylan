@@ -2,4 +2,7 @@ use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
 #[derive(Event)]
-pub struct TogglePause {}
+pub struct CameraZoomIn {}
+
+#[derive(Event)]
+pub struct CameraZoomOut {}

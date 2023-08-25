@@ -19,11 +19,10 @@ pub struct GamePlugin;
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
         app
-            // states
             .add_state::<GameState>()
-            // events
+
             .add_event::<events::TogglePause>()
-            // plugins
+
             .add_plugins((
                 CharacterPlugin,
                 EnvironmentPlugin,
@@ -31,6 +30,7 @@ impl Plugin for GamePlugin {
                 RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(100.0),
                 RapierDebugRenderPlugin::default(),
             ))
+
             .add_systems(OnEnter(AppState::Game), (
                 systems::setup_physics,
             ))

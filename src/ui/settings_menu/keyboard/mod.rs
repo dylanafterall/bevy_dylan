@@ -1,9 +1,9 @@
 use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
-pub struct EnvironmentPlugin;
+pub struct KeyboardSettingsPlugin;
 
-impl Plugin for EnvironmentPlugin {
+impl Plugin for KeyboardSettingsPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_plugins(());

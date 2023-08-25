@@ -1,9 +1,9 @@
 use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
-pub struct EnvironmentPlugin;
+pub struct AudioSettingsPlugin;
 
-impl Plugin for EnvironmentPlugin {
+impl Plugin for AudioSettingsPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_plugins(());

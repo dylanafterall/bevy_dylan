@@ -1,3 +1,5 @@
+mod resources;
+
 mod audio;
 mod camera;
 mod diagnostic;
@@ -18,7 +20,6 @@ pub struct CorePlugin;
 impl Plugin for CorePlugin {
     fn build(&self, app: &mut App) {
         app
-            // plugins
             .add_plugins((
                 CoreAudioPlugin,
                 CoreCameraPlugin,

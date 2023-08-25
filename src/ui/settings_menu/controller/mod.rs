@@ -1,9 +1,9 @@
 use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
-pub struct EnvironmentPlugin;
+pub struct ControllerSettingsPlugin;
 
-impl Plugin for EnvironmentPlugin {
+impl Plugin for ControllerSettingsPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_plugins(());

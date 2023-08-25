@@ -1,11 +1,12 @@
 use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
-pub struct EnvironmentPlugin;
+pub struct TitlePlugin;
 
-impl Plugin for EnvironmentPlugin {
+impl Plugin for TitlePlugin {
     fn build(&self, app: &mut App) {
         app
-            .add_plugins(());
+            .add_plugins((
+                ));
     }
 }

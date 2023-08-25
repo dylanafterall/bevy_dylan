@@ -3,29 +3,33 @@ mod systems;
 
 mod core;
 mod game;
+mod ui;
 
 use crate::core::CorePlugin;
 use crate::game::GamePlugin;
+use crate::ui::UIPlugin;
 
 use bevy::prelude::*;
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 // -----------------------------------------------------------------------------
 fn main() {
     App::new()
-        // plugins
         .add_plugins((
             CorePlugin,
             GamePlugin,
+            UIPlugin,
+            WorldInspectorPlugin::new(),
         ))
-        // states
+
         .add_state::<AppState>()
-        // events
+
         .add_event::<events::TransitionToSplash>()
         .add_event::<events::TransitionToTitle>()
         .add_event::<events::TransitionToSettings>()
         .add_event::<events::TransitionToGame>()
         .add_event::<events::TransitionToFail>()
-        // systems: update
+
         .add_systems(Update, (
             systems::emit_transition_to_title,
             systems::emit_transition_to_settings,
@@ -40,7 +44,7 @@ fn main() {
             systems::handle_transition_game_to_fail.run_if(in_state(AppState::Game)),
             systems::exit_game,
         ))
-        // launch app
+
         .run();
 }
 

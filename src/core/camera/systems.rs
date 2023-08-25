@@ -1,19 +1,86 @@
+use super::components::*;
+use super::events::*;
+
 use::bevy::{
     prelude::*,
-    // window::*,
+    core_pipeline::clear_color::ClearColorConfig,
+    render::view::visibility::RenderLayers,
 };
 
 // -----------------------------------------------------------------------------
-pub fn spawn_camera(
-    mut commands: Commands,
-    // window_query: Query<&Window, With<PrimaryWindow>>,
+pub fn spawn_cameras(mut commands: Commands) {
+    // World (default) camera
+    commands.spawn((
+        Camera2dBundle {
+            camera: Camera {
+                order: 0,
+                ..default()
+            },
+            ..default()
+        },
+        UiCameraConfig {
+            show_ui: false,
+        },
+        WorldCamera,
+        RenderLayers::from_layers(&[0]),
+    ));
+
+    // Player camera
+    commands.spawn((
+        Camera2dBundle {
+            camera_2d: Camera2d {
+                clear_color: ClearColorConfig::None,
+            },
+            camera: Camera {
+                order: 1,
+                ..default()
+            },
+            ..default()
+        },
+        UiCameraConfig {
+            show_ui: false,
+        },
+        PlayerCamera,
+        RenderLayers::from_layers(&[1]),
+    ));
+
+    // UI camera
+    commands.spawn((
+        Camera2dBundle {
+            camera_2d: Camera2d {
+                clear_color: ClearColorConfig::None,
+            },
+            camera: Camera {
+                order: 2,
+                ..default()
+            },
+            ..default()
+        },
+        UICamera,
+        RenderLayers::from_layers(&[2]),
+    ));
+}
+
+pub fn handle_camera_zoom_in(
+    mut query: Query<&mut OrthographicProjection, Without<UICamera>>,
+    mut event_listener: EventReader<CameraZoomIn>,
 ) {
-    commands.spawn(Camera2dBundle::default());
-    /*
-    let window = window_query.get_single().unwrap();
-    commands.spawn(Camera2dBundle {
-        transform: Transform::from_xyz(window.width() / 2.0, window.height() / 2.0, 0.0),
-        ..default()
-    });
-     */
+    for _ in event_listener.iter() {
+        for mut camera in query.iter_mut() {
+            camera.scale *= 1.25;
+            camera.scale = camera.scale.clamp(0.5, 5.0);
+        }
+    }
+}
+
+pub fn handle_camera_zoom_out(
+    mut query: Query<&mut OrthographicProjection, Without<UICamera>>,
+    mut event_listener: EventReader<CameraZoomOut>,
+) {
+    for _ in event_listener.iter() {
+        for mut camera in query.iter_mut() {
+            camera.scale *= 0.75;
+            camera.scale = camera.scale.clamp(0.5, 5.0);
+        }
+    }
 }
