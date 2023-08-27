@@ -10,6 +10,7 @@ use crate::game::GamePlugin;
 use crate::ui::UIPlugin;
 
 use bevy::prelude::*;
+use bevy_rapier2d::prelude::*;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 // -----------------------------------------------------------------------------
@@ -19,6 +20,8 @@ fn main() {
             CorePlugin,
             GamePlugin,
             UIPlugin,
+            RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(100.0),
+            RapierDebugRenderPlugin::default(),
             WorldInspectorPlugin::new(),
         ))
 
@@ -32,9 +35,7 @@ fn main() {
 
         .add_systems(Update, (
             systems::emit_transition_to_title,
-            systems::emit_transition_to_settings,
             systems::emit_transition_to_game,
-            systems::emit_transition_to_fail,
             systems::handle_transition_splash_to_title.run_if(in_state(AppState::Splash)),
             systems::handle_transition_settings_to_title.run_if(in_state(AppState::Settings)),
             systems::handle_transition_game_to_title.run_if(in_state(AppState::Game)),
@@ -50,8 +51,8 @@ fn main() {
 
 #[derive(States, Debug, Clone, Copy, Eq, PartialEq, Hash, Default)]
 pub enum AppState {
-    #[default]
     Splash,
+    #[default]
     Title,
     Settings,
     Game,

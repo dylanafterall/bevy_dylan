@@ -8,7 +8,7 @@ use::bevy::{
 };
 
 // -----------------------------------------------------------------------------
-pub fn spawn_cameras(mut commands: Commands) {
+pub fn spawn_world_and_ui_cameras(mut commands: Commands) {
     // World (default) camera
     commands.spawn((
         Camera2dBundle {
@@ -25,6 +25,24 @@ pub fn spawn_cameras(mut commands: Commands) {
         RenderLayers::from_layers(&[0]),
     ));
 
+    // UI camera
+    commands.spawn((
+        Camera2dBundle {
+            camera_2d: Camera2d {
+                clear_color: ClearColorConfig::None,
+            },
+            camera: Camera {
+                order: 2,
+                ..default()
+            },
+            ..default()
+        },
+        UICamera,
+        RenderLayers::from_layers(&[2]),
+    ));
+}
+
+pub fn spawn_player_camera(mut commands: Commands) {
     // Player camera
     commands.spawn((
         Camera2dBundle {
@@ -43,22 +61,15 @@ pub fn spawn_cameras(mut commands: Commands) {
         PlayerCamera,
         RenderLayers::from_layers(&[1]),
     ));
+}
 
-    // UI camera
-    commands.spawn((
-        Camera2dBundle {
-            camera_2d: Camera2d {
-                clear_color: ClearColorConfig::None,
-            },
-            camera: Camera {
-                order: 2,
-                ..default()
-            },
-            ..default()
-        },
-        UICamera,
-        RenderLayers::from_layers(&[2]),
-    ));
+pub fn despawn_player_camera(
+    mut commands: Commands,
+    camera_query: Query<Entity, With<PlayerCamera>>,
+) {
+    for camera in camera_query.iter() {
+        commands.entity(camera).despawn();
+    }
 }
 
 pub fn handle_camera_zoom_in(

@@ -19,16 +19,6 @@ pub fn emit_transition_to_title(
     }
 }
 
-pub fn emit_transition_to_settings(
-    mut keyboard_input: ResMut<Input<KeyCode>>,
-    mut event_source: EventWriter<TransitionToSettings>,
-) {
-    if keyboard_input.just_pressed(KeyCode::Semicolon) {
-        event_source.send(TransitionToSettings {});
-        keyboard_input.reset(KeyCode::Semicolon);
-    }
-}
-
 pub fn emit_transition_to_game(
     mut keyboard_input: ResMut<Input<KeyCode>>,
     mut event_source: EventWriter<TransitionToGame>,
@@ -36,16 +26,6 @@ pub fn emit_transition_to_game(
     if keyboard_input.just_pressed(KeyCode::G) {
         event_source.send(TransitionToGame {});
         keyboard_input.reset(KeyCode::G);
-    }
-}
-
-pub fn emit_transition_to_fail(
-    mut keyboard_input: ResMut<Input<KeyCode>>,
-    mut event_source: EventWriter<TransitionToFail>,
-) {
-    if keyboard_input.just_pressed(KeyCode::F) {
-        event_source.send(TransitionToFail {});
-        keyboard_input.reset(KeyCode::F);
     }
 }
 

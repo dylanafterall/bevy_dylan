@@ -21,6 +21,8 @@ bevy = { version = "0.11.0", features = [
 bevy_rapier2d = { version = "0.22.0", features = [
     "debug-render-2d",
     "simd-nightly",
+    "parallel",
+    "serde-serialize",
 ] }
 bevy-inspector-egui = "0.19.0"
 #bevy_salva2d = "0.1.0"
@@ -39,3 +41,4 @@ opt-level = 3
 # enable Link-Time-Optimization to squeeze out even more performance at the cost of very slow compile times
 [profile.release]
 lto = "thin"
+codegen-units = 1

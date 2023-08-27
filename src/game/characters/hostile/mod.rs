@@ -1,9 +1,9 @@
 use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
-pub struct CharacterPlugin;
+pub struct HostilePlugin;
 
-impl Plugin for CharacterPlugin {
+impl Plugin for HostilePlugin {
     fn build(&self, app: &mut App) {
         app
             .add_plugins(());

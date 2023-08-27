@@ -1,17 +1,15 @@
 mod events;
 mod systems;
 
-mod character;
+mod characters;
 mod environment;
-mod player;
+mod objects;
 
-use crate::AppState;
-use crate::game::character::CharacterPlugin;
+use crate::game::characters::CharactersPlugin;
 use crate::game::environment::EnvironmentPlugin;
-use crate::game::player::PlayerPlugin;
+use crate::game::objects::ObjectsPlugin;
 
 use bevy::prelude::*;
-use bevy_rapier2d::prelude::*;
 
 // -----------------------------------------------------------------------------
 pub struct GamePlugin;
@@ -24,16 +22,11 @@ impl Plugin for GamePlugin {
             .add_event::<events::TogglePause>()
 
             .add_plugins((
-                CharacterPlugin,
+                CharactersPlugin,
                 EnvironmentPlugin,
-                PlayerPlugin,
-                RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(100.0),
-                RapierDebugRenderPlugin::default(),
+                ObjectsPlugin,
             ))
 
-            .add_systems(OnEnter(AppState::Game), (
-                systems::setup_physics,
-            ))
             .add_systems(Update, (
                 systems::emit_toggle_pause,
                 systems::handle_toggle_pause.run_if(not(in_state(GameState::Inert))),
