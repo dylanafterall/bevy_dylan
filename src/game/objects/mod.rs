@@ -1,9 +1,11 @@
 mod ball;
 mod platform;
+mod sensor;
 mod star;
 
 use crate::game::objects::ball::BallPlugin;
 use crate::game::objects::platform::PlatformPlugin;
+use crate::game::objects::sensor::SensorPlugin;
 use crate::game::objects::star::StarPlugin;
 
 use bevy::prelude::*;
@@ -17,6 +19,7 @@ impl Plugin for ObjectsPlugin {
             .add_plugins((
                 BallPlugin,
                 PlatformPlugin,
+                SensorPlugin,
                 StarPlugin,
             ));
     }

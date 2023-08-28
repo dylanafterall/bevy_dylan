@@ -14,9 +14,6 @@ impl Plugin for BallPlugin {
 
             .add_systems(OnEnter(AppState::Game), (
                 systems::spawn_ball,
-            ))
-            .add_systems(OnExit(AppState::Game), (
-                systems::despawn_ball,
             ));
     }
 }

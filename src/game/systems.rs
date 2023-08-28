@@ -2,6 +2,7 @@ use super::events::*;
 use crate::game::GameState;
 
 use bevy::prelude::*;
+use bevy_rapier2d::prelude::Collider;
 
 // -----------------------------------------------------------------------------
 pub fn _pause_game(
@@ -41,5 +42,14 @@ pub fn handle_toggle_pause(
             commands.insert_resource(NextState(Some(GameState::Playing)));
             println!("Game Playing");
         }
+    }
+}
+
+pub fn despawn_colliders(
+    mut commands: Commands,
+    collider_query: Query<Entity, With<Collider>>
+) {
+    for collider in collider_query.iter() {
+        commands.entity(collider).despawn();
     }
 }
