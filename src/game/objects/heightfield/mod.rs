@@ -5,15 +5,15 @@ use crate::AppState;
 use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
-pub struct StarPlugin;
+pub struct HeightfieldPlugin;
 
-impl Plugin for StarPlugin {
+impl Plugin for HeightfieldPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_plugins(())
 
             .add_systems(OnEnter(AppState::Game), (
-                systems::spawn_star,
+                systems::spawn_heightfield,
             ));
     }
 }

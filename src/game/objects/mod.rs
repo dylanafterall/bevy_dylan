@@ -1,9 +1,11 @@
 mod ball;
+mod heightfield;
 mod platform;
 mod sensor;
 mod star;
 
 use crate::game::objects::ball::BallPlugin;
+use crate::game::objects::heightfield::HeightfieldPlugin;
 use crate::game::objects::platform::PlatformPlugin;
 use crate::game::objects::sensor::SensorPlugin;
 use crate::game::objects::star::StarPlugin;
@@ -18,6 +20,7 @@ impl Plugin for ObjectsPlugin {
         app
             .add_plugins((
                 BallPlugin,
+                HeightfieldPlugin,
                 PlatformPlugin,
                 SensorPlugin,
                 StarPlugin,

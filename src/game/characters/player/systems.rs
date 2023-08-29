@@ -12,6 +12,7 @@ pub fn spawn_player(mut commands: Commands) {
         .insert(RenderLayers::layer(3))
         .insert(RigidBody::Dynamic)
         .insert(Collider::capsule(Vec2::new(-100.0, 50.0), Vec2::new(-100.0, 100.0), 50.0))
+        .insert(Ccd::enabled())
         .insert(Dominance::group(0))
         .insert(Restitution::coefficient(0.7))
         .insert(ColliderMassProperties::Density(1.0))
