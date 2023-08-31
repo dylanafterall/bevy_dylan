@@ -1,13 +1,15 @@
+pub mod components;
+
 mod ball;
 mod heightfield;
 mod platform;
-mod sensor;
+mod round_hull;
 mod star;
 
 use crate::game::objects::ball::BallPlugin;
 use crate::game::objects::heightfield::HeightfieldPlugin;
 use crate::game::objects::platform::PlatformPlugin;
-use crate::game::objects::sensor::SensorPlugin;
+use crate::game::objects::round_hull::RoundHullPlugin;
 use crate::game::objects::star::StarPlugin;
 
 use bevy::prelude::*;
@@ -22,7 +24,7 @@ impl Plugin for ObjectsPlugin {
                 BallPlugin,
                 HeightfieldPlugin,
                 PlatformPlugin,
-                SensorPlugin,
+                RoundHullPlugin,
                 StarPlugin,
             ));
     }

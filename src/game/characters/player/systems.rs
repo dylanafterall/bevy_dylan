@@ -1,3 +1,4 @@
+use crate::game::collision_manager::events::*;
 use super::components::*;
 use super::events::*;
 
@@ -10,6 +11,8 @@ pub fn spawn_player(mut commands: Commands) {
     commands
         .spawn(Player)
         .insert(RenderLayers::layer(3))
+        .insert(ActiveEvents::CONTACT_FORCE_EVENTS)
+        .insert(ContactForceEventThreshold(200.0))
         .insert(RigidBody::Dynamic)
         .insert(Collider::capsule(Vec2::new(-100.0, 50.0), Vec2::new(-100.0, 100.0), 50.0))
         .insert(Ccd::enabled())
@@ -81,82 +84,57 @@ pub fn emit_player_move_right(
 
 // -----------------------------------------------------------------------------
 pub fn handle_player_move_up(
-    // mut force_query: Query<&mut ExternalForce, With<Player>>,
     mut impulse_query: Query<&mut ExternalImpulse, With<Player>>,
     mut event_listener: EventReader<PlayerMoveUp>,
 ) {
     for _ in event_listener.iter() {
-        /*
-        for mut ext_force in force_query.iter_mut() {
-            ext_force.force = Vec2::new(0.0, 100.0);
-            ext_force.torque = 0.0;
-        }
-         */
-
         for mut ext_impulse in impulse_query.iter_mut() {
-            ext_impulse.impulse = Vec2::new(0.0, 100.0);
+            ext_impulse.impulse = Vec2::new(0.0, 50.0);
             ext_impulse.torque_impulse = 0.0;
         }
     }
 }
 
 pub fn handle_player_move_down(
-    // mut force_query: Query<&mut ExternalForce, With<Player>>,
     mut impulse_query: Query<&mut ExternalImpulse, With<Player>>,
     mut event_listener: EventReader<PlayerMoveDown>,
 ) {
     for _ in event_listener.iter() {
-        /*
-        for mut ext_force in force_query.iter_mut() {
-            ext_force.force = Vec2::new(0.0, -100.0);
-            ext_force.torque = 0.0;
-        }
-         */
-
         for mut ext_impulse in impulse_query.iter_mut() {
-            ext_impulse.impulse = Vec2::new(0.0, -100.0);
+            ext_impulse.impulse = Vec2::new(0.0, -50.0);
             ext_impulse.torque_impulse = 0.0;
         }
     }
 }
 
 pub fn handle_player_move_left(
-    // mut force_query: Query<&mut ExternalForce, With<Player>>,
     mut impulse_query: Query<&mut ExternalImpulse, With<Player>>,
     mut event_listener: EventReader<PlayerMoveLeft>,
 ) {
     for _ in event_listener.iter() {
-        /*
-        for mut ext_force in force_query.iter_mut() {
-            ext_force.force = Vec2::new(-100.0, 0.0);
-            ext_force.torque = 0.0;
-        }
-         */
-
         for mut ext_impulse in impulse_query.iter_mut() {
-            ext_impulse.impulse = Vec2::new(-100.0, 0.0);
+            ext_impulse.impulse = Vec2::new(-50.0, 0.0);
             ext_impulse.torque_impulse = 0.0;
         }
     }
 }
 
 pub fn handle_player_move_right(
-    // mut force_query: Query<&mut ExternalForce, With<Player>>,
     mut impulse_query: Query<&mut ExternalImpulse, With<Player>>,
     mut event_listener: EventReader<PlayerMoveRight>,
 ) {
     for _ in event_listener.iter() {
-        /*
-        for mut ext_force in force_query.iter_mut() {
-            ext_force.force = Vec2::new(100.0, 0.0);
-            ext_force.torque = 0.0;
-        }
-         */
-
         for mut ext_impulse in impulse_query.iter_mut() {
-            ext_impulse.impulse = Vec2::new(100.0, 0.0);
+            ext_impulse.impulse = Vec2::new(50.0, 0.0);
             ext_impulse.torque_impulse = 0.0;
         }
     }
 }
 
+pub fn handle_player_character_collision(
+    mut event_listener: EventReader<PlayerCharacterCollision>,
+) {
+    for collision in event_listener.iter() {
+        println!("{:?}, {:?}, {:?}", collision.player, collision.partner, collision.force_vector);
+    }
+}

@@ -1,6 +1,6 @@
 mod friendly;
 mod hostile;
-mod player;
+pub mod player;
 
 use bevy::prelude::*;
 use crate::game::characters::friendly::FriendlyPlugin;

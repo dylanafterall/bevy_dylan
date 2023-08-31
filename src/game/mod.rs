@@ -1,11 +1,15 @@
 mod events;
 mod systems;
 
+mod collision_manager;
+mod scene_manager;
 mod characters;
 mod environment;
 mod objects;
 
 use crate::AppState;
+use crate::game::collision_manager::CollisionManagerPlugin;
+use crate::game::scene_manager::SceneManagerPlugin;
 use crate::game::characters::CharactersPlugin;
 use crate::game::environment::EnvironmentPlugin;
 use crate::game::objects::ObjectsPlugin;
@@ -23,6 +27,8 @@ impl Plugin for GamePlugin {
             .add_event::<events::TogglePause>()
 
             .add_plugins((
+                CollisionManagerPlugin,
+                SceneManagerPlugin,
                 CharactersPlugin,
                 EnvironmentPlugin,
                 ObjectsPlugin,

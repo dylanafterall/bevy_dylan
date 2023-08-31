@@ -1,4 +1,4 @@
-mod components;
+pub mod components;
 mod events;
 mod systems;
 
@@ -28,6 +28,7 @@ impl Plugin for PlayerPlugin {
                 systems::handle_player_move_down,
                 systems::handle_player_move_left,
                 systems::handle_player_move_right,
+                systems::handle_player_character_collision,
             ))
 
             .add_systems(OnEnter(AppState::Game), (

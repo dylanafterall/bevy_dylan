@@ -5,15 +5,15 @@ use crate::AppState;
 use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
-pub struct SensorPlugin;
+pub struct RoundHullPlugin;
 
-impl Plugin for SensorPlugin {
+impl Plugin for RoundHullPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_plugins(())
 
             .add_systems(OnEnter(AppState::Game), (
-                systems::spawn_sensor,
+                systems::spawn_round_hull,
             ));
     }
 }
