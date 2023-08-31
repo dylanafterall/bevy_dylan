@@ -2,7 +2,7 @@ mod events;
 mod systems;
 
 mod collision_manager;
-mod scene_manager;
+pub mod scene_manager;
 mod characters;
 mod environment;
 mod objects;

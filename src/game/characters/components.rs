@@ -2,4 +2,7 @@ use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
 #[derive(Component)]
-pub struct TestObject;
+pub struct FriendlyCharacter;
+
+#[derive(Component)]
+pub struct HostileCharacter;

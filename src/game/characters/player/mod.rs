@@ -2,7 +2,7 @@ pub mod components;
 mod events;
 mod systems;
 
-use crate::AppState;
+use crate::game::scene_manager::SceneState;
 
 use bevy::prelude::*;
 
@@ -31,7 +31,13 @@ impl Plugin for PlayerPlugin {
                 systems::handle_player_character_collision,
             ))
 
-            .add_systems(OnEnter(AppState::Game), (
+            .add_systems(OnEnter(SceneState::First), (
+                systems::spawn_player,
+            ))
+            .add_systems(OnEnter(SceneState::Second), (
+                systems::spawn_player,
+            ))
+            .add_systems(OnEnter(SceneState::Third), (
                 systems::spawn_player,
             ));
     }

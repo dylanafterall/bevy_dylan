@@ -15,7 +15,14 @@ pub struct PlayerOtherCollision {
 }
 
 #[derive(Event)]
-pub struct PlayerCharacterCollision {
+pub struct PlayerFriendlyContact {
+    pub player: Entity,
+    pub partner: Entity,
+    pub force_vector: Vec2,
+}
+
+#[derive(Event)]
+pub struct PlayerHostileContact {
     pub player: Entity,
     pub partner: Entity,
     pub force_vector: Vec2,

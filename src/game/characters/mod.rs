@@ -1,3 +1,5 @@
+pub mod components;
+
 mod friendly;
 mod hostile;
 pub mod player;

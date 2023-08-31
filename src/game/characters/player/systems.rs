@@ -14,7 +14,7 @@ pub fn spawn_player(mut commands: Commands) {
         .insert(ActiveEvents::CONTACT_FORCE_EVENTS)
         .insert(ContactForceEventThreshold(200.0))
         .insert(RigidBody::Dynamic)
-        .insert(Collider::capsule(Vec2::new(-100.0, 50.0), Vec2::new(-100.0, 100.0), 50.0))
+        .insert(Collider::capsule(Vec2::new(0.0, -25.0), Vec2::new(0.0, 25.0), 50.0))
         .insert(Ccd::enabled())
         .insert(Dominance::group(0))
         .insert(Restitution::coefficient(0.7))
@@ -22,7 +22,7 @@ pub fn spawn_player(mut commands: Commands) {
         .insert(GravityScale(0.0))
         .insert(Damping { linear_damping: 1.0, angular_damping: 2.0 })
         // .insert(CollisionGroups::new(0b1101.into(), 0b0100.into())
-        .insert(TransformBundle::from(Transform::from_xyz(-5.0, 4.0, 0.0)))
+        .insert(TransformBundle::from(Transform::from_xyz(0.0, 0.0, 0.0)))
         .insert(Velocity {
             linvel: Vec2::new(0.0, 0.0),
             angvel: 0.0,
@@ -132,9 +132,23 @@ pub fn handle_player_move_right(
 }
 
 pub fn handle_player_character_collision(
-    mut event_listener: EventReader<PlayerCharacterCollision>,
+    mut friendly_contact_listener: EventReader<PlayerFriendlyContact>,
+    mut hostile_contact_listener: EventReader<PlayerHostileContact>,
 ) {
-    for collision in event_listener.iter() {
-        println!("{:?}, {:?}, {:?}", collision.player, collision.partner, collision.force_vector);
+    for friendly_contact in friendly_contact_listener.iter() {
+        println!(
+            "Friendly contact between: {:?}, {:?}, {:?}",
+            friendly_contact.player,
+            friendly_contact.partner,
+            friendly_contact.force_vector,
+        );
+    }
+    for hostile_contact in hostile_contact_listener.iter() {
+        println!(
+            "Hostile contact between: {:?}, {:?}, {:?}",
+            hostile_contact.player,
+            hostile_contact.partner,
+            hostile_contact.force_vector,
+        );
     }
 }

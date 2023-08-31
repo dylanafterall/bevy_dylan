@@ -13,7 +13,8 @@ impl Plugin for CollisionManagerPlugin {
 
             .add_event::<events::PlayerSceneCollision>()
             .add_event::<events::PlayerOtherCollision>()
-            .add_event::<events::PlayerCharacterCollision>()
+            .add_event::<events::PlayerFriendlyContact>()
+            .add_event::<events::PlayerHostileContact>()
 
             .add_systems(Update, (
                 systems::parse_collision_event,

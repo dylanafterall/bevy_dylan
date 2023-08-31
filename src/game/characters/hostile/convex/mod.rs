@@ -1,19 +1,19 @@
 mod systems;
 
-use crate::AppState;
+use crate::game::scene_manager::SceneState;
 
 use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
-pub struct RoundHullPlugin;
+pub struct ConvexPlugin;
 
-impl Plugin for RoundHullPlugin {
+impl Plugin for ConvexPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_plugins(())
 
-            .add_systems(OnEnter(AppState::Game), (
-                systems::spawn_round_hull,
+            .add_systems(OnEnter(SceneState::First), (
+                systems::spawn_convex,
             ));
     }
 }

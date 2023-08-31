@@ -2,6 +2,7 @@ use crate::events::*;
 
 use crate::AppState;
 use crate::game::GameState;
+use crate::game::scene_manager::SceneState;
 
 use bevy::{
     app::*,
@@ -54,11 +55,13 @@ pub fn handle_transition_settings_to_title(
 pub fn handle_transition_game_to_title(
     mut next_app_state: ResMut<NextState<AppState>>,
     mut next_game_state: ResMut<NextState<GameState>>,
+    mut next_scene_state: ResMut<NextState<SceneState>>,
     mut event_listener: EventReader<TransitionToTitle>,
 ) {
     for _ in event_listener.iter() {
         next_app_state.set(AppState::Title);
         next_game_state.set(GameState::Inert);
+        next_scene_state.set(SceneState::Inert);
         println!("Entered AppState::Title");
     }
 }
@@ -78,11 +81,13 @@ pub fn handle_transition_title_to_settings(
 pub fn handle_transition_title_to_game(
     mut next_app_state: ResMut<NextState<AppState>>,
     mut next_game_state: ResMut<NextState<GameState>>,
+    mut next_scene_state: ResMut<NextState<SceneState>>,
     mut event_listener: EventReader<TransitionToGame>,
 ) {
     for _ in event_listener.iter() {
         next_app_state.set(AppState::Game);
         next_game_state.set(GameState::Playing);
+        next_scene_state.set(SceneState::First);
         println!("Entered AppState::Game");
     }
 }
@@ -90,11 +95,13 @@ pub fn handle_transition_title_to_game(
 pub fn handle_transition_fail_to_game(
     mut next_app_state: ResMut<NextState<AppState>>,
     mut next_game_state: ResMut<NextState<GameState>>,
+    mut next_scene_state: ResMut<NextState<SceneState>>,
     mut event_listener: EventReader<TransitionToGame>,
 ) {
     for _ in event_listener.iter() {
         next_app_state.set(AppState::Game);
         next_game_state.set(GameState::Playing);
+        next_scene_state.set(SceneState::First);
         println!("Entered AppState::Game");
     }
 }
@@ -103,11 +110,13 @@ pub fn handle_transition_fail_to_game(
 pub fn handle_transition_game_to_fail(
     mut next_app_state: ResMut<NextState<AppState>>,
     mut next_game_state: ResMut<NextState<GameState>>,
+    mut next_scene_state: ResMut<NextState<SceneState>>,
     mut event_listener: EventReader<TransitionToFail>,
 ) {
     for _ in event_listener.iter() {
         next_app_state.set(AppState::Fail);
         next_game_state.set(GameState::Inert);
+        next_scene_state.set(SceneState::Inert);
         println!("Entered AppState::Fail");
     }
 }

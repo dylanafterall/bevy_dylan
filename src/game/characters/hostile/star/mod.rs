@@ -1,6 +1,6 @@
 mod systems;
 
-use crate::AppState;
+use crate::game::scene_manager::SceneState;
 
 use bevy::prelude::*;
 
@@ -12,7 +12,7 @@ impl Plugin for StarPlugin {
         app
             .add_plugins(())
 
-            .add_systems(OnEnter(AppState::Game), (
+            .add_systems(OnEnter(SceneState::First), (
                 systems::spawn_star,
             ));
     }

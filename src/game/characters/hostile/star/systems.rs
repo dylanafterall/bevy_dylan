@@ -1,3 +1,5 @@
+use crate::game::characters::components::*;
+
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
 
@@ -28,7 +30,8 @@ pub fn spawn_star(mut commands: Commands) {
         Vec2::new(0.00, -50.00),
     ]);
     commands
-        .spawn(RigidBody::Dynamic)
+        .spawn(HostileCharacter)
+        .insert(RigidBody::Dynamic)
         .insert(Collider::compound(vec![
             (Vec2::new(0.0, 0.0), 0.0, shape1.unwrap()),
             (Vec2::new(0.0, 0.0), 0.0, shape2.unwrap()),

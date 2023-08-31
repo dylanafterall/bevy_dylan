@@ -1,8 +1,6 @@
 pub mod components;
 mod systems;
 
-use crate::AppState;
-
 use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
@@ -19,9 +17,6 @@ impl Plugin for SceneManagerPlugin {
                 systems::handle_scene_transition,
             ))
 
-            .add_systems(OnEnter(AppState::Game), (
-                systems::spawn_initial_scene_sensors,
-            ))
             .add_systems(OnEnter(SceneState::First), (
                 systems::spawn_first_scene_sensors,
             ))
@@ -33,13 +28,13 @@ impl Plugin for SceneManagerPlugin {
             ))
 
             .add_systems(OnExit(SceneState::First), (
-                systems::despawn_scene_sensors,
+                systems::despawn_colliders,
             ))
             .add_systems(OnExit(SceneState::Second), (
-                systems::despawn_scene_sensors,
+                systems::despawn_colliders,
             ))
             .add_systems(OnExit(SceneState::Third), (
-                systems::despawn_scene_sensors,
+                systems::despawn_colliders,
             ));
     }
 }
@@ -47,6 +42,7 @@ impl Plugin for SceneManagerPlugin {
 #[derive(States, Debug, Clone, Copy, Eq, PartialEq, Hash, Default)]
 pub enum SceneState {
     #[default]
+    Inert,
     First,
     Second,
     Third,
