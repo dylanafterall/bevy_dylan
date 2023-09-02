@@ -1,8 +1,10 @@
 mod heightfield;
+mod joints;
 mod platform;
 
-use crate::game::objects::heightfield::HeightfieldPlugin;
-use crate::game::objects::platform::PlatformPlugin;
+use heightfield::HeightfieldPlugin;
+use joints::JointsPlugin;
+use platform::PlatformPlugin;
 
 use bevy::prelude::*;
 
@@ -14,6 +16,7 @@ impl Plugin for ObjectsPlugin {
         app
             .add_plugins((
                 HeightfieldPlugin,
+                JointsPlugin,
                 PlatformPlugin,
             ));
     }
