@@ -1,65 +1,79 @@
-// use bevy::prelude::*;
-// use bevy_rapier2d::prelude::*;
+use bevy::prelude::*;
+use bevy_rapier2d::prelude::*;
 
 // -----------------------------------------------------------------------------
 pub fn spawn_revolute_joint(
-    // mut commands: Commands
+    mut commands: Commands
 ) {
-    /*
-    // Build the rigid body.
-    let rad = 4.0;
-    let numi = 40; // Num vertical nodes.
-    let numk = 40; // Num horizontal nodes.
-    let shift = 10.0;
+    // adjust RADIUS and CENTER for scaling and translating --------------------
+    const RADIUS :f32 = 150.0;
+    const CENTER :Vec3 = Vec3::new(-400.0, 400.0, 0.0);
 
-    let mut body_entities = Vec::new();
+    // consts derived from RADIUS and CENTER -----------------------------------
+    const DIAMETER :f32 = 2.0 * RADIUS;
+    const TOP_LEFT :Vec3 = Vec3::new(CENTER.x - RADIUS, CENTER.y + RADIUS, CENTER.z);
+    const TOP_RIGHT :Vec3 = Vec3::new(CENTER.x + RADIUS, CENTER.y + RADIUS, CENTER.z);
+    const BOTTOM_LEFT :Vec3 = Vec3::new(CENTER.x - RADIUS, CENTER.y - RADIUS, CENTER.z);
+    const BOTTOM_RIGHT :Vec3 = Vec3::new(CENTER.x + RADIUS, CENTER.y - RADIUS, CENTER.z);
 
-    for k in 0..numk {
-        for i in 0..numi {
-            let fk = k as f32;
-            let fi = i as f32;
+    // joints ------------------------------------------------------------------
+    // top left to top right
+    let revolute_joint_top = RevoluteJointBuilder::new()
+        .local_anchor1(Vec2::new(DIAMETER, 0.0));
 
-            let rigid_body = if i == 0 && (k % 4 == 0 || k == numk - 1) {
-                RigidBody::Fixed
-            } else {
-                RigidBody::Dynamic
-            };
+    // top right to bottom right
+    let revolute_joint_right = RevoluteJointBuilder::new()
+        .local_anchor1(Vec2::new(0.0, -DIAMETER));
 
-            let child_entity = commands
-                .spawn((
-                    TransformBundle::from(Transform::from_xyz(fk * shift, -fi * shift, 0.0)),
-                    rigid_body,
-                    Collider::cuboid(rad, rad),
-                ))
-                .id();
+    // bottom right to bottom left
+    let revolute_joint_bottom = RevoluteJointBuilder::new()
+        .local_anchor1(Vec2::new(-DIAMETER, 0.0));
 
-            // Vertical joint.
-            if i > 0 {
-                let parent_entity = *body_entities.last().unwrap();
-                let joint = RevoluteJointBuilder::new().local_anchor2(Vec2::new(0.0, shift));
-                commands.entity(child_entity).with_children(|cmd| {
-                    // NOTE: we want to attach multiple impulse joints to this entity, so
-                    //       we need to add the components to children of the entity. Otherwise
-                    //       the second joint component would just overwrite the first one.
-                    cmd.spawn(ImpulseJoint::new(parent_entity, joint));
-                });
-            }
+    // bottom left to top left
+    let revolute_joint_left = RevoluteJointBuilder::new()
+        .local_anchor1(Vec2::new(0.0, DIAMETER));
 
-            // Horizontal joint.
-            if k > 0 {
-                let parent_index = body_entities.len() - numi;
-                let parent_entity = body_entities[parent_index];
-                let joint = RevoluteJointBuilder::new().local_anchor2(Vec2::new(-shift, 0.0));
-                commands.entity(child_entity).with_children(|cmd| {
-                    // NOTE: we want to attach multiple impulse joints to this entity, so
-                    //       we need to add the components to children of the entity. Otherwise
-                    //       the second joint component would just overwrite the first one.
-                    cmd.spawn(ImpulseJoint::new(parent_entity, joint));
-                });
-            }
+    // bodies ------------------------------------------------------------------
+    let top_left_entity = commands
+        .spawn(RigidBody::Dynamic)
+        .insert(Collider::cuboid(50.0,50.0))
+        .insert(GravityScale(0.0))
+        .insert(TransformBundle::from(Transform::from_xyz(
+            TOP_LEFT.x, TOP_LEFT.y, TOP_LEFT.z
+        )))
+        .id();
 
-            body_entities.push(child_entity);
-        }
-    }
-     */
+    let top_right_entity = commands
+        .spawn(RigidBody::Dynamic)
+        .insert(Collider::cuboid(50.0,50.0))
+        .insert(GravityScale(0.0))
+        .insert(TransformBundle::from(Transform::from_xyz(
+            TOP_RIGHT.x, TOP_RIGHT.y, TOP_RIGHT.z
+        )))
+        .insert(ImpulseJoint::new(top_left_entity, revolute_joint_top))
+        .id();
+
+    let bottom_right_entity = commands
+        .spawn(RigidBody::Dynamic)
+        .insert(Collider::cuboid(50.0,50.0))
+        .insert(GravityScale(0.0))
+        .insert(TransformBundle::from(Transform::from_xyz(
+            BOTTOM_RIGHT.x, BOTTOM_RIGHT.y, BOTTOM_RIGHT.z
+        )))
+        .insert(ImpulseJoint::new(top_right_entity, revolute_joint_right))
+        .id();
+
+    let bottom_left_entity = commands
+        .spawn(RigidBody::Dynamic)
+        .insert(Collider::cuboid(50.0,50.0))
+        .insert(GravityScale(0.0))
+        .insert(TransformBundle::from(Transform::from_xyz(
+            BOTTOM_LEFT.x, BOTTOM_LEFT.y, BOTTOM_LEFT.z
+        )))
+        .insert(ImpulseJoint::new(bottom_right_entity, revolute_joint_bottom))
+        .id();
+
+    commands
+        .entity(top_left_entity)
+        .insert(ImpulseJoint::new(bottom_left_entity, revolute_joint_left));
 }
