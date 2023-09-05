@@ -2,6 +2,7 @@ use super::SceneState;
 use super::components::*;
 
 use bevy::prelude::*;
+use bevy::sprite::Mesh2dHandle;
 use bevy_rapier2d::prelude::*;
 use crate::game::collision_manager::events::PlayerSceneCollision;
 
@@ -57,12 +58,16 @@ pub fn spawn_third_scene_sensors(
         .insert(TransformBundle::from(Transform::from_xyz(1000.0, -550.0, 0.0)));
 }
 
-pub fn despawn_colliders(
+pub fn despawn_entities(
     mut commands: Commands,
-    collider_query: Query<Entity, With<Collider>>
+    collider_query: Query<Entity, With<Collider>>,
+    shape_query: Query<Entity, With<Mesh2dHandle>>,
 ) {
     for collider in collider_query.iter() {
         commands.entity(collider).despawn();
+    }
+    for shape in shape_query.iter() {
+        commands.entity(shape).despawn();
     }
 }
 

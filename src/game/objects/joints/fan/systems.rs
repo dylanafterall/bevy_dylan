@@ -11,29 +11,31 @@ pub fn spawn_fan(
 
     let fan = commands
         .spawn(RigidBody::Dynamic)
+        .insert(Collider::ball(1.0))
+        .insert(Sensor)
+        .insert(GravityScale(0.0))
         .insert(TransformBundle::from(Transform::from_xyz(
             600.0, -400.0, 0.0,
         )))
-        .insert(GravityScale(0.0))
         .with_children(|children| {
             // top left
             children.spawn(Collider::ball(50.0))
-                .insert(TransformBundle::from(Transform::from_xyz(-100.0, 100.0, 0.0)));
+                .insert(TransformBundle::from(Transform::from_xyz(-125.0, 125.0, 0.0)));
             // top right
             children.spawn(Collider::ball(50.0))
-                .insert(TransformBundle::from(Transform::from_xyz(100.0, 100.0, 0.0)));
+                .insert(TransformBundle::from(Transform::from_xyz(125.0, 125.0, 0.0)));
             // bottom right
             children.spawn(Collider::ball(50.0))
-                .insert(TransformBundle::from(Transform::from_xyz(100.0, -100.0, 0.0)));
+                .insert(TransformBundle::from(Transform::from_xyz(125.0, -125.0, 0.0)));
             // bottom left
             children.spawn(Collider::ball(50.0))
-                .insert(TransformBundle::from(Transform::from_xyz(-100.0, -100.0, 0.0)));
+                .insert(TransformBundle::from(Transform::from_xyz(-125.0, -125.0, 0.0)));
         })
         .id();
 
     commands
         .spawn(RigidBody::Fixed)
-        .insert(Collider::cuboid(50.0,50.0))
+        .insert(Collider::cuboid(25.0,25.0))
         .insert(GravityScale(0.0))
         .insert(TransformBundle::from(Transform::from_xyz(
             400.0, -400.0, 0.0

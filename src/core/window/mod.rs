@@ -13,6 +13,7 @@ pub struct CoreWindowPlugin;
 impl Plugin for CoreWindowPlugin {
     fn build(&self, app: &mut App) {
         app
+            .insert_resource(Msaa::Sample4)
             .insert_resource(ClearColor(Color::GRAY))
             .init_resource::<ResolutionSettings>()
 

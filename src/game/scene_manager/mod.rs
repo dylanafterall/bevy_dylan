@@ -28,13 +28,13 @@ impl Plugin for SceneManagerPlugin {
             ))
 
             .add_systems(OnExit(SceneState::First), (
-                systems::despawn_colliders,
+                systems::despawn_entities,
             ))
             .add_systems(OnExit(SceneState::Second), (
-                systems::despawn_colliders,
+                systems::despawn_entities,
             ))
             .add_systems(OnExit(SceneState::Third), (
-                systems::despawn_colliders,
+                systems::despawn_entities,
             ));
     }
 }

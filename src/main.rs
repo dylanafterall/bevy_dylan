@@ -10,6 +10,7 @@ use crate::game::GamePlugin;
 use crate::ui::UIPlugin;
 
 use bevy::prelude::*;
+use bevy_prototype_lyon::prelude::*;
 use bevy_rapier2d::prelude::*;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
@@ -20,6 +21,7 @@ fn main() {
             CorePlugin,
             GamePlugin,
             UIPlugin,
+            ShapePlugin,
             RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(100.0),
             RapierDebugRenderPlugin::default(),
             WorldInspectorPlugin::new(),
