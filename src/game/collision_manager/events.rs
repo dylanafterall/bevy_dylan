@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use bevy_rapier2d::prelude::RapierRigidBodyHandle;
 use bevy_rapier2d::rapier::prelude::CollisionEventFlags;
 
 // -----------------------------------------------------------------------------
@@ -15,16 +16,14 @@ pub struct PlayerOtherCollision {
 }
 
 #[derive(Event)]
-pub struct PlayerFriendlyContact {
+pub struct PlayerContact {
     pub player: Entity,
     pub partner: Entity,
     pub force_vector: Vec2,
 }
 
 #[derive(Event)]
-pub struct PlayerHostileContact {
-    pub player: Entity,
-    pub partner: Entity,
-    pub force_vector: Vec2,
+pub struct DestructibleContact {
+    pub destructible: RapierRigidBodyHandle,
 }
 

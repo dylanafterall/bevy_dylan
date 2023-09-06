@@ -1,5 +1,5 @@
 mod heightfield;
-mod joints;
+pub mod joints;
 mod platform;
 
 use heightfield::HeightfieldPlugin;

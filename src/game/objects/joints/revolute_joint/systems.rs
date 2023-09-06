@@ -36,7 +36,7 @@ pub fn spawn_revolute_joint(
     // bodies ------------------------------------------------------------------
     let top_left_entity = commands
         .spawn(RigidBody::Dynamic)
-        .insert(Collider::cuboid(50.0,50.0))
+        .insert(Collider::ball(50.0))
         .insert(GravityScale(0.0))
         .insert(TransformBundle::from(Transform::from_xyz(
             TOP_LEFT.x, TOP_LEFT.y, TOP_LEFT.z
@@ -45,7 +45,7 @@ pub fn spawn_revolute_joint(
 
     let top_right_entity = commands
         .spawn(RigidBody::Dynamic)
-        .insert(Collider::cuboid(50.0,50.0))
+        .insert(Collider::ball(50.0))
         .insert(GravityScale(0.0))
         .insert(TransformBundle::from(Transform::from_xyz(
             TOP_RIGHT.x, TOP_RIGHT.y, TOP_RIGHT.z
@@ -55,7 +55,7 @@ pub fn spawn_revolute_joint(
 
     let bottom_right_entity = commands
         .spawn(RigidBody::Dynamic)
-        .insert(Collider::cuboid(50.0,50.0))
+        .insert(Collider::ball(50.0))
         .insert(GravityScale(0.0))
         .insert(TransformBundle::from(Transform::from_xyz(
             BOTTOM_RIGHT.x, BOTTOM_RIGHT.y, BOTTOM_RIGHT.z
@@ -65,7 +65,7 @@ pub fn spawn_revolute_joint(
 
     let bottom_left_entity = commands
         .spawn(RigidBody::Dynamic)
-        .insert(Collider::cuboid(50.0,50.0))
+        .insert(Collider::ball(50.0))
         .insert(GravityScale(0.0))
         .insert(TransformBundle::from(Transform::from_xyz(
             BOTTOM_LEFT.x, BOTTOM_LEFT.y, BOTTOM_LEFT.z

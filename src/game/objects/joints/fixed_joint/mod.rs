@@ -14,6 +14,9 @@ impl Plugin for FixedJointPlugin {
 
             .add_systems(OnEnter(SceneState::Second), (
                 systems::spawn_fixed_joint,
+            ))
+            .add_systems(Update, (
+                systems::handle_destructible_contact.run_if(in_state(SceneState::Second)),
             ));
     }
 }

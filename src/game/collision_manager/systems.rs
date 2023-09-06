@@ -1,6 +1,6 @@
-use crate::game::characters::components::*;
 use crate::game::scene_manager::components::*;
 use crate::game::characters::player::components::*;
+use crate::game::objects::joints::components::*;
 use super::events::*;
 
 use bevy::prelude::*;
@@ -53,48 +53,44 @@ pub fn parse_collision_event(
 
 pub fn parse_contact_force_event(
     player_query: Query<&Player>,
-    friendly_query: Query<&FriendlyCharacter>,
-    hostile_query: Query<&HostileCharacter>,
+    destructible_query: Query<&RapierRigidBodyHandle, With<Destructible>>,
     mut contact_force_events: EventReader<ContactForceEvent>,
-    mut player_friendly_contact: EventWriter<PlayerFriendlyContact>,
-    mut player_hostile_contact: EventWriter<PlayerHostileContact>,
+    mut player_contact: EventWriter<PlayerContact>,
+    mut destructible_contact: EventWriter<DestructibleContact>,
 ) {
     for contact_force_event in contact_force_events.iter() {
         let entity1 = contact_force_event.collider1;
         let entity2 = contact_force_event.collider2;
         let total_force = contact_force_event.total_force;
 
+        // check for player contact events
         if player_query.get(entity1).is_ok() {
-            if friendly_query.get(entity2).is_ok() {
-                player_friendly_contact.send(PlayerFriendlyContact {
-                    player: entity1,
-                    partner: entity2,
-                    force_vector: total_force,
-                });
-            }
-            else if hostile_query.get(entity2).is_ok() {
-                player_hostile_contact.send(PlayerHostileContact {
-                    player: entity1,
-                    partner: entity2,
-                    force_vector: total_force,
-                });
-            }
+            player_contact.send(PlayerContact {
+                player: entity1,
+                partner: entity2,
+                force_vector: total_force,
+            });
         }
         else if player_query.get(entity2).is_ok() {
-            if friendly_query.get(entity1).is_ok() {
-                player_friendly_contact.send(PlayerFriendlyContact {
-                    player: entity2,
-                    partner: entity1,
-                    force_vector: total_force,
-                });
-            }
-            else if hostile_query.get(entity1).is_ok() {
-                player_hostile_contact.send(PlayerHostileContact {
-                    player: entity2,
-                    partner: entity1,
-                    force_vector: total_force,
-                });
-            }
+            player_contact.send(PlayerContact {
+                player: entity2,
+                partner: entity1,
+                force_vector: total_force,
+            });
+        }
+
+        // check for destructible contact events
+        if destructible_query.get(entity1).is_ok() {
+            let rigid_body = destructible_query.get(entity1).unwrap();
+            destructible_contact.send(DestructibleContact {
+                destructible: *rigid_body,
+            });
+        }
+        else if destructible_query.get(entity2).is_ok() {
+            let rigid_body = destructible_query.get(entity2).unwrap();
+            destructible_contact.send(DestructibleContact {
+                destructible: *rigid_body,
+            });
         }
     }
 }

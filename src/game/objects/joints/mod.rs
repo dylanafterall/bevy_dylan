@@ -1,3 +1,5 @@
+pub mod components;
+
 mod fan;
 mod fixed_joint;
 mod multi_collider;

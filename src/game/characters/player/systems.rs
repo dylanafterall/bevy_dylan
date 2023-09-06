@@ -5,6 +5,7 @@ use super::events::*;
 use bevy::prelude::*;
 use bevy::render::view::visibility::RenderLayers;
 use bevy_rapier2d::prelude::*;
+use crate::game::characters::components::{FriendlyCharacter, HostileCharacter};
 
 // -----------------------------------------------------------------------------
 pub fn spawn_player(mut commands: Commands) {
@@ -23,10 +24,6 @@ pub fn spawn_player(mut commands: Commands) {
         .insert(Damping { linear_damping: 1.0, angular_damping: 2.0 })
         // .insert(CollisionGroups::new(0b1101.into(), 0b0100.into())
         .insert(TransformBundle::from(Transform::from_xyz(0.0, 0.0, 0.0)))
-        .insert(Velocity {
-            linvel: Vec2::new(0.0, 0.0),
-            angvel: 0.0,
-        })
         .insert(Friction {
             coefficient: 0.7,
             combine_rule: CoefficientCombineRule::Average,
@@ -89,7 +86,7 @@ pub fn handle_player_move_up(
 ) {
     for _ in event_listener.iter() {
         for mut ext_impulse in impulse_query.iter_mut() {
-            ext_impulse.impulse = Vec2::new(0.0, 50.0);
+            ext_impulse.impulse = Vec2::new(0.0, 70.0);
             ext_impulse.torque_impulse = 0.0;
         }
     }
@@ -101,7 +98,7 @@ pub fn handle_player_move_down(
 ) {
     for _ in event_listener.iter() {
         for mut ext_impulse in impulse_query.iter_mut() {
-            ext_impulse.impulse = Vec2::new(0.0, -50.0);
+            ext_impulse.impulse = Vec2::new(0.0, -70.0);
             ext_impulse.torque_impulse = 0.0;
         }
     }
@@ -113,7 +110,7 @@ pub fn handle_player_move_left(
 ) {
     for _ in event_listener.iter() {
         for mut ext_impulse in impulse_query.iter_mut() {
-            ext_impulse.impulse = Vec2::new(-50.0, 0.0);
+            ext_impulse.impulse = Vec2::new(-70.0, 0.0);
             ext_impulse.torque_impulse = 0.0;
         }
     }
@@ -125,30 +122,34 @@ pub fn handle_player_move_right(
 ) {
     for _ in event_listener.iter() {
         for mut ext_impulse in impulse_query.iter_mut() {
-            ext_impulse.impulse = Vec2::new(50.0, 0.0);
+            ext_impulse.impulse = Vec2::new(70.0, 0.0);
             ext_impulse.torque_impulse = 0.0;
         }
     }
 }
 
 pub fn handle_player_character_collision(
-    mut friendly_contact_listener: EventReader<PlayerFriendlyContact>,
-    mut hostile_contact_listener: EventReader<PlayerHostileContact>,
+    friendly_query: Query<&FriendlyCharacter>,
+    hostile_query: Query<&HostileCharacter>,
+    mut player_contact_listener: EventReader<PlayerContact>,
 ) {
-    for friendly_contact in friendly_contact_listener.iter() {
-        println!(
-            "Friendly contact between: {:?}, {:?}, {:?}",
-            friendly_contact.player,
-            friendly_contact.partner,
-            friendly_contact.force_vector,
-        );
-    }
-    for hostile_contact in hostile_contact_listener.iter() {
-        println!(
-            "Hostile contact between: {:?}, {:?}, {:?}",
-            hostile_contact.player,
-            hostile_contact.partner,
-            hostile_contact.force_vector,
-        );
+    for player_contact in player_contact_listener.iter() {
+        let partner = player_contact.partner;
+        if friendly_query.get(partner).is_ok() {
+            println!(
+                "Friendly contact between: {:?}, {:?}, {:?}",
+                player_contact.player,
+                partner,
+                player_contact.force_vector,
+            );
+        }
+        else if hostile_query.get(partner).is_ok() {
+            println!(
+                "Hostile contact between: {:?}, {:?}, {:?}",
+                player_contact.player,
+                partner,
+                player_contact.force_vector,
+            );
+        }
     }
 }
