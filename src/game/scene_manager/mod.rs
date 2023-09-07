@@ -26,6 +26,12 @@ impl Plugin for SceneManagerPlugin {
             .add_systems(OnEnter(SceneState::Third), (
                 systems::spawn_third_scene_sensors,
             ))
+            .add_systems(OnEnter(SceneState::Fourth), (
+                systems::spawn_fourth_scene_sensors,
+            ))
+            .add_systems(OnEnter(SceneState::Fifth), (
+                systems::spawn_fifth_scene_sensors,
+            ))
 
             .add_systems(OnExit(SceneState::First), (
                 systems::despawn_entities,
@@ -34,6 +40,12 @@ impl Plugin for SceneManagerPlugin {
                 systems::despawn_entities,
             ))
             .add_systems(OnExit(SceneState::Third), (
+                systems::despawn_entities,
+            ))
+            .add_systems(OnExit(SceneState::Fourth), (
+                systems::despawn_entities,
+            ))
+            .add_systems(OnExit(SceneState::Fifth), (
                 systems::despawn_entities,
             ));
     }
@@ -46,4 +58,6 @@ pub enum SceneState {
     First,
     Second,
     Third,
+    Fourth,
+    Fifth,
 }

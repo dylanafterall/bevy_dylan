@@ -1,11 +1,11 @@
 use crate::game::collision_manager::events::*;
+use super::super::components::*;
 use super::components::*;
 use super::events::*;
 
 use bevy::prelude::*;
 use bevy::render::view::visibility::RenderLayers;
 use bevy_rapier2d::prelude::*;
-use crate::game::characters::components::{FriendlyCharacter, HostileCharacter};
 
 // -----------------------------------------------------------------------------
 pub fn spawn_player(mut commands: Commands) {

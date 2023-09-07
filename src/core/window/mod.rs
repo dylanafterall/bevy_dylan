@@ -14,7 +14,7 @@ impl Plugin for CoreWindowPlugin {
     fn build(&self, app: &mut App) {
         app
             .insert_resource(Msaa::Sample4)
-            .insert_resource(ClearColor(Color::GRAY))
+            .insert_resource(ClearColor(Color::DARK_GRAY))
             .init_resource::<ResolutionSettings>()
 
             .add_plugins(DefaultPlugins.set(WindowPlugin {

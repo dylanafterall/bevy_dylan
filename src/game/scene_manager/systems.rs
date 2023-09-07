@@ -11,17 +11,17 @@ pub fn spawn_first_scene_sensors(
     mut commands: Commands,
 ) {
     commands
-        .spawn(SceneSensor { desired_scene: SceneState::Third})
+        .spawn(SceneSensor { desired_scene: SceneState::Fifth})
         .insert(Collider::cuboid(100.0, 100.0))
         .insert(Sensor)
         .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(-1000.0, 550.0, 0.0)));
+        .insert(TransformBundle::from(Transform::from_xyz(-1000.0, 500.0, 0.0)));
     commands
         .spawn(SceneSensor{ desired_scene: SceneState::Second})
         .insert(Collider::cuboid(100.0, 100.0))
         .insert(Sensor)
         .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(1000.0, 550.0, 0.0)));
+        .insert(TransformBundle::from(Transform::from_xyz(1000.0, 500.0, 0.0)));
 }
 
 pub fn spawn_second_scene_sensors(
@@ -32,13 +32,13 @@ pub fn spawn_second_scene_sensors(
         .insert(Collider::cuboid(100.0, 100.0))
         .insert(Sensor)
         .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(-1000.0, 0.0, 0.0)));
+        .insert(TransformBundle::from(Transform::from_xyz(-1000.0, 250.0, 0.0)));
     commands
         .spawn(SceneSensor{ desired_scene: SceneState::Third})
         .insert(Collider::cuboid(100.0, 100.0))
         .insert(Sensor)
         .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(1000.0, 0.0, 0.0)));
+        .insert(TransformBundle::from(Transform::from_xyz(1000.0, 250.0, 0.0)));
 }
 
 pub fn spawn_third_scene_sensors(
@@ -49,13 +49,47 @@ pub fn spawn_third_scene_sensors(
         .insert(Collider::cuboid(100.0, 100.0))
         .insert(Sensor)
         .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(-1000.0, -550.0, 0.0)));
+        .insert(TransformBundle::from(Transform::from_xyz(-1000.0, 0.0, 0.0)));
+    commands
+        .spawn(SceneSensor{ desired_scene: SceneState::Fourth})
+        .insert(Collider::cuboid(100.0, 100.0))
+        .insert(Sensor)
+        .insert(ActiveEvents::COLLISION_EVENTS)
+        .insert(TransformBundle::from(Transform::from_xyz(1000.0, 0.0, 0.0)));
+}
+
+pub fn spawn_fourth_scene_sensors(
+    mut commands: Commands,
+) {
+    commands
+        .spawn(SceneSensor { desired_scene: SceneState::Third})
+        .insert(Collider::cuboid(100.0, 100.0))
+        .insert(Sensor)
+        .insert(ActiveEvents::COLLISION_EVENTS)
+        .insert(TransformBundle::from(Transform::from_xyz(-1000.0, -250.0, 0.0)));
+    commands
+        .spawn(SceneSensor{ desired_scene: SceneState::Fifth})
+        .insert(Collider::cuboid(100.0, 100.0))
+        .insert(Sensor)
+        .insert(ActiveEvents::COLLISION_EVENTS)
+        .insert(TransformBundle::from(Transform::from_xyz(1000.0, -250.0, 0.0)));
+}
+
+pub fn spawn_fifth_scene_sensors(
+    mut commands: Commands,
+) {
+    commands
+        .spawn(SceneSensor { desired_scene: SceneState::Fourth})
+        .insert(Collider::cuboid(100.0, 100.0))
+        .insert(Sensor)
+        .insert(ActiveEvents::COLLISION_EVENTS)
+        .insert(TransformBundle::from(Transform::from_xyz(-1000.0, -500.0, 0.0)));
     commands
         .spawn(SceneSensor{ desired_scene: SceneState::First})
         .insert(Collider::cuboid(100.0, 100.0))
         .insert(Sensor)
         .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(1000.0, -550.0, 0.0)));
+        .insert(TransformBundle::from(Transform::from_xyz(1000.0, -500.0, 0.0)));
 }
 
 pub fn despawn_entities(
@@ -93,6 +127,14 @@ pub fn handle_scene_transition(
             SceneState::Third => {
                 next_scene_state.set(SceneState::Third);
                 println!("Entered third scene");
+            }
+            SceneState::Fourth => {
+                next_scene_state.set(SceneState::Fourth);
+                println!("Entered fourth scene");
+            }
+            SceneState::Fifth => {
+                next_scene_state.set(SceneState::Fifth);
+                println!("Entered fifth scene");
             }
         }
     }
