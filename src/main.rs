@@ -1,5 +1,6 @@
 mod events;
 mod systems;
+mod system_params;
 
 mod core;
 mod game;
@@ -22,7 +23,7 @@ fn main() {
             GamePlugin,
             UIPlugin,
             ShapePlugin,
-            RapierPhysicsPlugin::<NoUserData>::pixels_per_meter(100.0),
+            RapierPhysicsPlugin::<system_params::MyPhysicsHooks>::pixels_per_meter(100.0),
             RapierDebugRenderPlugin::default(),
             WorldInspectorPlugin::new(),
         ))

@@ -1,6 +1,9 @@
 mod systems;
 
+mod particles;
+
 use crate::game::scene_manager::SceneState;
+use particles::ParticlesPlugin;
 
 use bevy::prelude::*;
 
@@ -10,6 +13,10 @@ pub struct RenderManagerPlugin;
 impl Plugin for RenderManagerPlugin {
     fn build(&self, app: &mut App) {
         app
+            .add_plugins((
+                ParticlesPlugin,
+            ))
+
             .add_systems(OnEnter(SceneState::Third), (
                 systems::draw_regular_shapes,
                 systems::draw_circle,

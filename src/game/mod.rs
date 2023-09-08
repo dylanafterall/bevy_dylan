@@ -2,14 +2,14 @@ mod events;
 mod systems;
 
 mod collision_manager;
-mod render_manager;
+mod render;
 pub mod scene_manager;
 mod characters;
 mod environment;
-mod objects;
+pub mod objects;
 
 use crate::game::collision_manager::CollisionManagerPlugin;
-use crate::game::render_manager::RenderManagerPlugin;
+use crate::game::render::RenderManagerPlugin;
 use crate::game::scene_manager::SceneManagerPlugin;
 use crate::game::characters::CharactersPlugin;
 use crate::game::environment::EnvironmentPlugin;

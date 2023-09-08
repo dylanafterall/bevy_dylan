@@ -1,8 +1,9 @@
 mod bumper;
-mod conveyor_belt;
+pub mod conveyor_belt;
 mod elevator;
 mod heightfield;
 pub mod joints;
+pub mod one_way_platform;
 mod platform;
 mod rope;
 
@@ -11,6 +12,7 @@ use conveyor_belt::ConveyorBeltPlugin;
 use elevator::ElevatorPlugin;
 use heightfield::HeightfieldPlugin;
 use joints::JointsPlugin;
+use one_way_platform::OneWayPlatformPlugin;
 use platform::PlatformPlugin;
 use rope::RopePlugin;
 
@@ -28,6 +30,7 @@ impl Plugin for ObjectsPlugin {
                 ElevatorPlugin,
                 HeightfieldPlugin,
                 JointsPlugin,
+                OneWayPlatformPlugin,
                 PlatformPlugin,
                 RopePlugin,
             ));

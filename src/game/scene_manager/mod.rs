@@ -53,11 +53,11 @@ impl Plugin for SceneManagerPlugin {
 
 #[derive(States, Debug, Clone, Copy, Eq, PartialEq, Hash, Default)]
 pub enum SceneState {
-    #[default]
     Inert,
     First,
     Second,
     Third,
     Fourth,
+    #[default]
     Fifth,
 }
