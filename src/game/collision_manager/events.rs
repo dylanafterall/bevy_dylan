@@ -1,18 +1,16 @@
+use crate::game::scene_manager::SceneState;
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::RapierRigidBodyHandle;
-use bevy_rapier2d::rapier::prelude::CollisionEventFlags;
 
 // -----------------------------------------------------------------------------
 #[derive(Event)]
 pub struct PlayerSceneCollision {
-    pub scene_sensor: Entity,
+    pub desired_scene: SceneState,
 }
 
 #[derive(Event)]
-pub struct PlayerOtherCollision {
-    pub player: Entity,
-    pub partner: Entity,
-    pub flag: CollisionEventFlags,
+pub struct PlayerGravCollision {
+    pub grav_direction: Vec2,
 }
 
 #[derive(Event)]
@@ -26,4 +24,3 @@ pub struct PlayerContact {
 pub struct DestructibleContact {
     pub destructible: RapierRigidBodyHandle,
 }
-

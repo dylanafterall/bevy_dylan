@@ -2,7 +2,8 @@ use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
 #[derive(Component)]
-pub struct FriendlyCharacter;
-
-#[derive(Component)]
-pub struct HostileCharacter;
+pub enum NPC {
+    Friendly,
+    Neutral,
+    Hostile,
+}

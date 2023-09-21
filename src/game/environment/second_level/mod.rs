@@ -5,7 +5,6 @@ pub struct SecondLevelPlugin;
 
 impl Plugin for SecondLevelPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_plugins(());
+        app.add_plugins(());
     }
 }

@@ -1,17 +1,8 @@
+use crate::AppState;
 use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
 #[derive(Event)]
-pub struct TransitionToSplash {}
-
-#[derive(Event)]
-pub struct TransitionToTitle {}
-
-#[derive(Event)]
-pub struct TransitionToSettings {}
-
-#[derive(Event)]
-pub struct TransitionToGame {}
-
-#[derive(Event)]
-pub struct TransitionToFail {}
+pub struct TransitionAppState {
+    pub desired_app_state: AppState,
+}

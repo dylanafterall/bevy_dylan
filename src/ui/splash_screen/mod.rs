@@ -5,8 +5,6 @@ pub struct SplashPlugin;
 
 impl Plugin for SplashPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_plugins((
-                ));
+        app.add_plugins(());
     }
 }

@@ -1,7 +1,4 @@
-use bevy::{
-    ecs::system::SystemParam,
-    prelude::*,
-};
+use bevy::{ecs::system::SystemParam, prelude::*};
 use bevy_rapier2d::prelude::*;
 use bevy_rapier2d::rapier::prelude::Vector;
 
@@ -19,22 +16,18 @@ pub struct MyPhysicsHooks<'w, 's> {
 }
 
 impl BevyPhysicsHooks for MyPhysicsHooks<'_, '_> {
-    fn modify_solver_contacts(
-        &self,
-        context: ContactModificationContextView
-    ) {
+    fn modify_solver_contacts(&self, context: ContactModificationContextView) {
         let entity1 = context.collider1();
         let entity2 = context.collider2();
 
         // conveyor belt functionality -----------------------------------------
         if self.belt_query.get(entity1).is_ok() {
             for solver_contact in &mut *context.raw.solver_contacts {
-                solver_contact.tangent_velocity.x = 100.0;
+                solver_contact.tangent_velocity.x = 50.0;
             }
-        }
-        else if self.belt_query.get(entity2).is_ok() {
+        } else if self.belt_query.get(entity2).is_ok() {
             for solver_contact in &mut *context.raw.solver_contacts {
-                solver_contact.tangent_velocity.x = -100.0;
+                solver_contact.tangent_velocity.x = -50.0;
             }
         }
 
@@ -54,7 +47,9 @@ impl BevyPhysicsHooks for MyPhysicsHooks<'_, '_> {
         }
 
         if one_way_exists {
-            context.raw.update_as_oneway_platform(&allowed_local_n1, 0.1);
+            context
+                .raw
+                .update_as_oneway_platform(&allowed_local_n1, 0.1);
         }
     }
 }

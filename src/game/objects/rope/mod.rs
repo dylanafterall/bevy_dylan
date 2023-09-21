@@ -9,11 +9,7 @@ pub struct RopePlugin;
 
 impl Plugin for RopePlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_plugins(())
-
-            .add_systems(OnEnter(SceneState::Fourth), (
-                systems::spawn_rope,
-            ));
+        app.add_plugins(())
+            .add_systems(OnEnter(SceneState::Fourth), (systems::spawn_rope,));
     }
 }

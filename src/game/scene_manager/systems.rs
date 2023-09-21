@@ -1,141 +1,178 @@
 use super::SceneState;
-use super::components::*;
-
-use bevy::prelude::*;
-use bevy::sprite::Mesh2dHandle;
-use bevy_rapier2d::prelude::*;
+use crate::game::collision_manager::components::*;
 use crate::game::collision_manager::events::PlayerSceneCollision;
 
+use bevy::sprite::MaterialMesh2dBundle;
+use bevy::{prelude::*, sprite::Mesh2dHandle};
+use bevy_hanabi::prelude::*;
+use bevy_rapier2d::prelude::*;
+
 // -----------------------------------------------------------------------------
-pub fn spawn_first_scene_sensors(
+pub fn spawn_scene_sensors(
     mut commands: Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<ColorMaterial>>,
+    asset_server: Res<AssetServer>,
 ) {
+    let texture_handle1 = asset_server.load("images/numerals/1.png");
+    let texture_handle2 = asset_server.load("images/numerals/2.png");
+    let texture_handle3 = asset_server.load("images/numerals/3.png");
+    let texture_handle4 = asset_server.load("images/numerals/4.png");
+    let texture_handle5 = asset_server.load("images/numerals/5.png");
+
     commands
-        .spawn(SceneSensor { desired_scene: SceneState::Fifth})
-        .insert(Collider::cuboid(100.0, 100.0))
+        // info
+        // ----
+        .spawn(Name::new("Scene1Sensor"))
+        .insert(PlayerCollisionSensor::SceneSensor(SceneState::First))
+        // physics
+        // -------
+        .insert(Collider::cuboid(7.5, 7.5))
         .insert(Sensor)
         .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(-1000.0, 500.0, 0.0)));
+        // rendering
+        // ---------
+        .insert(MaterialMesh2dBundle {
+            mesh: meshes
+                .add(shape::Quad::new(Vec2::new(15.0, 15.0)).into())
+                .into(),
+            material: materials.add(ColorMaterial::from(texture_handle1)),
+            ..default()
+        })
+        // transform
+        // ---------
+        .insert(TransformBundle::from(Transform::from_xyz(
+            -100.0, 60.0, 0.0,
+        )));
+
     commands
-        .spawn(SceneSensor{ desired_scene: SceneState::Second})
-        .insert(Collider::cuboid(100.0, 100.0))
+        // info
+        // ----
+        .spawn(Name::new("Scene2Sensor"))
+        .insert(PlayerCollisionSensor::SceneSensor(SceneState::Second))
+        // physics
+        // -------
+        .insert(Collider::cuboid(7.5, 7.5))
         .insert(Sensor)
         .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(1000.0, 500.0, 0.0)));
+        // rendering
+        // ---------
+        .insert(MaterialMesh2dBundle {
+            mesh: meshes
+                .add(shape::Quad::new(Vec2::new(15.0, 15.0)).into())
+                .into(),
+            material: materials.add(ColorMaterial::from(texture_handle2)),
+            ..default()
+        })
+        // transform
+        // ---------
+        .insert(TransformBundle::from(Transform::from_xyz(-50.0, 60.0, 0.0)));
+
+    commands
+        // info
+        // ----
+        .spawn(Name::new("Scene3Sensor"))
+        .insert(PlayerCollisionSensor::SceneSensor(SceneState::Third))
+        // physics
+        // -------
+        .insert(Collider::cuboid(7.5, 7.5))
+        .insert(Sensor)
+        .insert(ActiveEvents::COLLISION_EVENTS)
+        // rendering
+        // ---------
+        .insert(MaterialMesh2dBundle {
+            mesh: meshes
+                .add(shape::Quad::new(Vec2::new(15.0, 15.0)).into())
+                .into(),
+            material: materials.add(ColorMaterial::from(texture_handle3)),
+            ..default()
+        })
+        // transform
+        // ---------
+        .insert(TransformBundle::from(Transform::from_xyz(0.0, 60.0, 0.0)));
+
+    commands
+        // info
+        // ----
+        .spawn(Name::new("Scene4Sensor"))
+        .insert(PlayerCollisionSensor::SceneSensor(SceneState::Fourth))
+        // physics
+        // -------
+        .insert(Collider::cuboid(7.5, 7.5))
+        .insert(Sensor)
+        .insert(ActiveEvents::COLLISION_EVENTS)
+        // rendering
+        // ---------
+        .insert(MaterialMesh2dBundle {
+            mesh: meshes
+                .add(shape::Quad::new(Vec2::new(15.0, 15.0)).into())
+                .into(),
+            material: materials.add(ColorMaterial::from(texture_handle4)),
+            ..default()
+        })
+        // transform
+        // ---------
+        .insert(TransformBundle::from(Transform::from_xyz(50.0, 60.0, 0.0)));
+
+    commands
+        // info
+        // ----
+        .spawn(Name::new("Scene5Sensor"))
+        .insert(PlayerCollisionSensor::SceneSensor(SceneState::Fifth))
+        // physics
+        // -------
+        .insert(Collider::cuboid(7.5, 7.5))
+        .insert(Sensor)
+        .insert(ActiveEvents::COLLISION_EVENTS)
+        // rendering
+        // ---------
+        .insert(MaterialMesh2dBundle {
+            mesh: meshes
+                .add(shape::Quad::new(Vec2::new(15.0, 15.0)).into())
+                .into(),
+            material: materials.add(ColorMaterial::from(texture_handle5)),
+            ..default()
+        })
+        // transform
+        // ---------
+        .insert(TransformBundle::from(Transform::from_xyz(100.0, 60.0, 0.0)));
 }
 
-pub fn spawn_second_scene_sensors(
-    mut commands: Commands,
-) {
-    commands
-        .spawn(SceneSensor { desired_scene: SceneState::First})
-        .insert(Collider::cuboid(100.0, 100.0))
-        .insert(Sensor)
-        .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(-1000.0, 250.0, 0.0)));
-    commands
-        .spawn(SceneSensor{ desired_scene: SceneState::Third})
-        .insert(Collider::cuboid(100.0, 100.0))
-        .insert(Sensor)
-        .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(1000.0, 250.0, 0.0)));
-}
-
-pub fn spawn_third_scene_sensors(
-    mut commands: Commands,
-) {
-    commands
-        .spawn(SceneSensor { desired_scene: SceneState::Second})
-        .insert(Collider::cuboid(100.0, 100.0))
-        .insert(Sensor)
-        .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(-1000.0, 0.0, 0.0)));
-    commands
-        .spawn(SceneSensor{ desired_scene: SceneState::Fourth})
-        .insert(Collider::cuboid(100.0, 100.0))
-        .insert(Sensor)
-        .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(1000.0, 0.0, 0.0)));
-}
-
-pub fn spawn_fourth_scene_sensors(
-    mut commands: Commands,
-) {
-    commands
-        .spawn(SceneSensor { desired_scene: SceneState::Third})
-        .insert(Collider::cuboid(100.0, 100.0))
-        .insert(Sensor)
-        .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(-1000.0, -250.0, 0.0)));
-    commands
-        .spawn(SceneSensor{ desired_scene: SceneState::Fifth})
-        .insert(Collider::cuboid(100.0, 100.0))
-        .insert(Sensor)
-        .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(1000.0, -250.0, 0.0)));
-}
-
-pub fn spawn_fifth_scene_sensors(
-    mut commands: Commands,
-) {
-    commands
-        .spawn(SceneSensor { desired_scene: SceneState::Fourth})
-        .insert(Collider::cuboid(100.0, 100.0))
-        .insert(Sensor)
-        .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(-1000.0, -500.0, 0.0)));
-    commands
-        .spawn(SceneSensor{ desired_scene: SceneState::First})
-        .insert(Collider::cuboid(100.0, 100.0))
-        .insert(Sensor)
-        .insert(ActiveEvents::COLLISION_EVENTS)
-        .insert(TransformBundle::from(Transform::from_xyz(1000.0, -500.0, 0.0)));
-}
-
+// -----------------------------------------------------------------------------
 pub fn despawn_entities(
     mut commands: Commands,
-    collider_query: Query<Entity, With<Collider>>,
-    shape_query: Query<Entity, With<Mesh2dHandle>>,
+    collider_query: Query<Option<Entity>, With<Collider>>,
+    mesh_query: Query<Option<Entity>, (With<Mesh2dHandle>, Without<Collider>)>,
+    particle_query: Query<Option<Entity>, With<ParticleEffect>>,
 ) {
     for collider in collider_query.iter() {
-        commands.entity(collider).despawn();
+        match collider {
+            Some(c_entity) => commands.entity(c_entity).despawn(),
+            None => {}
+        }
     }
-    for shape in shape_query.iter() {
-        commands.entity(shape).despawn();
+
+    for mesh in mesh_query.iter() {
+        match mesh {
+            Some(m_entity) => commands.entity(m_entity).despawn(),
+            None => {}
+        }
+    }
+
+    for particles in particle_query.iter() {
+        match particles {
+            Some(p_entity) => commands.entity(p_entity).despawn(),
+            None => {}
+        }
     }
 }
 
 pub fn handle_scene_transition(
     mut next_scene_state: ResMut<NextState<SceneState>>,
     mut event_listener: EventReader<PlayerSceneCollision>,
-    scene_sensor_query: Query<&SceneSensor>,
 ) {
     for scene_collision in event_listener.iter() {
-        let sensor = scene_sensor_query.get(scene_collision.scene_sensor).unwrap();
-        let next_scene = sensor.desired_scene;
-
-        match next_scene {
-            SceneState::Inert => {}
-            SceneState::First => {
-                next_scene_state.set(SceneState::First);
-                println!("Entered first scene");
-            }
-            SceneState::Second => {
-                next_scene_state.set(SceneState::Second);
-                println!("Entered second scene");
-            }
-            SceneState::Third => {
-                next_scene_state.set(SceneState::Third);
-                println!("Entered third scene");
-            }
-            SceneState::Fourth => {
-                next_scene_state.set(SceneState::Fourth);
-                println!("Entered fourth scene");
-            }
-            SceneState::Fifth => {
-                next_scene_state.set(SceneState::Fifth);
-                println!("Entered fifth scene");
-            }
-        }
+        let next_scene = scene_collision.desired_scene;
+        next_scene_state.set(next_scene);
     }
 }

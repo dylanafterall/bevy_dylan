@@ -8,7 +8,7 @@ mod revolute_joint;
 
 use fan::FanPlugin;
 use fixed_joint::FixedJointPlugin;
-// use multi_collider::MultiColliderPlugin;
+use multi_collider::MultiColliderPlugin;
 use prismatic_joint::PrismaticJointPlugin;
 use revolute_joint::RevoluteJointPlugin;
 
@@ -19,13 +19,12 @@ pub struct JointsPlugin;
 
 impl Plugin for JointsPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_plugins((
-                FanPlugin,
-                FixedJointPlugin,
-                // MultiColliderPlugin,
-                PrismaticJointPlugin,
-                RevoluteJointPlugin,
-            ));
+        app.add_plugins((
+            FanPlugin,
+            FixedJointPlugin,
+            MultiColliderPlugin,
+            PrismaticJointPlugin,
+            RevoluteJointPlugin,
+        ));
     }
 }

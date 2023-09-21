@@ -9,11 +9,9 @@ pub struct RevoluteJointPlugin;
 
 impl Plugin for RevoluteJointPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_plugins(())
-
-            .add_systems(OnEnter(SceneState::Second), (
-                systems::spawn_revolute_joint,
-            ));
+        app.add_plugins(()).add_systems(
+            OnEnter(SceneState::Second),
+            (systems::spawn_revolute_joint,),
+        );
     }
 }

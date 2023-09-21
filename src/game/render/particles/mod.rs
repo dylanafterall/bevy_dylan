@@ -1,6 +1,12 @@
-mod systems;
+mod firework;
+mod infinity;
+mod portal;
+mod red_particles;
 
-use crate::game::scene_manager::SceneState;
+use firework::FireworkPlugin;
+// use infinity::InfinityPlugin;
+// use portal::PortalPlugin;
+use red_particles::RedParticlesPlugin;
 
 use bevy::prelude::*;
 
@@ -9,11 +15,11 @@ pub struct ParticlesPlugin;
 
 impl Plugin for ParticlesPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_plugins(())
-
-            .add_systems(OnEnter(SceneState::Fifth), (
-                systems::spawn_particles,
-            ));
+        app.add_plugins((
+            FireworkPlugin,
+            // InfinityPlugin,
+            // PortalPlugin,
+            RedParticlesPlugin,
+        ));
     }
 }

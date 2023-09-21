@@ -1,14 +1,36 @@
 use crate::game::characters::components::*;
 
 use bevy::prelude::*;
+use bevy::sprite::MaterialMesh2dBundle;
 use bevy_rapier2d::prelude::*;
 
 // -----------------------------------------------------------------------------
-pub fn spawn_ball(mut commands: Commands) {
+pub fn spawn_ball(
+    mut commands: Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<ColorMaterial>>,
+    asset_server: Res<AssetServer>,
+) {
+    let texture_handle = asset_server.load("images/bevy_icon.png");
+
     commands
-        .spawn(FriendlyCharacter)
+        // info
+        // ----
+        .spawn(Name::new("Ball"))
+        .insert(NPC::Friendly)
+        // physics
+        // -------
         .insert(RigidBody::Dynamic)
-        .insert(Collider::ball(50.0))
+        .insert(Collider::ball(5.0))
         .insert(Restitution::coefficient(0.7))
-        .insert(TransformBundle::from(Transform::from_xyz(-200.0, 400.0, 0.0)));
+        // rendering
+        // ---------
+        .insert(MaterialMesh2dBundle {
+            mesh: meshes.add(shape::Circle::new(5.0).into()).into(),
+            material: materials.add(ColorMaterial::from(texture_handle)),
+            ..default()
+        })
+        // transform
+        // ---------
+        .insert(TransformBundle::from(Transform::from_xyz(-20.0, 40.0, 0.0)));
 }

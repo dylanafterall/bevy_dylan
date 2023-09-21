@@ -4,15 +4,11 @@ use crate::game::GameState;
 use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
-pub fn _pause_game(
-    mut game_state_next_state: ResMut<NextState<GameState>>
-) {
+pub fn _pause_game(mut game_state_next_state: ResMut<NextState<GameState>>) {
     game_state_next_state.set(GameState::Paused);
 }
 
-pub fn _resume_game(
-    mut game_state_next_state: ResMut<NextState<GameState>>
-) {
+pub fn _resume_game(mut game_state_next_state: ResMut<NextState<GameState>>) {
     game_state_next_state.set(GameState::Playing);
 }
 
@@ -36,8 +32,7 @@ pub fn handle_toggle_pause(
         if *game_state.get() == GameState::Playing {
             commands.insert_resource(NextState(Some(GameState::Paused)));
             println!("Game Paused");
-        }
-        else {
+        } else {
             commands.insert_resource(NextState(Some(GameState::Playing)));
             println!("Game Playing");
         }

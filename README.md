@@ -19,6 +19,7 @@ Project to learn the Bevy game engine.
     <ul>
         <li>Languages: <a href="https://www.rust-lang.org/">Rust</a></li>
         <li>IDE: <a href="https://www.jetbrains.com/clion/">Jetbrains CLion with Rust plugin</a></li>
+        <li>Theme:  <a href="https://github.com/catppuccin/catppuccin">Catppuccin Color Theme</a></li>
     </ul>
 
 

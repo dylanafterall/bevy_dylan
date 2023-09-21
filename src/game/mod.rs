@@ -1,19 +1,21 @@
 mod events;
 mod systems;
 
-mod collision_manager;
-mod render;
-pub mod scene_manager;
+mod camera_manager;
 mod characters;
+mod collision_manager;
 mod environment;
 pub mod objects;
+mod render;
+pub mod scene_manager;
 
-use crate::game::collision_manager::CollisionManagerPlugin;
-use crate::game::render::RenderManagerPlugin;
-use crate::game::scene_manager::SceneManagerPlugin;
-use crate::game::characters::CharactersPlugin;
-use crate::game::environment::EnvironmentPlugin;
-use crate::game::objects::ObjectsPlugin;
+use camera_manager::CameraManagerPlugin;
+use characters::CharactersPlugin;
+use collision_manager::CollisionManagerPlugin;
+use environment::EnvironmentPlugin;
+use objects::ObjectsPlugin;
+use render::RenderPlugin;
+use scene_manager::SceneManagerPlugin;
 
 use bevy::prelude::*;
 
@@ -22,24 +24,24 @@ pub struct GamePlugin;
 
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_state::<GameState>()
-
+        app.add_state::<GameState>()
             .add_event::<events::TogglePause>()
-
             .add_plugins((
+                CameraManagerPlugin,
                 CollisionManagerPlugin,
-                RenderManagerPlugin,
+                RenderPlugin,
                 SceneManagerPlugin,
                 CharactersPlugin,
                 EnvironmentPlugin,
                 ObjectsPlugin,
             ))
-
-            .add_systems(Update, (
-                systems::emit_toggle_pause,
-                systems::handle_toggle_pause.run_if(not(in_state(GameState::Inert))),
-            ));
+            .add_systems(
+                Update,
+                (
+                    systems::emit_toggle_pause,
+                    systems::handle_toggle_pause.run_if(not(in_state(GameState::Inert))),
+                ),
+            );
     }
 }
 

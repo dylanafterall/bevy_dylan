@@ -1,55 +1,88 @@
 mod events;
-mod systems;
 mod system_params;
+mod systems;
 
-mod core;
+mod config;
 mod game;
+mod style;
 mod ui;
 
-use crate::core::CorePlugin;
+use crate::config::ConfigPlugin;
 use crate::game::GamePlugin;
 use crate::ui::UIPlugin;
 
-use bevy::prelude::*;
-use bevy_prototype_lyon::prelude::*;
-use bevy_rapier2d::prelude::*;
+use bevy::{
+    prelude::*,
+    // diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin},
+    render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
+    window::*,
+};
+use bevy_hanabi::prelude::*;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
+use bevy_rapier2d::prelude::*;
+use std::error::Error;
 
 // -----------------------------------------------------------------------------
-fn main() {
+const GRAV_MAG: f32 = 40.0; // used with RapierConfiguration resource
+
+fn main() -> Result<(), Box<dyn Error>> {
+    let mut wgpu_settings = WgpuSettings::default();
+    wgpu_settings
+        .features
+        .set(WgpuFeatures::VERTEX_WRITABLE_STORAGE, true);
+
     App::new()
         .add_plugins((
-            CorePlugin,
+            // my plugins
+            ConfigPlugin,
             GamePlugin,
             UIPlugin,
-            ShapePlugin,
+            // external plugins
+            DefaultPlugins
+                .set(WindowPlugin {
+                    primary_window: Some(Window {
+                        present_mode: PresentMode::AutoVsync,
+                        mode: WindowMode::Windowed,
+                        position: WindowPosition::Centered(MonitorSelection::Primary),
+                        title: "".into(),
+                        resizable: false,
+                        ..default()
+                    }),
+                    ..default()
+                })
+                .set(RenderPlugin { wgpu_settings }),
+            // LogDiagnosticsPlugin::default(),
+            // FrameTimeDiagnosticsPlugin,
             RapierPhysicsPlugin::<system_params::MyPhysicsHooks>::pixels_per_meter(100.0),
-            RapierDebugRenderPlugin::default(),
+            RapierDebugRenderPlugin {
+                enabled: true,
+                style: DebugRenderStyle {
+                    rigid_body_axes_length: 2.0,
+                    ..default()
+                },
+                mode: Default::default(),
+            },
             WorldInspectorPlugin::new(),
+            HanabiPlugin,
         ))
-
+        .insert_resource(RapierConfiguration {
+            gravity: Vec2::new(0.0, -GRAV_MAG),
+            ..Default::default()
+        })
         .add_state::<AppState>()
-
-        .add_event::<events::TransitionToSplash>()
-        .add_event::<events::TransitionToTitle>()
-        .add_event::<events::TransitionToSettings>()
-        .add_event::<events::TransitionToGame>()
-        .add_event::<events::TransitionToFail>()
-
-        .add_systems(Update, (
-            systems::emit_transition_to_title,
-            systems::emit_transition_to_game,
-            systems::handle_transition_splash_to_title.run_if(in_state(AppState::Splash)),
-            systems::handle_transition_settings_to_title.run_if(in_state(AppState::Settings)),
-            systems::handle_transition_game_to_title.run_if(in_state(AppState::Game)),
-            systems::handle_transition_title_to_settings.run_if(in_state(AppState::Title)),
-            systems::handle_transition_title_to_game.run_if(in_state(AppState::Title)),
-            systems::handle_transition_fail_to_game.run_if(in_state(AppState::Fail)),
-            systems::handle_transition_game_to_fail.run_if(in_state(AppState::Game)),
-            systems::exit_game,
-        ))
-
+        .add_event::<events::TransitionAppState>()
+        .add_systems(
+            Update,
+            (
+                systems::emit_transition_to_title,
+                systems::emit_transition_to_game,
+                systems::handle_transition_app_state,
+                systems::exit_game,
+            ),
+        )
         .run();
+
+    Ok(())
 }
 
 #[derive(States, Debug, Clone, Copy, Eq, PartialEq, Hash, Default)]

@@ -9,11 +9,7 @@ pub struct BallPlugin;
 
 impl Plugin for BallPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_plugins(())
-
-            .add_systems(OnEnter(SceneState::First), (
-                systems::spawn_ball,
-            ));
+        app.add_plugins(())
+            .add_systems(OnEnter(SceneState::First), (systems::spawn_ball,));
     }
 }

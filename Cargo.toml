@@ -25,11 +25,10 @@ bevy_rapier2d = { version = "0.22.0", features = [
     "serde-serialize",
 ] }
 bevy_salva2d = "0.1.0"
-bevy_prototype_lyon = "0.9.0"
 bevy-inspector-egui = "0.19.0"
+bevy_hanabi = "0.7.0"
 #big-brain
 #bevy_spine
-#Hanabi
 #leafwing_input_manager
 #bevy_asset_loader
 #bevy_tweening

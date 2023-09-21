@@ -5,8 +5,8 @@ mod gameplay;
 mod keyboard;
 mod video;
 
-use bevy::prelude::*;
 use audio::AudioSettingsPlugin;
+use bevy::prelude::*;
 use controller::ControllerSettingsPlugin;
 use credits::CreditsPlugin;
 use gameplay::GameplaySettingsPlugin;
@@ -18,17 +18,15 @@ pub struct SettingsPlugin;
 
 impl Plugin for SettingsPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_plugins((
-                AudioSettingsPlugin,
-                ControllerSettingsPlugin,
-                CreditsPlugin,
-                GameplaySettingsPlugin,
-                KeyboardSettingsPlugin,
-                VideoSettingsPlugin,
-                ))
-
-            .add_state::<SettingsState>();
+        app.add_plugins((
+            AudioSettingsPlugin,
+            ControllerSettingsPlugin,
+            CreditsPlugin,
+            GameplaySettingsPlugin,
+            KeyboardSettingsPlugin,
+            VideoSettingsPlugin,
+        ))
+        .add_state::<SettingsState>();
     }
 }
 
@@ -41,5 +39,5 @@ pub enum SettingsState {
     Audio,
     Controller,
     Keyboard,
-    Credits
+    Credits,
 }
