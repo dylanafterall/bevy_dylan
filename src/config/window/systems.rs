@@ -1,31 +1,32 @@
 use super::resources::*;
 
+use super::events::ChangeResolution;
 use bevy::{
     input::{keyboard::KeyboardInput, ButtonState},
     prelude::*,
+    render::camera::ScalingMode,
     window::*,
 };
 
 // -----------------------------------------------------------------------------
 pub fn setup_window(
     mut window_query: Query<&mut Window, With<PrimaryWindow>>,
-    resolution: Res<ResolutionSettings>,
+    res_settings: Res<ResolutionSettings>,
 ) {
     let mut window = window_query.single_mut();
 
-    let res = resolution._2560_x_1440;
+    // set default resolution
+    let res = res_settings._2560_1440;
     window.resolution.set(res.x, res.y);
 
     WindowResolution::set_scale_factor(&mut window.resolution, 1.0);
 }
 
-pub fn toggle_resolution(
+pub fn emit_resolution_change(
     mut key_event: EventReader<KeyboardInput>,
-    mut windows: Query<&mut Window>,
-    resolution: Res<ResolutionSettings>,
+    res_settings: Res<ResolutionSettings>,
+    mut res_change_event: EventWriter<ChangeResolution>,
 ) {
-    let mut window = windows.single_mut();
-
     for key in key_event.iter() {
         match key.state {
             ButtonState::Pressed => {
@@ -33,20 +34,34 @@ pub fn toggle_resolution(
                     Some(key_code) => {
                         match key_code {
                             KeyCode::Key1 => {
-                                let res = resolution._1280_x_720;
-                                window.resolution.set(res.x, res.y);
+                                res_change_event.send(ChangeResolution {
+                                    resolution: res_settings._1024_768,
+                                    aspect_ratio: AspectRatio::_4_3,
+                                });
                             }
                             KeyCode::Key2 => {
-                                let res = resolution._1920_x_1080;
-                                window.resolution.set(res.x, res.y);
+                                res_change_event.send(ChangeResolution {
+                                    resolution: res_settings._1280_1024,
+                                    aspect_ratio: AspectRatio::_5_4,
+                                });
                             }
                             KeyCode::Key3 => {
-                                let res = resolution._2560_x_1440;
-                                window.resolution.set(res.x, res.y);
+                                res_change_event.send(ChangeResolution {
+                                    resolution: res_settings._2560_1600,
+                                    aspect_ratio: AspectRatio::_8_5,
+                                });
                             }
                             KeyCode::Key4 => {
-                                let res = resolution._3840_x_2160;
-                                window.resolution.set(res.x, res.y);
+                                res_change_event.send(ChangeResolution {
+                                    resolution: res_settings._1920_1080,
+                                    aspect_ratio: AspectRatio::_16_9,
+                                });
+                            }
+                            KeyCode::Key5 => {
+                                res_change_event.send(ChangeResolution {
+                                    resolution: res_settings._2560_1440,
+                                    aspect_ratio: AspectRatio::_16_9,
+                                });
                             }
                             _ => {}
                         };
@@ -56,6 +71,105 @@ pub fn toggle_resolution(
             }
             ButtonState::Released => {}
         }
+    }
+}
+
+pub fn handle_resolution_change(
+    mut windows: Query<&mut Window>,
+    mut orthographic_query: Query<&mut OrthographicProjection>,
+    mut perspective_query: Query<&mut Transform, With<Projection>>,
+    mut res_change_events: EventReader<ChangeResolution>,
+) {
+    let mut window = windows.single_mut();
+
+    for res_change in res_change_events.iter() {
+        let desired_res = res_change.resolution;
+        window.resolution.set(desired_res.x, desired_res.y);
+        WindowResolution::set_scale_factor(&mut window.resolution, 1.0);
+
+        // in addition to changing window resolution, we must account for aspect_ratio change:
+        //  - change the Fixed Width and Height for orthographic projections
+        //  - change the z position of cameras with perspective projections
+        let _desired_aspect_ratio = match &res_change.aspect_ratio {
+            AspectRatio::_4_3 => {
+                for mut camera2d in orthographic_query.iter_mut() {
+                    camera2d.scaling_mode = ScalingMode::Fixed {
+                        width: 256.0,
+                        height: 192.0,
+                    };
+                }
+                for mut camera3d in perspective_query.iter_mut() {
+                    let temp_translation = camera3d.translation;
+                    camera3d.translation =
+                        Vec3::new(temp_translation.x, temp_translation.y, 231.765);
+                }
+            }
+            AspectRatio::_5_4 => {
+                for mut camera2d in orthographic_query.iter_mut() {
+                    camera2d.scaling_mode = ScalingMode::Fixed {
+                        width: 240.0,
+                        height: 192.0,
+                    };
+                }
+                for mut camera3d in perspective_query.iter_mut() {
+                    let temp_translation = camera3d.translation;
+                    camera3d.translation =
+                        Vec3::new(temp_translation.x, temp_translation.y, 231.765);
+                }
+            }
+            AspectRatio::_8_5 => {
+                for mut camera2d in orthographic_query.iter_mut() {
+                    camera2d.scaling_mode = ScalingMode::Fixed {
+                        width: 256.0,
+                        height: 160.0,
+                    };
+                }
+                for mut camera3d in perspective_query.iter_mut() {
+                    let temp_translation = camera3d.translation;
+                    camera3d.translation =
+                        Vec3::new(temp_translation.x, temp_translation.y, 193.137);
+                }
+            }
+            AspectRatio::_16_9 => {
+                for mut camera2d in orthographic_query.iter_mut() {
+                    camera2d.scaling_mode = ScalingMode::Fixed {
+                        width: 256.0,
+                        height: 144.0,
+                    };
+                }
+                for mut camera3d in perspective_query.iter_mut() {
+                    let temp_translation = camera3d.translation;
+                    camera3d.translation =
+                        Vec3::new(temp_translation.x, temp_translation.y, 173.823);
+                }
+            }
+            AspectRatio::_21_9 => {
+                for mut camera2d in orthographic_query.iter_mut() {
+                    camera2d.scaling_mode = ScalingMode::Fixed {
+                        width: 336.0,
+                        height: 144.0,
+                    };
+                }
+                for mut camera3d in perspective_query.iter_mut() {
+                    let temp_translation = camera3d.translation;
+                    camera3d.translation =
+                        Vec3::new(temp_translation.x, temp_translation.y, 173.823);
+                }
+            }
+            AspectRatio::_32_9 => {
+                for mut camera2d in orthographic_query.iter_mut() {
+                    camera2d.scaling_mode = ScalingMode::Fixed {
+                        width: 512.0,
+                        height: 144.0,
+                    };
+                }
+                for mut camera3d in perspective_query.iter_mut() {
+                    let temp_translation = camera3d.translation;
+                    camera3d.translation =
+                        Vec3::new(temp_translation.x, temp_translation.y, 173.823);
+                }
+            }
+        };
     }
 }
 

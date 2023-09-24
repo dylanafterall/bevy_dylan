@@ -11,6 +11,13 @@ use ::bevy::{
 };
 
 // -----------------------------------------------------------------------------
+/*
+       Changing resolution of window:
+           for 2D cameras, adjust OrthographicProjection{scaling_mode: Fixed{width: and height:}}
+           for 3D cameras, adjust transform: Transform::from_translation(_,_,z)
+       Calculating z position for 3D camera:
+           z = ( height / 2 ) / ( tan( FOV / 2 ) )
+*/
 pub fn spawn_cameras(mut commands: Commands) {
     //      ORDER       RENDER LAYER            CAMERA              CONFIG
     //      -----       ------------            ------              ------
@@ -37,7 +44,9 @@ pub fn spawn_cameras(mut commands: Commands) {
                 clear_color: ClearColorConfig::Custom(FRAPPE_BASE),
                 ..default()
             },
+            projection: Projection::Perspective(PerspectiveProjection { ..default() }),
             tonemapping: Tonemapping::None,
+            transform: Transform::from_translation(Vec3::new(0.0, 0.0, 173.82)),
             ..default()
         },
         BloomSettings::default(),
@@ -48,7 +57,7 @@ pub fn spawn_cameras(mut commands: Commands) {
         Name::new("CameraStage"),
         StageCamera,
         UiCameraConfig { show_ui: false },
-        RenderLayers::from_layers(&[0]),
+        RenderLayers::from_layers(&[0, 1]),
         Camera2dBundle {
             camera: Camera {
                 order: 1,
@@ -89,7 +98,9 @@ pub fn spawn_cameras(mut commands: Commands) {
                 clear_color: ClearColorConfig::None,
                 ..default()
             },
+            projection: Projection::Perspective(PerspectiveProjection { ..default() }),
             tonemapping: Tonemapping::None,
+            transform: Transform::from_translation(Vec3::new(0.0, 0.0, 173.82)),
             ..default()
         },
         BloomSettings::default(),
@@ -140,7 +151,9 @@ pub fn spawn_cameras(mut commands: Commands) {
                 clear_color: ClearColorConfig::None,
                 ..default()
             },
+            projection: Projection::Perspective(PerspectiveProjection { ..default() }),
             tonemapping: Tonemapping::None,
+            transform: Transform::from_translation(Vec3::new(0.0, 0.0, 173.82)),
             ..default()
         },
         BloomSettings::default(),
@@ -155,6 +168,14 @@ pub fn spawn_cameras(mut commands: Commands) {
             camera: Camera {
                 order: 5,
                 // hdr: true,
+                ..default()
+            },
+            projection: OrthographicProjection {
+                near: -1.0,
+                scaling_mode: Fixed {
+                    width: 256.0,
+                    height: 144.0,
+                },
                 ..default()
             },
             camera_2d: Camera2d {

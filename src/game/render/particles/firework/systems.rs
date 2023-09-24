@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use bevy::render::view::RenderLayers;
 use bevy_hanabi::prelude::*;
 
 // -----------------------------------------------------------------------------
@@ -29,9 +30,9 @@ pub fn spawn_firework(mut commands: Commands, mut effects: ResMut<Assets<EffectA
     let update_drag = LinearDragModifier::new(drag);
 
     let init_pos = SetPositionSphereModifier {
-        center: writer.lit(Vec3::ZERO).expr(),
+        center: writer.lit(Vec3::new(40.0, 0.0, 0.0)).expr(),
         // axis: writer.lit(Vec3::Z).expr(),
-        radius: writer.lit(100.0).expr(),
+        radius: writer.lit(10.0).expr(),
         dimension: ShapeDimension::Volume,
     };
 
@@ -66,6 +67,7 @@ pub fn spawn_firework(mut commands: Commands, mut effects: ResMut<Assets<EffectA
 
     commands.spawn((
         Name::new("Firework"),
+        RenderLayers::layer(2),
         ParticleEffectBundle {
             effect: ParticleEffect::new(effect1),
             transform: Transform::IDENTITY,

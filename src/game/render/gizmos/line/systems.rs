@@ -53,14 +53,26 @@ pub fn spawn_lines(
 
     // rotating, gradient polygon
     gizmos.linestrip_gradient_2d([
-        (Vec2::new(sin + 0.0, cos + -15.0) + translation, LATTE_LAVENDER),
-        (Vec2::new(sin + -4.65, cos + -4.65) + translation, LATTE_SAPPHIRE),
+        (
+            Vec2::new(sin + 0.0, cos + -15.0) + translation,
+            LATTE_LAVENDER,
+        ),
+        (
+            Vec2::new(sin + -4.65, cos + -4.65) + translation,
+            LATTE_SAPPHIRE,
+        ),
         (Vec2::new(sin + -15.0, cos + 0.0) + translation, LATTE_GREEN),
-        (Vec2::new(sin + -4.65, cos + 4.65) + translation, LATTE_YELLOW),
+        (
+            Vec2::new(sin + -4.65, cos + 4.65) + translation,
+            LATTE_YELLOW,
+        ),
         (Vec2::new(sin + 0.0, cos + 15.0) + translation, LATTE_PEACH),
         (Vec2::new(sin + 4.65, cos + 4.65) + translation, LATTE_RED),
         (Vec2::new(sin + 15.0, cos + 0.0) + translation, LATTE_MAUVE),
         (Vec2::new(sin + 4.65, cos + -4.65) + translation, LATTE_PINK),
-        (Vec2::new(sin + 0.0, cos + -15.0) + translation, LATTE_LAVENDER),
+        (
+            Vec2::new(sin + 0.0, cos + -15.0) + translation,
+            LATTE_LAVENDER,
+        ),
     ]);
 }
