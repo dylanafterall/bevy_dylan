@@ -2,13 +2,13 @@ use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
 #[derive(Event)]
-pub struct PlayerMoveUp {}
+pub struct PlayerMoveUp;
 
 #[derive(Event)]
-pub struct PlayerMoveDown {}
+pub struct PlayerMoveDown;
 
 #[derive(Event)]
-pub struct PlayerMoveLeft {}
+pub struct PlayerMoveLeft;
 
 #[derive(Event)]
-pub struct PlayerMoveRight {}
+pub struct PlayerMoveRight;

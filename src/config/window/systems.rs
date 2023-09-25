@@ -4,7 +4,6 @@ use super::events::ChangeResolution;
 use bevy::{
     input::{keyboard::KeyboardInput, ButtonState},
     prelude::*,
-    render::camera::ScalingMode,
     window::*,
 };
 
@@ -76,8 +75,6 @@ pub fn emit_resolution_change(
 
 pub fn handle_resolution_change(
     mut windows: Query<&mut Window>,
-    mut orthographic_query: Query<&mut OrthographicProjection>,
-    mut perspective_query: Query<&mut Transform, With<Projection>>,
     mut res_change_events: EventReader<ChangeResolution>,
 ) {
     let mut window = windows.single_mut();
@@ -85,91 +82,6 @@ pub fn handle_resolution_change(
     for res_change in res_change_events.iter() {
         let desired_res = res_change.resolution;
         window.resolution.set(desired_res.x, desired_res.y);
-        WindowResolution::set_scale_factor(&mut window.resolution, 1.0);
-
-        // in addition to changing window resolution, we must account for aspect_ratio change:
-        //  - change the Fixed Width and Height for orthographic projections
-        //  - change the z position of cameras with perspective projections
-        let _desired_aspect_ratio = match &res_change.aspect_ratio {
-            AspectRatio::_4_3 => {
-                for mut camera2d in orthographic_query.iter_mut() {
-                    camera2d.scaling_mode = ScalingMode::Fixed {
-                        width: 256.0,
-                        height: 192.0,
-                    };
-                }
-                for mut camera3d in perspective_query.iter_mut() {
-                    let temp_translation = camera3d.translation;
-                    camera3d.translation =
-                        Vec3::new(temp_translation.x, temp_translation.y, 231.765);
-                }
-            }
-            AspectRatio::_5_4 => {
-                for mut camera2d in orthographic_query.iter_mut() {
-                    camera2d.scaling_mode = ScalingMode::Fixed {
-                        width: 240.0,
-                        height: 192.0,
-                    };
-                }
-                for mut camera3d in perspective_query.iter_mut() {
-                    let temp_translation = camera3d.translation;
-                    camera3d.translation =
-                        Vec3::new(temp_translation.x, temp_translation.y, 231.765);
-                }
-            }
-            AspectRatio::_8_5 => {
-                for mut camera2d in orthographic_query.iter_mut() {
-                    camera2d.scaling_mode = ScalingMode::Fixed {
-                        width: 256.0,
-                        height: 160.0,
-                    };
-                }
-                for mut camera3d in perspective_query.iter_mut() {
-                    let temp_translation = camera3d.translation;
-                    camera3d.translation =
-                        Vec3::new(temp_translation.x, temp_translation.y, 193.137);
-                }
-            }
-            AspectRatio::_16_9 => {
-                for mut camera2d in orthographic_query.iter_mut() {
-                    camera2d.scaling_mode = ScalingMode::Fixed {
-                        width: 256.0,
-                        height: 144.0,
-                    };
-                }
-                for mut camera3d in perspective_query.iter_mut() {
-                    let temp_translation = camera3d.translation;
-                    camera3d.translation =
-                        Vec3::new(temp_translation.x, temp_translation.y, 173.823);
-                }
-            }
-            AspectRatio::_21_9 => {
-                for mut camera2d in orthographic_query.iter_mut() {
-                    camera2d.scaling_mode = ScalingMode::Fixed {
-                        width: 336.0,
-                        height: 144.0,
-                    };
-                }
-                for mut camera3d in perspective_query.iter_mut() {
-                    let temp_translation = camera3d.translation;
-                    camera3d.translation =
-                        Vec3::new(temp_translation.x, temp_translation.y, 173.823);
-                }
-            }
-            AspectRatio::_32_9 => {
-                for mut camera2d in orthographic_query.iter_mut() {
-                    camera2d.scaling_mode = ScalingMode::Fixed {
-                        width: 512.0,
-                        height: 144.0,
-                    };
-                }
-                for mut camera3d in perspective_query.iter_mut() {
-                    let temp_translation = camera3d.translation;
-                    camera3d.translation =
-                        Vec3::new(temp_translation.x, temp_translation.y, 173.823);
-                }
-            }
-        };
     }
 }
 

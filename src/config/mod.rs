@@ -2,7 +2,7 @@ mod resources;
 
 mod audio;
 mod input;
-mod window;
+pub mod window;
 
 use audio::ConfigAudioPlugin;
 use input::ConfigInputPlugin;

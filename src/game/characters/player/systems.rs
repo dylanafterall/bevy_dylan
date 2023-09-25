@@ -73,7 +73,7 @@ pub fn emit_player_move_up(
     mut event_source: EventWriter<PlayerMoveUp>,
 ) {
     if keyboard_input.pressed(KeyCode::W) {
-        event_source.send(PlayerMoveUp {});
+        event_source.send(PlayerMoveUp);
         keyboard_input.reset(KeyCode::W);
     }
 }
@@ -83,7 +83,7 @@ pub fn emit_player_move_down(
     mut event_source: EventWriter<PlayerMoveDown>,
 ) {
     if keyboard_input.pressed(KeyCode::S) {
-        event_source.send(PlayerMoveDown {});
+        event_source.send(PlayerMoveDown);
         keyboard_input.reset(KeyCode::S);
     }
 }
@@ -93,7 +93,7 @@ pub fn emit_player_move_left(
     mut event_source: EventWriter<PlayerMoveLeft>,
 ) {
     if keyboard_input.pressed(KeyCode::A) {
-        event_source.send(PlayerMoveLeft {});
+        event_source.send(PlayerMoveLeft);
         keyboard_input.reset(KeyCode::A);
     }
 }
@@ -103,7 +103,7 @@ pub fn emit_player_move_right(
     mut event_source: EventWriter<PlayerMoveRight>,
 ) {
     if keyboard_input.pressed(KeyCode::D) {
-        event_source.send(PlayerMoveRight {});
+        event_source.send(PlayerMoveRight);
         keyboard_input.reset(KeyCode::D);
     }
 }

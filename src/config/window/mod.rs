@@ -1,5 +1,5 @@
-mod events;
-mod resources;
+pub mod events;
+pub mod resources;
 mod systems;
 
 use resources::ResolutionSettings;

@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use bevy::render::view::RenderLayers;
 use bevy_hanabi::prelude::*;
 
 // -----------------------------------------------------------------------------
@@ -17,7 +18,7 @@ pub fn spawn_red_particles(mut commands: Commands, mut effects: ResMut<Assets<Ef
     };
 
     let init_vel = SetVelocityCircleModifier {
-        center: module.lit(Vec3::new(-400.0, 400.0, 0.0)),
+        center: module.lit(Vec3::new(-40.0, 40.0, 0.0)),
         axis: module.lit(Vec3::Z),
         speed: module.lit(10.0),
     };
@@ -43,6 +44,7 @@ pub fn spawn_red_particles(mut commands: Commands, mut effects: ResMut<Assets<Ef
 
     commands.spawn((
         Name::new("RedParticles"),
+        RenderLayers::layer(2),
         ParticleEffectBundle {
             effect: ParticleEffect::new(effect_handle).with_spawner(spawner),
             transform: Transform::from_translation(Vec3::Y),
