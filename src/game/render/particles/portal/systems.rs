@@ -18,7 +18,7 @@ pub fn spawn_portal(mut commands: Commands, mut effects: ResMut<Assets<EffectAss
     let writer = ExprWriter::new();
 
     let init_pos = SetPositionCircleModifier {
-        center: writer.lit(Vec3::new(40.0, 0.0, 0.0)).expr(),
+        center: writer.lit(Vec3::new(80.0, 0.0, 0.0)).expr(),
         axis: writer.lit(Vec3::Z).expr(),
         radius: writer.lit(10.0).expr(),
         dimension: ShapeDimension::Surface,
@@ -68,5 +68,5 @@ pub fn spawn_portal(mut commands: Commands, mut effects: ResMut<Assets<EffectAss
     commands
         .spawn(RigidBody::Fixed)
         .insert(Collider::ball(10.0))
-        .insert(TransformBundle::from(Transform::from_xyz(40.0, 0.0, 0.0)));
+        .insert(TransformBundle::from(Transform::from_xyz(80.0, 0.0, 0.0)));
 }

@@ -2,15 +2,20 @@ use super::components::*;
 use super::events::*;
 
 use crate::config::window::{events::*, resources::AspectRatio};
+use crate::game::characters::player::components::Player;
 use crate::style::FRAPPE_BASE;
 use ::bevy::{
     core_pipeline::{
         bloom::BloomSettings, clear_color::ClearColorConfig, tonemapping::Tonemapping,
     },
     prelude::{Projection::*, *},
-    render::{camera::ScalingMode::*, view::visibility::RenderLayers},
+    render::{
+        camera::{CameraOutputMode, ScalingMode::*},
+        render_resource::{BlendState, LoadOp},
+        view::visibility::RenderLayers,
+    },
 };
-use crate::game::characters::player::components::Player;
+use bevy::core_pipeline::bloom::BloomPrefilterSettings;
 
 // -----------------------------------------------------------------------------
 /*
@@ -39,7 +44,7 @@ pub fn spawn_cameras(mut commands: Commands) {
         Camera3dBundle {
             camera: Camera {
                 order: 0,
-                // hdr: true,
+                hdr: true,
                 ..default()
             },
             camera_3d: Camera3d {
@@ -47,11 +52,9 @@ pub fn spawn_cameras(mut commands: Commands) {
                 ..default()
             },
             projection: Perspective(PerspectiveProjection { ..default() }),
-            tonemapping: Tonemapping::None,
             transform: Transform::from_translation(Vec3::new(0.0, 0.0, 173.82)),
             ..default()
         },
-        BloomSettings::default(),
     ));
 
     // STAGE -------------------------------------------------------------------
@@ -59,11 +62,16 @@ pub fn spawn_cameras(mut commands: Commands) {
         Name::new("CameraStage"),
         StageCamera,
         UiCameraConfig { show_ui: false },
-        RenderLayers::from_layers(&[0, 1]),
+        RenderLayers::from_layers(&[0]),
         Camera2dBundle {
             camera: Camera {
                 order: 1,
-                hdr: false,
+                hdr: true,
+                msaa_writeback: false,
+                output_mode: CameraOutputMode::Write {
+                    blend_state: Some(BlendState::ALPHA_BLENDING),
+                    color_attachment_load_op: LoadOp::Load,
+                },
                 ..default()
             },
             projection: OrthographicProjection {
@@ -78,10 +86,8 @@ pub fn spawn_cameras(mut commands: Commands) {
                 clear_color: ClearColorConfig::None,
                 ..default()
             },
-            tonemapping: Tonemapping::None,
             ..default()
         },
-        BloomSettings::default(),
     ));
 
     // PARTICLES ---------------------------------------------------------------
@@ -93,7 +99,12 @@ pub fn spawn_cameras(mut commands: Commands) {
         Camera3dBundle {
             camera: Camera {
                 order: 2,
-                // hdr: true,
+                hdr: true,
+                msaa_writeback: false,
+                output_mode: CameraOutputMode::Write {
+                    blend_state: Some(BlendState::ALPHA_BLENDING),
+                    color_attachment_load_op: LoadOp::Load,
+                },
                 ..default()
             },
             camera_3d: Camera3d {
@@ -101,11 +112,9 @@ pub fn spawn_cameras(mut commands: Commands) {
                 ..default()
             },
             projection: Perspective(PerspectiveProjection { ..default() }),
-            tonemapping: Tonemapping::None,
             transform: Transform::from_translation(Vec3::new(0.0, 0.0, 173.82)),
             ..default()
         },
-        BloomSettings::default(),
     ));
 
     // PLAYER ------------------------------------------------------------------
@@ -117,7 +126,12 @@ pub fn spawn_cameras(mut commands: Commands) {
         Camera2dBundle {
             camera: Camera {
                 order: 3,
-                // hdr: true,
+                hdr: true,
+                msaa_writeback: false,
+                output_mode: CameraOutputMode::Write {
+                    blend_state: Some(BlendState::ALPHA_BLENDING),
+                    color_attachment_load_op: LoadOp::Load,
+                },
                 ..default()
             },
             projection: OrthographicProjection {
@@ -131,10 +145,8 @@ pub fn spawn_cameras(mut commands: Commands) {
             camera_2d: Camera2d {
                 clear_color: ClearColorConfig::None,
             },
-            tonemapping: Tonemapping::None,
             ..default()
         },
-        BloomSettings::default(),
     ));
 
     // FOREGROUND --------------------------------------------------------------
@@ -146,7 +158,12 @@ pub fn spawn_cameras(mut commands: Commands) {
         Camera3dBundle {
             camera: Camera {
                 order: 4,
-                // hdr: true,
+                hdr: true,
+                msaa_writeback: false,
+                output_mode: CameraOutputMode::Write {
+                    blend_state: Some(BlendState::ALPHA_BLENDING),
+                    color_attachment_load_op: LoadOp::Load,
+                },
                 ..default()
             },
             camera_3d: Camera3d {
@@ -154,11 +171,9 @@ pub fn spawn_cameras(mut commands: Commands) {
                 ..default()
             },
             projection: Perspective(PerspectiveProjection { ..default() }),
-            tonemapping: Tonemapping::None,
             transform: Transform::from_translation(Vec3::new(0.0, 0.0, 173.82)),
             ..default()
         },
-        BloomSettings::default(),
     ));
 
     // UI ----------------------------------------------------------------------
@@ -169,7 +184,12 @@ pub fn spawn_cameras(mut commands: Commands) {
         Camera2dBundle {
             camera: Camera {
                 order: 5,
-                // hdr: true,
+                hdr: true,
+                msaa_writeback: false,
+                output_mode: CameraOutputMode::Write {
+                    blend_state: Some(BlendState::ALPHA_BLENDING),
+                    color_attachment_load_op: LoadOp::Load,
+                },
                 ..default()
             },
             projection: OrthographicProjection {
@@ -183,10 +203,17 @@ pub fn spawn_cameras(mut commands: Commands) {
             camera_2d: Camera2d {
                 clear_color: ClearColorConfig::None,
             },
-            tonemapping: Tonemapping::None,
+            tonemapping: Tonemapping::TonyMcMapface,
             ..default()
         },
-        BloomSettings::default(),
+        BloomSettings {
+            intensity: 0.1,
+            prefilter_settings: BloomPrefilterSettings {
+                threshold: 1.0,
+                threshold_softness: 0.0,
+            },
+            ..default()
+        },
     ));
 }
 
@@ -327,7 +354,7 @@ pub fn handle_camera_move(
             camera.translation = Vec3::new(
                 camera_move.position.x,
                 camera_move.position.y,
-                camera.translation.z,   // don't change the current depth (z) value
+                camera.translation.z, // don't change the current depth (z) value
             );
         }
     }

@@ -1,6 +1,5 @@
 use crate::game::characters::components::*;
 
-use crate::style::FRAPPE_MAUVE;
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
 use bevy_rapier2d::prelude::*;
 
@@ -34,7 +33,7 @@ pub fn spawn_bloom_triangle(
             mesh: meshes
                 .add(shape::RegularPolygon::new(10.0, 3).into())
                 .into(),
-            material: materials.add(ColorMaterial::from(FRAPPE_MAUVE)),
+            material: materials.add(ColorMaterial::from(Color::rgb(7.5, 0.0, 7.5))),
             ..default()
         })
         // transform

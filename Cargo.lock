@@ -533,7 +533,6 @@ dependencies = [
  "bevy-inspector-egui",
  "bevy_hanabi",
  "bevy_rapier2d",
- "bevy_salva2d",
 ]
 
 [[package]]
@@ -943,12 +942,6 @@ dependencies = [
  "quote",
  "syn 2.0.29",
 ]
-
-[[package]]
-name = "bevy_salva2d"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f8f85234d97083eed1a9d7acde8daf2a253e2d7700afe95cfc7c3418674d839f"
 
 [[package]]
 name = "bevy_scene"
