@@ -22,5 +22,6 @@ pub struct PlayerContact {
 
 #[derive(Event)]
 pub struct DestructibleContact {
-    pub destructible: RapierRigidBodyHandle,
+    pub destructible_rb_handle: RapierRigidBodyHandle,
+    pub destructible_entity: Entity,
 }

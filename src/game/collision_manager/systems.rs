@@ -101,7 +101,8 @@ pub fn parse_contact_force_event(
         let _rigid_body_result = match destructible_query.get(entity1) {
             Ok(rb_handle) => {
                 destructible_contact.send(DestructibleContact {
-                    destructible: *rb_handle,
+                    destructible_rb_handle: *rb_handle,
+                    destructible_entity: entity1,
                 });
             }
             Err(_e) => {}
@@ -109,7 +110,8 @@ pub fn parse_contact_force_event(
         let _rigid_body_result = match destructible_query.get(entity2) {
             Ok(rb_handle) => {
                 destructible_contact.send(DestructibleContact {
-                    destructible: *rb_handle,
+                    destructible_rb_handle: *rb_handle,
+                    destructible_entity: entity2,
                 });
             }
             Err(_e) => {}

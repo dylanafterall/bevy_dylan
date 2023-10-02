@@ -1,5 +1,6 @@
 use super::super::components::*;
 
+use crate::game::characters::player::carry::components::*;
 use crate::game::collision_manager::events::DestructibleContact;
 use crate::style::{FRAPPE_OVERLAY2, FRAPPE_SURFACE2};
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
@@ -160,14 +161,19 @@ pub fn spawn_fixed_joint(
 }
 
 pub fn handle_destructible_contact(
+    mut commands: Commands,
     mut rapier_context: ResMut<RapierContext>,
     mut destructible_listener: EventReader<DestructibleContact>,
 ) {
     for contact in destructible_listener.iter() {
-        let rapier_body_handle = contact.destructible;
+        let rapier_body_handle = contact.destructible_rb_handle;
         let body_handle = rapier_body_handle.0;
         rapier_context
             .impulse_joints
             .remove_joints_attached_to_rigid_body(body_handle);
+        commands
+            .entity(contact.destructible_entity)
+            .remove::<(ImpulseJoint, RapierImpulseJointHandle)>()
+            .insert(Carryable);
     }
 }

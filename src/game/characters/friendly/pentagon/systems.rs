@@ -2,6 +2,7 @@ use crate::game::characters::components::*;
 
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
 
+use crate::game::characters::player::carry::components::Carryable;
 use crate::style::FRAPPE_TEAL;
 use bevy_rapier2d::prelude::*;
 
@@ -29,6 +30,7 @@ pub fn spawn_pentagon(
         // ----
         .spawn(Name::new("Pentagon"))
         .insert(NPC::Friendly)
+        .insert(Carryable)
         // physics
         // -------
         .insert(RigidBody::Dynamic)

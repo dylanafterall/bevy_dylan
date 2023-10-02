@@ -1,5 +1,6 @@
 use crate::game::characters::components::*;
 
+use crate::game::characters::player::carry::components::Carryable;
 use bevy::prelude::*;
 use bevy::sprite::MaterialMesh2dBundle;
 use bevy_rapier2d::prelude::*;
@@ -18,6 +19,7 @@ pub fn spawn_ball(
         // ----
         .spawn(Name::new("Ball"))
         .insert(NPC::Friendly)
+        .insert(Carryable)
         // physics
         // -------
         .insert(RigidBody::Dynamic)

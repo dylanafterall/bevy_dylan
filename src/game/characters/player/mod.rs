@@ -1,9 +1,11 @@
+pub mod carry;
 pub mod components;
 mod events;
 mod systems;
 
 use crate::game::scene_manager::SceneState;
 use crate::game::GameState;
+use carry::CarryPlugin;
 
 use bevy::prelude::*;
 
@@ -12,7 +14,7 @@ pub struct PlayerPlugin;
 
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
-        app.add_plugins(())
+        app.add_plugins(CarryPlugin)
             .add_event::<events::PlayerMoveUp>()
             .add_event::<events::PlayerMoveDown>()
             .add_event::<events::PlayerMoveLeft>()

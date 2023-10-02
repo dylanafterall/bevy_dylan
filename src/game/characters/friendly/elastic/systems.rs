@@ -1,5 +1,5 @@
 use super::components::*;
-use crate::style::FRAPPE_RED;
+use crate::style::LATTE_YELLOW;
 use bevy::sprite::Mesh2dHandle;
 use bevy::{
     prelude::*,
@@ -95,7 +95,7 @@ pub fn spawn_elastic(
         .insert(ElasticMesh)
         .insert(MaterialMesh2dBundle {
             mesh: meshes.add(Mesh::from(mesh)).into(),
-            material: materials.add(ColorMaterial::from(FRAPPE_RED)),
+            material: materials.add(ColorMaterial::from(LATTE_YELLOW)),
             ..default()
         })
         .insert(TransformBundle::from(Transform::from_translation(

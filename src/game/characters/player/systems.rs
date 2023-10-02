@@ -3,6 +3,7 @@ use super::components::*;
 use super::events::*;
 use crate::game::collision_manager::events::*;
 
+use crate::game::characters::player::carry::components::Carrier;
 use crate::style::FRAPPE_TEXT;
 use bevy::{prelude::*, render::view::visibility::RenderLayers, sprite::MaterialMesh2dBundle};
 use bevy_rapier2d::prelude::*;
@@ -22,6 +23,7 @@ pub fn spawn_player(
         // ----
         .spawn(Name::new("Player"))
         .insert(Player)
+        .insert(Carrier { is_carrying: false })
         // physics
         // -------
         .insert(RigidBody::Dynamic)

@@ -1,5 +1,6 @@
 use crate::game::characters::components::*;
 
+use crate::game::characters::player::carry::components::Carryable;
 use bevy::{
     prelude::*,
     sprite::{MaterialMesh2dBundle, Mesh2dHandle},
@@ -30,6 +31,7 @@ pub fn spawn_rainbow_square(
         // ----
         .spawn(Name::new("RainbowSquare"))
         .insert(NPC::Hostile)
+        .insert(Carryable)
         // physics
         // -------
         .insert(RigidBody::Dynamic)

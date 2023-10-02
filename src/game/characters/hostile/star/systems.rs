@@ -1,5 +1,6 @@
 use crate::game::characters::components::*;
 
+use crate::game::characters::player::carry::components::Carryable;
 use crate::style::FRAPPE_RED;
 use bevy::render::mesh::{Indices, PrimitiveTopology};
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
@@ -73,6 +74,7 @@ pub fn spawn_star(
         // ----
         .spawn(Name::new("Star"))
         .insert(NPC::Hostile)
+        .insert(Carryable)
         // physics
         // -------
         .insert(RigidBody::Dynamic)
