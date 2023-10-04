@@ -19,6 +19,7 @@ use bevy::{
 };
 use bevy_hanabi::prelude::*;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
+use bevy_prototype_lyon::prelude::ShapePlugin;
 use bevy_rapier2d::prelude::*;
 use std::error::Error;
 
@@ -64,6 +65,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             },
             WorldInspectorPlugin::new(),
             HanabiPlugin,
+            ShapePlugin,
         ))
         .insert_resource(RapierConfiguration {
             gravity: Vec2::new(0.0, -GRAV_MAG),

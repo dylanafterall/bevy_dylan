@@ -30,10 +30,9 @@ pub fn spawn_cameras(mut commands: Commands) {
     //      -----       ------------            ------              ------
     //        0             1               Background          3D Perspective
     //        1             0               Stage               2D Orthographic
-    //        2             2               Particles           3D Perspective
-    //        3             3               Player              2D Orthographic
-    //        4             4               Foreground          3D Perspective
-    //        5             5               UI                  2D Orthographic
+    //        2             2               Player              2D Orthographic
+    //        3             3               Foreground          3D Perspective
+    //        4             4               UI                  2D Orthographic
 
     // BACKGROUND --------------------------------------------------------------
     commands.spawn((
@@ -90,42 +89,15 @@ pub fn spawn_cameras(mut commands: Commands) {
         },
     ));
 
-    // PARTICLES ---------------------------------------------------------------
-    commands.spawn((
-        Name::new("CameraParticles"),
-        ParticlesCamera,
-        UiCameraConfig { show_ui: false },
-        RenderLayers::from_layers(&[2]),
-        Camera3dBundle {
-            camera: Camera {
-                order: 2,
-                hdr: true,
-                msaa_writeback: false,
-                output_mode: CameraOutputMode::Write {
-                    blend_state: Some(BlendState::ALPHA_BLENDING),
-                    color_attachment_load_op: LoadOp::Load,
-                },
-                ..default()
-            },
-            camera_3d: Camera3d {
-                clear_color: ClearColorConfig::None,
-                ..default()
-            },
-            projection: Perspective(PerspectiveProjection { ..default() }),
-            transform: Transform::from_translation(Vec3::new(0.0, 0.0, 173.82)),
-            ..default()
-        },
-    ));
-
     // PLAYER ------------------------------------------------------------------
     commands.spawn((
         Name::new("CameraPlayer"),
         PlayerCamera,
         UiCameraConfig { show_ui: false },
-        RenderLayers::from_layers(&[3]),
+        RenderLayers::from_layers(&[2]),
         Camera2dBundle {
             camera: Camera {
-                order: 3,
+                order: 2,
                 hdr: true,
                 msaa_writeback: false,
                 output_mode: CameraOutputMode::Write {
@@ -154,10 +126,10 @@ pub fn spawn_cameras(mut commands: Commands) {
         Name::new("CameraForeground"),
         ForegroundCamera,
         UiCameraConfig { show_ui: false },
-        RenderLayers::from_layers(&[4]),
+        RenderLayers::from_layers(&[3]),
         Camera3dBundle {
             camera: Camera {
-                order: 4,
+                order: 3,
                 hdr: true,
                 msaa_writeback: false,
                 output_mode: CameraOutputMode::Write {
@@ -180,10 +152,10 @@ pub fn spawn_cameras(mut commands: Commands) {
     commands.spawn((
         Name::new("CameraUI"),
         UICamera,
-        RenderLayers::from_layers(&[5]),
+        RenderLayers::from_layers(&[4]),
         Camera2dBundle {
             camera: Camera {
-                order: 5,
+                order: 4,
                 hdr: true,
                 msaa_writeback: false,
                 output_mode: CameraOutputMode::Write {

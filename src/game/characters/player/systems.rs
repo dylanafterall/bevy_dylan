@@ -1,6 +1,7 @@
 use super::super::components::*;
 use super::components::*;
 use super::events::*;
+use crate::game::characters::friendly::bloom_triangle::events::*;
 use crate::game::collision_manager::events::*;
 
 use crate::game::characters::player::carry::components::Carrier;
@@ -57,7 +58,7 @@ pub fn spawn_player(
         // .insert(CollisionGroups::new(0b1101.into(), 0b0100.into())
         // rendering
         // ---------
-        .insert(RenderLayers::layer(3))
+        .insert(RenderLayers::layer(2))
         .insert(MaterialMesh2dBundle {
             mesh: meshes.add(capsule_shape.into()).into(),
             material: materials.add(ColorMaterial::from(FRAPPE_TEXT)),
@@ -162,6 +163,7 @@ pub fn handle_player_move_right(
 pub fn handle_player_character_collision(
     npc_query: Query<&NPC>,
     mut player_contact_listener: EventReader<PlayerContact>,
+    mut bloom_triangle_event: EventWriter<BloomTriangleContact>,
 ) {
     for player_contact in player_contact_listener.iter() {
         let partner = player_contact.partner;
@@ -174,17 +176,14 @@ pub fn handle_player_character_collision(
                         player_contact.player, partner, player_contact.force_vector,
                     );
                 }
-                NPC::Neutral => {
-                    println!(
-                        "Neutral contact between: {:?}, {:?}, {:?}",
-                        player_contact.player, partner, player_contact.force_vector,
-                    );
-                }
                 NPC::Hostile => {
                     println!(
                         "Hostile contact between: {:?}, {:?}, {:?}",
                         player_contact.player, partner, player_contact.force_vector,
                     );
+                }
+                NPC::BloomTriangle => {
+                    bloom_triangle_event.send(BloomTriangleContact);
                 }
             },
             Err(_e) => {}

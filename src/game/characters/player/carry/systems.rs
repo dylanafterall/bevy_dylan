@@ -17,7 +17,10 @@ pub fn emit_cast_carry_ray(
 
 pub fn handle_cast_carry_ray(
     mut commands: Commands,
-    mut player_query: Query<(Entity, &Transform, &RapierRigidBodyHandle, &mut Carrier), With<Player>>,
+    mut player_query: Query<
+        (Entity, &Transform, &RapierRigidBodyHandle, &mut Carrier),
+        With<Player>,
+    >,
     carryable_query: Query<Entity, With<Carryable>>,
     mut rapier_context: ResMut<RapierContext>,
     mut event_listener: EventReader<CastCarryRay>,

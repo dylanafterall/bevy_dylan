@@ -2,8 +2,11 @@ use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
 #[derive(Component)]
-pub enum NPC {
-    Friendly,
-    Hostile,
-    BloomTriangle,
+pub enum BloomColor {
+    Red,
+    Blue,
+    Green,
+    Magenta,
+    Cyan,
+    Yellow,
 }

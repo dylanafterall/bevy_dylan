@@ -1,5 +1,5 @@
 use super::components::*;
-use crate::style::LATTE_YELLOW;
+use crate::style::LATTE_SKY;
 use bevy::sprite::Mesh2dHandle;
 use bevy::{
     prelude::*,
@@ -14,7 +14,7 @@ pub fn spawn_elastic(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<ColorMaterial>>,
 ) {
-    const CENTER_POS: Vec2 = Vec2::new(-40.0, 0.0);
+    const CENTER_POS: Vec2 = Vec2::new(80.0, 30.0);
 
     /*
     KEY:
@@ -95,7 +95,7 @@ pub fn spawn_elastic(
         .insert(ElasticMesh)
         .insert(MaterialMesh2dBundle {
             mesh: meshes.add(Mesh::from(mesh)).into(),
-            material: materials.add(ColorMaterial::from(LATTE_YELLOW)),
+            material: materials.add(ColorMaterial::from(LATTE_SKY)),
             ..default()
         })
         .insert(TransformBundle::from(Transform::from_translation(

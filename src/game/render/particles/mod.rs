@@ -1,12 +1,14 @@
 mod firework;
+mod force_field;
 mod infinity;
 mod portal;
-mod red_particles;
+mod whirlwind;
 
-// use firework::FireworkPlugin;
-// use infinity::InfinityPlugin;
+use firework::FireworkPlugin;
+use force_field::ForceFieldPlugin;
+use infinity::InfinityPlugin;
 use portal::PortalPlugin;
-// use red_particles::RedParticlesPlugin;
+use whirlwind::WhirlwindPlugin;
 
 use bevy::prelude::*;
 
@@ -16,10 +18,11 @@ pub struct ParticlesPlugin;
 impl Plugin for ParticlesPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins((
-            // FireworkPlugin,
-            // InfinityPlugin,
+            FireworkPlugin,
+            ForceFieldPlugin,
+            InfinityPlugin,
             PortalPlugin,
-            // RedParticlesPlugin,
+            WhirlwindPlugin,
         ));
     }
 }

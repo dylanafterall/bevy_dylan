@@ -1,5 +1,5 @@
 mod ball;
-mod bloom_triangle;
+pub mod bloom_triangle;
 mod elastic;
 mod pentagon;
 

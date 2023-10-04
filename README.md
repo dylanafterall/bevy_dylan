@@ -9,12 +9,14 @@ Project to learn the Bevy game engine.
     <ul>
         <li><a href="https://crates.io/crates/bevy">bevy</a> </li>
         <li><a href="https://crates.io/crates/bevy_rapier2d">bevy_rapier2d</a> </li>
+        <li><a href="https://crates.io/crates/bevy_hanabi">bevy_hanabi</a> </li>
+        <li><a href="https://crates.io/crates/bevy_prototype_lyon">bevy_prototype_lyon</a> </li>
     </ul>
 
 <p>Tools:
     <ul>
         <li>Languages: <a href="https://www.rust-lang.org/">Rust</a></li>
-        <li>IDE: <a href="https://www.jetbrains.com/clion/">Jetbrains CLion with Rust plugin</a></li>
+        <li>IDE: <a href="https://www.jetbrains.com/clion/">JetBrains CLion with Rust plugin</a>, <a href="https://www.jetbrains.com/rust/">JetBrains RustRover EAP</a></li>
         <li>Theme:  <a href="https://github.com/catppuccin/catppuccin">Catppuccin Color Theme</a></li>
     </ul>
 
