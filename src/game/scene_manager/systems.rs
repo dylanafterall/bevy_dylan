@@ -2,7 +2,6 @@ use super::SceneState;
 use crate::game::collision_manager::components::*;
 use crate::game::collision_manager::events::PlayerSceneCollision;
 
-use bevy::render::primitives::Aabb;
 use bevy::sprite::MaterialMesh2dBundle;
 use bevy::{prelude::*, sprite::Mesh2dHandle};
 use bevy_hanabi::prelude::*;
@@ -144,7 +143,7 @@ pub fn despawn_entities(
     mut commands: Commands,
     collider_query: Query<Option<Entity>, With<Collider>>,
     mesh_query: Query<Option<Entity>, (With<Mesh2dHandle>, Without<Collider>)>,
-    aabb_query: Query<Option<Entity>, (With<Aabb>, Without<Collider>, Without<Mesh2dHandle>)>,
+    text_query: Query<Option<Entity>, With<Text>>,
     particle_query: Query<Option<Entity>, With<ParticleEffect>>,
 ) {
     for collider in collider_query.iter() {
@@ -161,9 +160,9 @@ pub fn despawn_entities(
         }
     }
 
-    for aabb in aabb_query.iter() {
-        match aabb {
-            Some(m_entity) => commands.entity(m_entity).despawn(),
+    for text in text_query.iter() {
+        match text {
+            Some(t_entity) => commands.entity(t_entity).despawn(),
             None => {}
         }
     }

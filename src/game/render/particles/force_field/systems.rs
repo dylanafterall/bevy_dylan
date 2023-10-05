@@ -1,8 +1,9 @@
 use crate::game::characters::player::components::Player;
 use crate::game::render::particles::force_field::components::ForceFieldParticles;
-use crate::style::{LATTE_BLUE, LATTE_RED};
+use crate::style::{FRAPPE_CRUST, LATTE_BLUE, LATTE_RED};
 use bevy::prelude::*;
 use bevy::render::view::RenderLayers;
+use bevy::sprite::MaterialMesh2dBundle;
 use bevy_hanabi::prelude::*;
 
 // -----------------------------------------------------------------------------
@@ -10,7 +11,7 @@ pub fn spawn_force_field(
     mut commands: Commands,
     mut effects: ResMut<Assets<EffectAsset>>,
     mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
+    mut materials: ResMut<Assets<ColorMaterial>>,
 ) {
     const BALL_RADIUS: f32 = 5.0;
 
@@ -19,72 +20,30 @@ pub fn spawn_force_field(
 
     // attractor1
     commands
-        .spawn(PbrBundle {
-            mesh: meshes.add(Mesh::from(shape::UVSphere {
-                sectors: 128,
-                stacks: 4,
-                radius: BALL_RADIUS,
-            })),
-            material: materials.add(StandardMaterial {
-                base_color: LATTE_BLUE,
-                unlit: true,
-                ..Default::default()
-            }),
-            transform: Transform::from_translation(attractor1_position),
-            ..Default::default()
+        .spawn(MaterialMesh2dBundle {
+            mesh: meshes.add(shape::Circle::new(BALL_RADIUS).into()).into(),
+            material: materials.add(ColorMaterial::from(LATTE_BLUE)),
+            ..default()
         })
-        .insert(RenderLayers::layer(1));
+        .insert(Transform::from_translation(attractor1_position));
 
     // attractor2
     commands
-        .spawn(PbrBundle {
-            mesh: meshes.add(Mesh::from(shape::UVSphere {
-                sectors: 128,
-                stacks: 4,
-                radius: BALL_RADIUS,
-            })),
-            material: materials.add(StandardMaterial {
-                base_color: LATTE_RED,
-                unlit: true,
-                ..Default::default()
-            }),
-            transform: Transform::from_translation(attractor2_position),
-            ..Default::default()
+        .spawn(MaterialMesh2dBundle {
+            mesh: meshes.add(shape::Circle::new(BALL_RADIUS).into()).into(),
+            material: materials.add(ColorMaterial::from(LATTE_RED)),
+            ..default()
         })
-        .insert(RenderLayers::layer(1));
+        .insert(Transform::from_translation(attractor2_position));
 
-    // "allow" box
+    // "forbid" circle
     commands
-        .spawn(PbrBundle {
-            mesh: meshes.add(Mesh::from(shape::Box::new(150.0, 100.0, 24.0))),
-            material: materials.add(StandardMaterial {
-                base_color: Color::rgba(0.0, 0.0, 0.0, 0.0),
-                unlit: true,
-                alpha_mode: AlphaMode::Blend,
-                ..Default::default()
-            }),
-            ..Default::default()
+        .spawn(MaterialMesh2dBundle {
+            mesh: meshes.add(shape::Circle::new(12.0).into()).into(),
+            material: materials.add(ColorMaterial::from(FRAPPE_CRUST)),
+            ..default()
         })
-        .insert(RenderLayers::layer(1));
-
-    // "forbid" sphere
-    commands
-        .spawn(PbrBundle {
-            mesh: meshes.add(Mesh::from(shape::UVSphere {
-                radius: 12.0,
-                sectors: 32,
-                stacks: 8,
-            })),
-            material: materials.add(StandardMaterial {
-                base_color: Color::rgba(0.14, 0.15, 0.20, 0.5),
-                unlit: true,
-                alpha_mode: AlphaMode::Blend,
-                ..Default::default()
-            }),
-            transform: Transform::from_translation(Vec3::new(-30.0, 0.0, 0.0)),
-            ..Default::default()
-        })
-        .insert(RenderLayers::layer(1));
+        .insert(Transform::from_xyz(-30.0, 0.0, 0.0));
 
     let mut gradient = Gradient::new();
     gradient.add_key(0.0, Vec4::new(0.0, 1.0, 1.0, 1.0));
@@ -133,20 +92,21 @@ pub fn spawn_force_field(
             .init(init_age)
             .init(init_lifetime)
             .update(ForceFieldModifier::new(vec![
+                // repulsive force field
                 ForceFieldSource {
                     position: attractor2_position,
                     max_radius: 300.0,
                     min_radius: 1.0,
-                    // a negative mass produces a repulsive force instead of an attractive one
                     mass: -150.0,
                     // linear force: proportional to 1 / distance
                     force_exponent: 1.0,
                     conform_to_sphere: true,
                 },
+                // attractive force field
                 ForceFieldSource {
                     position: attractor1_position,
                     max_radius: 300.0,
-                    min_radius: 7.5,
+                    min_radius: 8.5,
                     mass: 1000.0,
                     // quadratic force: proportional to 1 / distance^2
                     force_exponent: 2.0,

@@ -1,9 +1,9 @@
 use super::components::*;
 use crate::game::characters::components::*;
 
+use crate::game::characters::friendly::bloom_triangle::events::BloomTriangleContact;
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
 use bevy_rapier2d::prelude::*;
-use crate::game::characters::friendly::bloom_triangle::events::BloomTriangleContact;
 
 // -----------------------------------------------------------------------------
 pub fn spawn_bloom_triangle(
@@ -55,45 +55,39 @@ pub fn handle_player_triangle_contact(
         match *bloom {
             BloomColor::Red => {
                 *bloom = BloomColor::Blue;
-                let new_color = ColorMaterial::from(Color::rgb(0.0, 0.0, 7.5));
+                let new_color = ColorMaterial::from(Color::rgb(0.0, 0.0, 4.0));
                 let handle = materials.add(new_color);
-                commands.entity(triangle)
-                    .insert(handle);
+                commands.entity(triangle).insert(handle);
             }
             BloomColor::Blue => {
                 *bloom = BloomColor::Green;
-                let new_color = ColorMaterial::from(Color::rgb(0.0, 7.5, 0.0));
+                let new_color = ColorMaterial::from(Color::rgb(0.0, 4.0, 0.0));
                 let handle = materials.add(new_color);
-                commands.entity(triangle)
-                    .insert(handle);
+                commands.entity(triangle).insert(handle);
             }
             BloomColor::Green => {
                 *bloom = BloomColor::Magenta;
-                let new_color = ColorMaterial::from(Color::rgb(7.5, 0.0, 7.5));
+                let new_color = ColorMaterial::from(Color::rgb(4.0, 0.0, 4.0));
                 let handle = materials.add(new_color);
-                commands.entity(triangle)
-                    .insert(handle);
+                commands.entity(triangle).insert(handle);
             }
             BloomColor::Magenta => {
                 *bloom = BloomColor::Cyan;
-                let new_color = ColorMaterial::from(Color::rgb(0.0, 7.5, 7.5));
+                let new_color = ColorMaterial::from(Color::rgb(0.0, 4.0, 4.0));
                 let handle = materials.add(new_color);
-                commands.entity(triangle)
-                    .insert(handle);
+                commands.entity(triangle).insert(handle);
             }
             BloomColor::Cyan => {
                 *bloom = BloomColor::Yellow;
-                let new_color = ColorMaterial::from(Color::rgb(7.5, 7.5, 0.0));
+                let new_color = ColorMaterial::from(Color::rgb(4.0, 4.0, 0.0));
                 let handle = materials.add(new_color);
-                commands.entity(triangle)
-                    .insert(handle);
+                commands.entity(triangle).insert(handle);
             }
             BloomColor::Yellow => {
                 *bloom = BloomColor::Red;
-                let new_color = ColorMaterial::from(Color::rgb(7.5, 0.0, 0.0));
+                let new_color = ColorMaterial::from(Color::rgb(4.0, 0.0, 0.0));
                 let handle = materials.add(new_color);
-                commands.entity(triangle)
-                    .insert(handle);
+                commands.entity(triangle).insert(handle);
             }
         };
     }
