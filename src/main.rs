@@ -10,6 +10,7 @@ mod ui;
 use crate::config::ConfigPlugin;
 use crate::game::GamePlugin;
 use crate::ui::UIPlugin;
+use crate::game::render::materials::*;
 
 use bevy::{
     prelude::*,
@@ -52,6 +53,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                     ..default()
                 })
                 .set(RenderPlugin { wgpu_settings }),
+            MaterialPlugin::<NeatMaterial>::default(),
             // LogDiagnosticsPlugin::default(),
             // FrameTimeDiagnosticsPlugin,
             RapierPhysicsPlugin::<system_params::MyPhysicsHooks>::pixels_per_meter(100.0),

@@ -19,6 +19,11 @@ pub fn spawn_scene_sensors(
     let texture_handle3 = asset_server.load("images/numerals/3.png");
     let texture_handle4 = asset_server.load("images/numerals/4.png");
     let texture_handle5 = asset_server.load("images/numerals/5.png");
+    let texture_handle6 = asset_server.load("images/numerals/6.png");
+    let texture_handle7 = asset_server.load("images/numerals/7.png");
+    let texture_handle8 = asset_server.load("images/numerals/8.png");
+    let texture_handle9 = asset_server.load("images/numerals/9.png");
+    let texture_handle0 = asset_server.load("images/numerals/0.png");
 
     commands
         // info
@@ -136,6 +141,127 @@ pub fn spawn_scene_sensors(
         // transform
         // ---------
         .insert(TransformBundle::from(Transform::from_xyz(100.0, 60.0, 0.0)));
+
+    commands
+        // info
+        // ----
+        .spawn(Name::new("Scene6Sensor"))
+        .insert(PlayerCollisionSensor::SceneSensor(SceneState::Sixth))
+        // physics
+        // -------
+        .insert(Collider::cuboid(7.5, 7.5))
+        .insert(Sensor)
+        .insert(ActiveEvents::COLLISION_EVENTS)
+        // rendering
+        // ---------
+        .insert(MaterialMesh2dBundle {
+            mesh: meshes
+                .add(shape::Quad::new(Vec2::new(15.0, 15.0)).into())
+                .into(),
+            material: materials.add(ColorMaterial::from(texture_handle6)),
+            ..default()
+        })
+        // transform
+        // ---------
+        .insert(TransformBundle::from(Transform::from_xyz(
+            -100.0, 100.0, 0.0,
+        )));
+
+    commands
+        // info
+        // ----
+        .spawn(Name::new("Scene7Sensor"))
+        .insert(PlayerCollisionSensor::SceneSensor(SceneState::Seventh))
+        // physics
+        // -------
+        .insert(Collider::cuboid(7.5, 7.5))
+        .insert(Sensor)
+        .insert(ActiveEvents::COLLISION_EVENTS)
+        // rendering
+        // ---------
+        .insert(MaterialMesh2dBundle {
+            mesh: meshes
+                .add(shape::Quad::new(Vec2::new(15.0, 15.0)).into())
+                .into(),
+            material: materials.add(ColorMaterial::from(texture_handle7)),
+            ..default()
+        })
+        // transform
+        // ---------
+        .insert(TransformBundle::from(Transform::from_xyz(
+            -50.0, 100.0, 0.0,
+        )));
+
+    commands
+        // info
+        // ----
+        .spawn(Name::new("Scene8Sensor"))
+        .insert(PlayerCollisionSensor::SceneSensor(SceneState::Eighth))
+        // physics
+        // -------
+        .insert(Collider::cuboid(7.5, 7.5))
+        .insert(Sensor)
+        .insert(ActiveEvents::COLLISION_EVENTS)
+        // rendering
+        // ---------
+        .insert(MaterialMesh2dBundle {
+            mesh: meshes
+                .add(shape::Quad::new(Vec2::new(15.0, 15.0)).into())
+                .into(),
+            material: materials.add(ColorMaterial::from(texture_handle8)),
+            ..default()
+        })
+        // transform
+        // ---------
+        .insert(TransformBundle::from(Transform::from_xyz(0.0, 100.0, 0.0)));
+
+    commands
+        // info
+        // ----
+        .spawn(Name::new("Scene9Sensor"))
+        .insert(PlayerCollisionSensor::SceneSensor(SceneState::Ninth))
+        // physics
+        // -------
+        .insert(Collider::cuboid(7.5, 7.5))
+        .insert(Sensor)
+        .insert(ActiveEvents::COLLISION_EVENTS)
+        // rendering
+        // ---------
+        .insert(MaterialMesh2dBundle {
+            mesh: meshes
+                .add(shape::Quad::new(Vec2::new(15.0, 15.0)).into())
+                .into(),
+            material: materials.add(ColorMaterial::from(texture_handle9)),
+            ..default()
+        })
+        // transform
+        // ---------
+        .insert(TransformBundle::from(Transform::from_xyz(50.0, 100.0, 0.0)));
+
+    commands
+        // info
+        // ----
+        .spawn(Name::new("Scene0Sensor"))
+        .insert(PlayerCollisionSensor::SceneSensor(SceneState::Zero))
+        // physics
+        // -------
+        .insert(Collider::cuboid(7.5, 7.5))
+        .insert(Sensor)
+        .insert(ActiveEvents::COLLISION_EVENTS)
+        // rendering
+        // ---------
+        .insert(MaterialMesh2dBundle {
+            mesh: meshes
+                .add(shape::Quad::new(Vec2::new(15.0, 15.0)).into())
+                .into(),
+            material: materials.add(ColorMaterial::from(texture_handle0)),
+            ..default()
+        })
+        // transform
+        // ---------
+        .insert(TransformBundle::from(Transform::from_xyz(
+            100.0, 100.0, 0.0,
+        )));
 }
 
 // -----------------------------------------------------------------------------

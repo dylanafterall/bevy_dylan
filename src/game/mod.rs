@@ -6,7 +6,7 @@ mod characters;
 mod collision_manager;
 mod environment;
 pub mod objects;
-mod render;
+pub mod render;
 pub mod scene_manager;
 
 use camera_manager::CameraManagerPlugin;

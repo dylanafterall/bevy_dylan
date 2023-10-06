@@ -15,7 +15,7 @@ Project to learn the Bevy game engine.
 
 <p>Tools:
     <ul>
-        <li>Languages: <a href="https://www.rust-lang.org/">Rust</a></li>
+        <li>Languages: <a href="https://www.rust-lang.org/">Rust</a>, <a href="https://www.w3.org/TR/WGSL/">WGSL</a></li>
         <li>IDE: <a href="https://www.jetbrains.com/clion/">JetBrains CLion with Rust plugin</a>, <a href="https://www.jetbrains.com/rust/">JetBrains RustRover EAP</a></li>
         <li>Theme:  <a href="https://github.com/catppuccin/catppuccin">Catppuccin Color Theme</a></li>
     </ul>

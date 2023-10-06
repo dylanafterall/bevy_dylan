@@ -21,7 +21,9 @@ _deps
 .DS_Store
 
 # Project
-/assets
+/assets/audio
+/assets/fonts
+/assets/images
 /wgpu_trace
 *.json
 optimal_poly_decomp

@@ -1,8 +1,6 @@
 use super::components::*;
 use crate::style::FRAPPE_TEXT;
-use bevy::{
-    prelude::*,
-};
+use bevy::prelude::*;
 
 // -----------------------------------------------------------------------------
 pub fn spawn_text(mut commands: Commands, asset_server: Res<AssetServer>) {
