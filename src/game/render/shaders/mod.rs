@@ -8,7 +8,6 @@ pub struct ShaderTestPlugin;
 
 impl Plugin for ShaderTestPlugin {
     fn build(&self, app: &mut App) {
-        app.add_plugins(())
-            .add_systems(OnEnter(SceneState::Sixth), systems::spawn_shader_test);
+        app.add_systems(OnEnter(SceneState::Sixth), systems::spawn_shader_test);
     }
 }

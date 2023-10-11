@@ -2,6 +2,7 @@ use super::SceneState;
 use crate::game::collision_manager::components::*;
 use crate::game::collision_manager::events::PlayerSceneCollision;
 
+use bevy::render::primitives::Aabb;
 use bevy::sprite::MaterialMesh2dBundle;
 use bevy::{prelude::*, sprite::Mesh2dHandle};
 use bevy_hanabi::prelude::*;
@@ -23,7 +24,6 @@ pub fn spawn_scene_sensors(
     let texture_handle7 = asset_server.load("images/numerals/7.png");
     let texture_handle8 = asset_server.load("images/numerals/8.png");
     let texture_handle9 = asset_server.load("images/numerals/9.png");
-    let texture_handle0 = asset_server.load("images/numerals/0.png");
 
     commands
         // info
@@ -164,7 +164,7 @@ pub fn spawn_scene_sensors(
         // transform
         // ---------
         .insert(TransformBundle::from(Transform::from_xyz(
-            -100.0, 100.0, 0.0,
+            -75.0, 100.0, 0.0,
         )));
 
     commands
@@ -189,7 +189,7 @@ pub fn spawn_scene_sensors(
         // transform
         // ---------
         .insert(TransformBundle::from(Transform::from_xyz(
-            -50.0, 100.0, 0.0,
+            -25.0, 100.0, 0.0,
         )));
 
     commands
@@ -213,7 +213,7 @@ pub fn spawn_scene_sensors(
         })
         // transform
         // ---------
-        .insert(TransformBundle::from(Transform::from_xyz(0.0, 100.0, 0.0)));
+        .insert(TransformBundle::from(Transform::from_xyz(25.0, 100.0, 0.0)));
 
     commands
         // info
@@ -236,39 +236,15 @@ pub fn spawn_scene_sensors(
         })
         // transform
         // ---------
-        .insert(TransformBundle::from(Transform::from_xyz(50.0, 100.0, 0.0)));
-
-    commands
-        // info
-        // ----
-        .spawn(Name::new("Scene0Sensor"))
-        .insert(PlayerCollisionSensor::SceneSensor(SceneState::Zero))
-        // physics
-        // -------
-        .insert(Collider::cuboid(7.5, 7.5))
-        .insert(Sensor)
-        .insert(ActiveEvents::COLLISION_EVENTS)
-        // rendering
-        // ---------
-        .insert(MaterialMesh2dBundle {
-            mesh: meshes
-                .add(shape::Quad::new(Vec2::new(15.0, 15.0)).into())
-                .into(),
-            material: materials.add(ColorMaterial::from(texture_handle0)),
-            ..default()
-        })
-        // transform
-        // ---------
-        .insert(TransformBundle::from(Transform::from_xyz(
-            100.0, 100.0, 0.0,
-        )));
+        .insert(TransformBundle::from(Transform::from_xyz(75.0, 100.0, 0.0)));
 }
 
 // -----------------------------------------------------------------------------
 pub fn despawn_entities(
     mut commands: Commands,
     collider_query: Query<Option<Entity>, With<Collider>>,
-    mesh_query: Query<Option<Entity>, (With<Mesh2dHandle>, Without<Collider>)>,
+    mesh2d_query: Query<Option<Entity>, (With<Mesh2dHandle>, Without<Collider>)>,
+    aabb_query: Query<Option<Entity>, (With<Aabb>, Without<Mesh2dHandle>)>,
     text_query: Query<Option<Entity>, With<Text>>,
     particle_query: Query<Option<Entity>, With<ParticleEffect>>,
 ) {
@@ -279,9 +255,16 @@ pub fn despawn_entities(
         }
     }
 
-    for mesh in mesh_query.iter() {
+    for mesh in mesh2d_query.iter() {
         match mesh {
             Some(m_entity) => commands.entity(m_entity).despawn(),
+            None => {}
+        }
+    }
+
+    for aabb in aabb_query.iter() {
+        match aabb {
+            Some(a_entity) => commands.entity(a_entity).despawn(),
             None => {}
         }
     }

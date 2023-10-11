@@ -4,18 +4,24 @@ mod systems;
 
 mod config;
 mod game;
+pub mod materials;
 mod style;
 mod ui;
 
 use crate::config::ConfigPlugin;
 use crate::game::GamePlugin;
+use crate::materials::{
+    blue_flash_material::BlueFlashMaterial, red_flash_material::RedFlashMaterial,
+    red_flash_smooth_material::RedFlashSmoothMaterial,
+    red_flash_tangent_material::RedFlashTangentMaterial, red_material::RedMaterial,
+};
 use crate::ui::UIPlugin;
-use crate::game::render::materials::*;
 
 use bevy::{
     prelude::*,
     // diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin},
     render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
+    sprite::Material2dPlugin,
     window::*,
 };
 use bevy_hanabi::prelude::*;
@@ -53,7 +59,11 @@ fn main() -> Result<(), Box<dyn Error>> {
                     ..default()
                 })
                 .set(RenderPlugin { wgpu_settings }),
-            MaterialPlugin::<NeatMaterial>::default(),
+            Material2dPlugin::<BlueFlashMaterial>::default(),
+            Material2dPlugin::<RedMaterial>::default(),
+            Material2dPlugin::<RedFlashMaterial>::default(),
+            Material2dPlugin::<RedFlashTangentMaterial>::default(),
+            Material2dPlugin::<RedFlashSmoothMaterial>::default(),
             // LogDiagnosticsPlugin::default(),
             // FrameTimeDiagnosticsPlugin,
             RapierPhysicsPlugin::<system_params::MyPhysicsHooks>::pixels_per_meter(100.0),

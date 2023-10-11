@@ -41,7 +41,6 @@ impl Plugin for PlayerPlugin {
             .add_systems(OnEnter(SceneState::Sixth), (systems::spawn_player,))
             .add_systems(OnEnter(SceneState::Seventh), (systems::spawn_player,))
             .add_systems(OnEnter(SceneState::Eighth), (systems::spawn_player,))
-            .add_systems(OnEnter(SceneState::Ninth), (systems::spawn_player,))
-            .add_systems(OnEnter(SceneState::Zero), (systems::spawn_player,));
+            .add_systems(OnEnter(SceneState::Ninth), (systems::spawn_player,));
     }
 }
