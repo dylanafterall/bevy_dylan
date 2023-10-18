@@ -1,4 +1,4 @@
-#import bevy_pbr::utils     PI HALF_PI
+#import bevy_pbr::utils     PI, HALF_PI
 
 // Robert Penner's easing functions in GLSL
 // https://github.com/stackgl/glsl-easings
@@ -145,29 +145,28 @@ fn circularInOut(t: f32) -> f32 {
             );
 }
 
+const BOUNCE_A = 0.363636;
+const BOUNCE_B = 0.727273;
+const BOUNCE_C = 0.900000;
+const BOUNCE_CA = 12.066482;
+const BOUNCE_CB = 19.635457;
+const BOUNCE_CC = 8.898061;
+
 fn bounceOut(t: f32) -> f32 {
-    const a = 4.0 / 11.0;
-    const b = 8.0 / 11.0;
-    const c = 9.0 / 10.0;
-
-    const ca = 4356.0 / 361.0;
-    const cb = 35442.0 / 1805.0;
-    const cc = 16061.0 / 1805.0;
-
     let t2 = t * t;
 
     return  select(
                 select(
                     select(
                         10.8 * t * t - 20.52 * t + 10.72,
-                        ca * t2 - cb * t + cc,
-                        t < c
+                        BOUNCE_CA * t2 - BOUNCE_CB * t + BOUNCE_CC,
+                        t < BOUNCE_C
                     ),
                     9.075 * t2 - 9.9 * t + 3.4,
-                    t < b
+                    t < BOUNCE_B
                 ),
                 7.5625 * t2,
-                t < a
+                t < BOUNCE_A
             );
 }
 

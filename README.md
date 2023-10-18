@@ -32,5 +32,7 @@ Project to learn the Bevy game engine.
     <li><a href="https://docs.rs/bevy_rapier2d/latest/bevy_rapier2d/">bevy_rapier2d API Docs</a></li>
     <li><a href="https://webgpufundamentals.org/">WebGPU Fundamentals</a></li>
     <li><a href="https://github.com/glslify/glsl-easings">glslify: GLSL Easings</a></li>
+    <li><a href="https://thebookofshaders.com/">The Book of Shaders</a></li>
+    <li><a href="https://iquilezles.org/articles/">Articles by Inigo Quilez</a></li>
     <li><a href="https://doc.cgal.org/latest/Manual/packages.html#PartPolygons">The Computational Geometry Algorithms Library</a></li>
 </ul>
