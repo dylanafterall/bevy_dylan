@@ -7,3 +7,10 @@ fn rotate2D(theta: f32) -> mat2x2<f32> {
     let s = sin(theta);
     return mat2x2<f32>(c, s, -s, c);
 }
+
+// https://iquilezles.org/articles/smin
+fn smin(a: f32, b: f32, k: f32) -> vec2f {
+    let f1 = exp2(-k * a);
+    let f2 = exp2(-k * b);
+    return vec2(-log2(f1 + f2) / k, f2);
+}

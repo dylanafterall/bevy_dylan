@@ -9,6 +9,11 @@ fn smoothedge(v: f32) -> f32 {
     return smoothstep(0.0, 1.0 / view.viewport.z, v);
 }
 
+fn smoothen(d1: f32, d2: f32) -> f32 {
+    let k = 1.5;
+    return -log(exp(-k * d1) + exp(-k * d2)) / k;
+}
+
 fn circle(p: vec2<f32>, radius: f32) -> f32 {
     return length(p) - radius;
 }
