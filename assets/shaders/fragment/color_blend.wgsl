@@ -7,9 +7,13 @@
 #import "shaders/shader_utils.wgsl"             smin
 #import "shaders/sd_shapes.wgsl"                sdBox
 
+@group(1) @binding(0) var color_texture: texture_2d<f32>;
+@group(1) @binding(1) var color_sampler: sampler;
+
 // -----------------------------------------------------------------------------
 @fragment
 fn fragment(in: MeshVertexOutput,) -> @location(0) vec4<f32> {
+    let texture = textureSample(color_texture, color_sampler, in.uv);
     let t = globals.time;
 
     var p = 2.0 * in.uv.xy - 1.0;
@@ -52,5 +56,5 @@ fn fragment(in: MeshVertexOutput,) -> @location(0) vec4<f32> {
     col = sqrt(col);
 
     // output to screen
-    return vec4(col, 1.0);
+    return texture * vec4(col, 1.0);
 }

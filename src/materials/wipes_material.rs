@@ -7,16 +7,16 @@ use bevy::{
 
 // -----------------------------------------------------------------------------
 #[derive(AsBindGroup, TypeUuid, TypePath, Debug, Clone)]
-#[uuid = "042d7ab4-e957-455c-90a3-78bbbd0d9f0c"]
-pub struct ColorBlendMaterial {
+#[uuid = "e12e08da-fb2f-4ebd-9686-ae4a4f5973d3"]
+pub struct WipesMaterial {
     #[texture(0)]
     #[sampler(1)]
     pub color_texture: Option<Handle<Image>>,
     pub alpha_mode: AlphaMode,
 }
 
-impl Material2d for ColorBlendMaterial {
+impl Material2d for WipesMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/fragment/color_blend.wgsl".into()
+        "shaders/fragment/wipes.wgsl".into()
     }
 }

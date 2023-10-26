@@ -7,16 +7,16 @@ use bevy::{
 
 // -----------------------------------------------------------------------------
 #[derive(AsBindGroup, TypeUuid, TypePath, Debug, Clone)]
-#[uuid = "042d7ab4-e957-455c-90a3-78bbbd0d9f0c"]
-pub struct ColorBlendMaterial {
+#[uuid = "f603e034-9177-47d5-a927-6327d45e0211"]
+pub struct MarbleEdgeMaterial {
     #[texture(0)]
     #[sampler(1)]
     pub color_texture: Option<Handle<Image>>,
     pub alpha_mode: AlphaMode,
 }
 
-impl Material2d for ColorBlendMaterial {
+impl Material2d for MarbleEdgeMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/fragment/color_blend.wgsl".into()
+        "shaders/fragment/marble_edge.wgsl".into()
     }
 }
