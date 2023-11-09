@@ -25,7 +25,7 @@ pub fn handle_cast_carry_ray(
     mut rapier_context: ResMut<RapierContext>,
     mut event_listener: EventReader<CastCarryRay>,
 ) {
-    for _ in event_listener.iter() {
+    for _ in event_listener.read() {
         let (player_entity, player_transform, player_rrbh, mut player_carrier) =
             player_query.single_mut();
 

@@ -14,7 +14,7 @@ pub fn parse_collision_event(
     mut player_scene_collision: EventWriter<PlayerSceneCollision>,
     mut player_grav_collision: EventWriter<PlayerGravCollision>,
 ) {
-    for collision_event in collision_events.iter() {
+    for collision_event in collision_events.read() {
         match collision_event {
             CollisionEvent::Started(entity1, entity2, _collision_flag) => {
                 if player_query.get(*entity1).is_ok() {
@@ -77,7 +77,7 @@ pub fn parse_contact_force_event(
     mut player_contact: EventWriter<PlayerContact>,
     mut destructible_contact: EventWriter<DestructibleContact>,
 ) {
-    for contact_force_event in contact_force_events.iter() {
+    for contact_force_event in contact_force_events.read() {
         let entity1 = contact_force_event.collider1;
         let entity2 = contact_force_event.collider2;
         let total_force = contact_force_event.total_force;

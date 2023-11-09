@@ -27,7 +27,7 @@ pub fn handle_toggle_pause(
     game_state: Res<State<GameState>>,
     mut event_listener: EventReader<TogglePause>,
 ) {
-    for _ in event_listener.iter() {
+    for _ in event_listener.read() {
         // toggle_pause run criteria is that GameState not be "inert"
         if *game_state.get() == GameState::Playing {
             commands.insert_resource(NextState(Some(GameState::Paused)));

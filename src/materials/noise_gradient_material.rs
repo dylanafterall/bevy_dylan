@@ -1,13 +1,12 @@
 use bevy::{
     prelude::*,
-    reflect::{TypePath, TypeUuid},
+    reflect::TypePath,
     render::render_resource::{AsBindGroup, ShaderRef},
     sprite::Material2d,
 };
 
 // -----------------------------------------------------------------------------
-#[derive(AsBindGroup, TypeUuid, TypePath, Debug, Clone)]
-#[uuid = "1dd904d8-852a-4a63-94a3-2751ffe767c6"]
+#[derive(Asset, AsBindGroup, TypePath, Debug, Clone)]
 pub struct NoiseGradientMaterial {
     #[texture(0)]
     #[sampler(1)]

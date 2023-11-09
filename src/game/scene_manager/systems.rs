@@ -288,7 +288,7 @@ pub fn handle_scene_transition(
     mut next_scene_state: ResMut<NextState<SceneState>>,
     mut event_listener: EventReader<PlayerSceneCollision>,
 ) {
-    for scene_collision in event_listener.iter() {
+    for scene_collision in event_listener.read() {
         let next_scene = scene_collision.desired_scene;
         next_scene_state.set(next_scene);
     }

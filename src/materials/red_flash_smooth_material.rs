@@ -1,13 +1,12 @@
 use bevy::{
     prelude::*,
-    reflect::{TypePath, TypeUuid},
+    reflect::TypePath,
     render::render_resource::{AsBindGroup, ShaderRef},
     sprite::Material2d,
 };
 
 // -----------------------------------------------------------------------------
-#[derive(AsBindGroup, TypeUuid, TypePath, Debug, Clone)]
-#[uuid = "1f98b736-04b3-4f89-8057-336e811bf1cf"]
+#[derive(Asset, AsBindGroup, TypePath, Debug, Clone)]
 pub struct RedFlashSmoothMaterial {
     #[texture(0)]
     #[sampler(1)]

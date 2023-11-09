@@ -2,7 +2,7 @@
 // Title: Distance Field Shapes
 // http://www.kynd.info
 
-#import bevy_render::view   View
+#import bevy_render::view::View
 @group(0) @binding(0) var<uniform> view: View;
 
 fn smoothedge(v: f32) -> f32 {

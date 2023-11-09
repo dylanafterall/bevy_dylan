@@ -1,13 +1,12 @@
 use bevy::{
     prelude::*,
-    reflect::{TypePath, TypeUuid},
+    reflect::TypePath,
     render::render_resource::{AsBindGroup, ShaderRef},
     sprite::Material2d,
 };
 
 // -----------------------------------------------------------------------------
-#[derive(AsBindGroup, TypeUuid, TypePath, Debug, Clone)]
-#[uuid = "2dcae97e-c040-4615-9f40-76383d2094dd"]
+#[derive(Asset, AsBindGroup, TypePath, Debug, Clone)]
 pub struct ColorPolarMaterial {
     #[texture(0)]
     #[sampler(1)]

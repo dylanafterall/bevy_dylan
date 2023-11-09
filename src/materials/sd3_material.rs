@@ -1,13 +1,12 @@
 use bevy::{
     prelude::*,
-    reflect::{TypePath, TypeUuid},
+    reflect::TypePath,
     render::render_resource::{AsBindGroup, ShaderRef},
     sprite::Material2d,
 };
 
 // -----------------------------------------------------------------------------
-#[derive(AsBindGroup, TypeUuid, TypePath, Debug, Clone)]
-#[uuid = "0e851359-f915-47b1-b567-016b3dbad34c"]
+#[derive(Asset, AsBindGroup, TypePath, Debug, Clone)]
 pub struct SD3Material {
     #[texture(0)]
     #[sampler(1)]

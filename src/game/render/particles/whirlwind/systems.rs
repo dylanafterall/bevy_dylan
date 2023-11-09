@@ -63,7 +63,9 @@ pub fn spawn_whirlwind(mut commands: Commands, mut effects: ResMut<Assets<Effect
                 gradient: size_gradient,
                 screen_space_size: false,
             })
-            .render(OrientAlongVelocityModifier),
+            .render(OrientModifier {
+                mode: OrientMode::AlongVelocity,
+            }),
     );
 
     commands.spawn((

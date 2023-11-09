@@ -56,7 +56,9 @@ pub fn spawn_portal(mut commands: Commands, mut effects: ResMut<Assets<EffectAss
                 gradient: size_gradient1.clone(),
                 screen_space_size: false,
             })
-            .render(OrientAlongVelocityModifier),
+            .render(OrientModifier {
+                mode: OrientMode::AlongVelocity,
+            }),
     );
 
     // BLUE PORTAL -------------------------------------------------------------
@@ -83,7 +85,9 @@ pub fn spawn_portal(mut commands: Commands, mut effects: ResMut<Assets<EffectAss
                 gradient: size_gradient1,
                 screen_space_size: false,
             })
-            .render(OrientAlongVelocityModifier),
+            .render(OrientModifier {
+                mode: OrientMode::AlongVelocity,
+            }),
     );
 
     // SPAWN BOTH PORTALS ------------------------------------------------------

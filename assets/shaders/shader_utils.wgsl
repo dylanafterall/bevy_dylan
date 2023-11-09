@@ -1,6 +1,6 @@
-#import bevy_sprite::mesh2d_view_bindings   globals
-#import bevy_pbr::utils                     PI, random1D
-#import bevy_render::view                   View
+#import bevy_sprite::mesh2d_view_bindings::globals
+#import bevy_pbr::utils::{PI, random1D}
+#import bevy_render::view::View
 
 @group(0) @binding(0) var<uniform> view: View;
 

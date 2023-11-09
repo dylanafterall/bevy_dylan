@@ -165,7 +165,7 @@ pub fn handle_destructible_contact(
     mut rapier_context: ResMut<RapierContext>,
     mut destructible_listener: EventReader<DestructibleContact>,
 ) {
-    for contact in destructible_listener.iter() {
+    for contact in destructible_listener.read() {
         let rapier_body_handle = contact.destructible_rb_handle;
         let body_handle = rapier_body_handle.0;
         rapier_context

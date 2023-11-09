@@ -50,7 +50,7 @@ pub fn handle_player_triangle_contact(
     mut bloom_query: Query<(Entity, &mut BloomColor)>,
     mut materials: ResMut<Assets<ColorMaterial>>,
 ) {
-    for _ in triangle_contact_listener.iter() {
+    for _ in triangle_contact_listener.read() {
         let (triangle, mut bloom) = bloom_query.single_mut();
         match *bloom {
             BloomColor::Red => {

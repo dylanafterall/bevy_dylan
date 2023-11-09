@@ -1,13 +1,12 @@
 use bevy::{
     prelude::*,
-    reflect::{TypePath, TypeUuid},
+    reflect::TypePath,
     render::render_resource::{AsBindGroup, ShaderRef},
     sprite::Material2d,
 };
 
 // -----------------------------------------------------------------------------
-#[derive(AsBindGroup, TypeUuid, TypePath, Debug, Clone)]
-#[uuid = "8cca320f-bced-4185-a4ff-873efd31c72e"]
+#[derive(Asset, AsBindGroup, TypePath, Debug, Clone)]
 pub struct ColorGridMaterial {
     #[texture(0)]
     #[sampler(1)]

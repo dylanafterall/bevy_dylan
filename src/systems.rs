@@ -40,7 +40,7 @@ pub fn handle_transition_app_state(
     mut next_scene_state: ResMut<NextState<SceneState>>,
     mut event_listener: EventReader<TransitionAppState>,
 ) {
-    for transition in event_listener.iter() {
+    for transition in event_listener.read() {
         let _desired_state = match transition.desired_app_state {
             AppState::Title => {
                 let _current_state = match *current_app_state.get() {

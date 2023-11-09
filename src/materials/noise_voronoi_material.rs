@@ -1,13 +1,12 @@
 use bevy::{
     prelude::*,
-    reflect::{TypePath, TypeUuid},
+    reflect::TypePath,
     render::render_resource::{AsBindGroup, ShaderRef},
     sprite::Material2d,
 };
 
 // -----------------------------------------------------------------------------
-#[derive(AsBindGroup, TypeUuid, TypePath, Debug, Clone)]
-#[uuid = "c8478722-6ca2-487b-bc42-1d7675a00ea1"]
+#[derive(Asset, AsBindGroup, TypePath, Debug, Clone)]
 pub struct NoiseVoronoiMaterial {
     #[texture(0)]
     #[sampler(1)]

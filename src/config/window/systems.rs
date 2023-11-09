@@ -18,7 +18,7 @@ pub fn setup_window(
     let res = res_settings._2560_1440;
     window.resolution.set(res.x, res.y);
 
-    WindowResolution::set_scale_factor(&mut window.resolution, 1.0);
+    WindowResolution::set_scale_factor_override(&mut window.resolution, Some(1.0));
 }
 
 pub fn emit_resolution_change(
@@ -26,7 +26,7 @@ pub fn emit_resolution_change(
     res_settings: Res<ResolutionSettings>,
     mut res_change_event: EventWriter<ChangeResolution>,
 ) {
-    for key in key_event.iter() {
+    for key in key_event.read() {
         match key.state {
             ButtonState::Pressed => {
                 let _key_option = match key.key_code {
@@ -79,7 +79,7 @@ pub fn handle_resolution_change(
 ) {
     let mut window = windows.single_mut();
 
-    for res_change in res_change_events.iter() {
+    for res_change in res_change_events.read() {
         let desired_res = res_change.resolution;
         window.resolution.set(desired_res.x, desired_res.y);
     }

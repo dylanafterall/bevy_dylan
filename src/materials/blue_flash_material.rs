@@ -1,13 +1,12 @@
 use bevy::{
     prelude::*,
-    reflect::{TypePath, TypeUuid},
+    reflect::TypePath,
     render::render_resource::{AsBindGroup, ShaderRef},
     sprite::Material2d,
 };
 
 // -----------------------------------------------------------------------------
-#[derive(AsBindGroup, TypeUuid, TypePath, Debug, Clone)]
-#[uuid = "1f1082f4-5253-4676-9792-cefb8a2555b5"]
+#[derive(Asset, AsBindGroup, TypePath, Debug, Clone)]
 pub struct BlueFlashMaterial {
     #[texture(0)]
     #[sampler(1)]

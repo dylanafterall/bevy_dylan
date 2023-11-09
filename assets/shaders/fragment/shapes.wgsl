@@ -1,12 +1,12 @@
-#import bevy_pbr::mesh_vertex_output            MeshVertexOutput
-#import "shaders/distance_field_shapes.wgsl"    smoothedge, circle, rect, roundRect, ring, hexagon, tri, ellipse, capsule, polygon
+#import bevy_pbr::forward_io::VertexOutput
+#import "shaders/distance_field_shapes.wgsl"::{smoothedge, circle, rect, roundRect, ring, hexagon, tri, ellipse, capsule, polygon}
 
 @group(1) @binding(0) var color_texture: texture_2d<f32>;
 @group(1) @binding(1) var color_sampler: sampler;
 
 // -----------------------------------------------------------------------------
 @fragment
-fn fragment(in: MeshVertexOutput,) -> @location(0) vec4<f32> {
+fn fragment(in: VertexOutput,) -> @location(0) vec4<f32> {
     var uv = in.uv.xy;
 
     var d = circle(uv - vec2(0.2), 0.1);

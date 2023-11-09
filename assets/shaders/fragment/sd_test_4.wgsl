@@ -1,6 +1,6 @@
-#import bevy_pbr::mesh_vertex_output            MeshVertexOutput
-#import "shaders/sd_shapes.wgsl"                sdEllipse, sdQuadraticCircle, sdTunnel, sdCutDisk, sdBezier, sdBlobbyCross, sdStairs
-#import bevy_render::view                       View
+#import bevy_pbr::forward_io::VertexOutput
+#import "shaders/sd_shapes.wgsl"::{sdEllipse, sdQuadraticCircle, sdTunnel, sdCutDisk, sdBezier, sdBlobbyCross, sdStairs}
+#import bevy_render::view::View
 
 @group(0) @binding(0) var<uniform> view: View;
 
@@ -9,7 +9,7 @@
 
 // -----------------------------------------------------------------------------
 @fragment
-fn fragment(in: MeshVertexOutput,) -> @location(0) vec4<f32> {
+fn fragment(in: VertexOutput,) -> @location(0) vec4<f32> {
     var uv = in.uv.xy;
 
     var d = sdEllipse(uv - vec2(0.2), vec2(0.1, 0.04));

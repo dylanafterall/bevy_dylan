@@ -1,13 +1,12 @@
 use bevy::{
     prelude::*,
-    reflect::{TypePath, TypeUuid},
+    reflect::TypePath,
     render::render_resource::{AsBindGroup, ShaderRef},
     sprite::Material2d,
 };
 
 // -----------------------------------------------------------------------------
-#[derive(AsBindGroup, TypeUuid, TypePath, Debug, Clone)]
-#[uuid = "e12e08da-fb2f-4ebd-9686-ae4a4f5973d3"]
+#[derive(Asset, AsBindGroup, TypePath, Debug, Clone)]
 pub struct WipesMaterial {
     #[texture(0)]
     #[sampler(1)]

@@ -183,7 +183,10 @@ pub fn draw_path(mut commands: Commands) {
     commands.spawn((
         ShapeBundle {
             path,
-            transform: Transform::from_xyz(90.0, -50.0, 0.0),
+            spatial: SpatialBundle {
+                transform: Transform::from_xyz(90.0, -50.0, 0.0),
+                ..default()
+            },
             ..default()
         },
         Fill::color(Color::PINK),

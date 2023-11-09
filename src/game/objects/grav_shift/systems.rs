@@ -118,7 +118,7 @@ pub fn handle_grav_shift(
     mut rapier: ResMut<RapierConfiguration>,
     mut event_listener: EventReader<PlayerGravCollision>,
 ) {
-    for grav_collision in event_listener.iter() {
+    for grav_collision in event_listener.read() {
         let grav_dir = grav_collision.grav_direction;
         rapier.gravity = grav_dir;
     }

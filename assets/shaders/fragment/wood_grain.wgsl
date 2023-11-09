@@ -1,16 +1,16 @@
 // https://thebookofshaders.com/edit.php#11/wood.frag
 
-#import bevy_pbr::mesh_vertex_output        MeshVertexOutput
-#import bevy_sprite::mesh2d_view_bindings   globals
-#import bevy_pbr::utils                     PI
-#import "shaders/shader_utils.wgsl"         value_noise, rotate2D
+#import bevy_pbr::forward_io::VertexOutput
+#import bevy_sprite::mesh2d_view_bindings::globals
+#import bevy_pbr::utils::PI
+#import "shaders/shader_utils.wgsl"::{value_noise, rotate2D}
 
 @group(1) @binding(0) var color_texture: texture_2d<f32>;
 @group(1) @binding(1) var color_sampler: sampler;
 
 // -----------------------------------------------------------------------------
 @fragment
-fn fragment(in: MeshVertexOutput,) -> @location(0) vec4<f32> {
+fn fragment(in: VertexOutput,) -> @location(0) vec4<f32> {
     let texture = textureSample(color_texture, color_sampler, in.uv);
     let t = globals.time * 0.1;
 

@@ -118,7 +118,7 @@ pub fn handle_player_move_up(
 ) {
     let mut player = impulse_query.single_mut();
 
-    for _ in event_listener.iter() {
+    for _ in event_listener.read() {
         player.impulse = Vec2::new(0.0, 0.1);
         player.torque_impulse = 0.0;
     }
@@ -130,7 +130,7 @@ pub fn handle_player_move_down(
 ) {
     let mut player = impulse_query.single_mut();
 
-    for _ in event_listener.iter() {
+    for _ in event_listener.read() {
         player.impulse = Vec2::new(0.0, -0.1);
         player.torque_impulse = 0.0;
     }
@@ -142,7 +142,7 @@ pub fn handle_player_move_left(
 ) {
     let mut player = impulse_query.single_mut();
 
-    for _ in event_listener.iter() {
+    for _ in event_listener.read() {
         player.impulse = Vec2::new(-0.1, 0.0);
         player.torque_impulse = 0.0;
     }
@@ -154,7 +154,7 @@ pub fn handle_player_move_right(
 ) {
     let mut player = impulse_query.single_mut();
 
-    for _ in event_listener.iter() {
+    for _ in event_listener.read() {
         player.impulse = Vec2::new(0.1, 0.0);
         player.torque_impulse = 0.0;
     }
@@ -165,7 +165,7 @@ pub fn handle_player_character_collision(
     mut player_contact_listener: EventReader<PlayerContact>,
     mut bloom_triangle_event: EventWriter<BloomTriangleContact>,
 ) {
-    for player_contact in player_contact_listener.iter() {
+    for player_contact in player_contact_listener.read() {
         let partner = player_contact.partner;
 
         let _npc_result = match npc_query.get(partner) {

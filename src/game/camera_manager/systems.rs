@@ -10,7 +10,7 @@ use ::bevy::{
     },
     prelude::{Projection::*, *},
     render::{
-        camera::{CameraOutputMode, ScalingMode::*},
+        camera::{CameraOutputMode, ScalingMode},
         render_resource::{BlendState, LoadOp},
         view::visibility::RenderLayers,
     },
@@ -75,7 +75,7 @@ pub fn spawn_cameras(mut commands: Commands) {
             },
             projection: OrthographicProjection {
                 near: -1.0,
-                scaling_mode: Fixed {
+                scaling_mode: ScalingMode::Fixed {
                     width: 256.0,
                     height: 144.0,
                 },
@@ -108,7 +108,7 @@ pub fn spawn_cameras(mut commands: Commands) {
             },
             projection: OrthographicProjection {
                 near: -1.0,
-                scaling_mode: Fixed {
+                scaling_mode: ScalingMode::Fixed {
                     width: 256.0,
                     height: 144.0,
                 },
@@ -166,7 +166,7 @@ pub fn spawn_cameras(mut commands: Commands) {
             },
             projection: OrthographicProjection {
                 near: -1.0,
-                scaling_mode: Fixed {
+                scaling_mode: ScalingMode::Fixed {
                     width: 256.0,
                     height: 144.0,
                 },
@@ -196,13 +196,13 @@ pub fn handle_resolution_change(
     mut perspective_query: Query<&mut Transform, With<Projection>>,
     mut res_change_events: EventReader<ChangeResolution>,
 ) {
-    for res_change in res_change_events.iter() {
+    for res_change in res_change_events.read() {
         //  - change the Fixed Width and Height for orthographic projections
         //  - change the z position of cameras with perspective projections
         let _desired_aspect_ratio = match &res_change.aspect_ratio {
             AspectRatio::_4_3 => {
                 for mut camera2d in orthographic_query.iter_mut() {
-                    camera2d.scaling_mode = Fixed {
+                    camera2d.scaling_mode = ScalingMode::Fixed {
                         width: 256.0,
                         height: 192.0,
                     };
@@ -215,7 +215,7 @@ pub fn handle_resolution_change(
             }
             AspectRatio::_5_4 => {
                 for mut camera2d in orthographic_query.iter_mut() {
-                    camera2d.scaling_mode = Fixed {
+                    camera2d.scaling_mode = ScalingMode::Fixed {
                         width: 240.0,
                         height: 192.0,
                     };
@@ -228,7 +228,7 @@ pub fn handle_resolution_change(
             }
             AspectRatio::_8_5 => {
                 for mut camera2d in orthographic_query.iter_mut() {
-                    camera2d.scaling_mode = Fixed {
+                    camera2d.scaling_mode = ScalingMode::Fixed {
                         width: 256.0,
                         height: 160.0,
                     };
@@ -241,7 +241,7 @@ pub fn handle_resolution_change(
             }
             AspectRatio::_16_9 => {
                 for mut camera2d in orthographic_query.iter_mut() {
-                    camera2d.scaling_mode = Fixed {
+                    camera2d.scaling_mode = ScalingMode::Fixed {
                         width: 256.0,
                         height: 144.0,
                     };
@@ -254,7 +254,7 @@ pub fn handle_resolution_change(
             }
             AspectRatio::_21_9 => {
                 for mut camera2d in orthographic_query.iter_mut() {
-                    camera2d.scaling_mode = Fixed {
+                    camera2d.scaling_mode = ScalingMode::Fixed {
                         width: 336.0,
                         height: 144.0,
                     };
@@ -267,7 +267,7 @@ pub fn handle_resolution_change(
             }
             AspectRatio::_32_9 => {
                 for mut camera2d in orthographic_query.iter_mut() {
-                    camera2d.scaling_mode = Fixed {
+                    camera2d.scaling_mode = ScalingMode::Fixed {
                         width: 512.0,
                         height: 144.0,
                     };
@@ -321,7 +321,7 @@ pub fn handle_camera_move(
     mut camera_query: Query<&mut Transform, With<Camera>>,
     mut event_listener: EventReader<CameraMove>,
 ) {
-    for camera_move in event_listener.iter() {
+    for camera_move in event_listener.read() {
         for mut camera in camera_query.iter_mut() {
             camera.translation = Vec3::new(
                 camera_move.position.x,
@@ -337,7 +337,7 @@ pub fn handle_camera_zoom_in(
     mut perspective_query: Query<(&mut Projection, &Transform)>,
     mut event_listener: EventReader<CameraZoomIn>,
 ) {
-    for _ in event_listener.iter() {
+    for _ in event_listener.read() {
         // will use aspect ratio and scale of 2d cameras to calculate new FOV for 3d cameras
         let mut aspect_ratio_y = 0.0;
         let mut new_scale = 0.0;
@@ -348,7 +348,7 @@ pub fn handle_camera_zoom_in(
 
             new_scale = camera2d.scale;
             match camera2d.scaling_mode {
-                Fixed { height, .. } => {
+                ScalingMode::Fixed { height, .. } => {
                     aspect_ratio_y = height;
                 }
                 _ => {}
@@ -379,7 +379,7 @@ pub fn handle_camera_zoom_out(
     mut perspective_query: Query<(&mut Projection, &Transform)>,
     mut event_listener: EventReader<CameraZoomOut>,
 ) {
-    for _ in event_listener.iter() {
+    for _ in event_listener.read() {
         // will use aspect ratio and scale of 2d cameras to calculate new FOV for 3d cameras
         let mut aspect_ratio_y = 0.0;
         let mut new_scale = 0.0;
@@ -390,7 +390,7 @@ pub fn handle_camera_zoom_out(
 
             new_scale = camera2d.scale;
             match camera2d.scaling_mode {
-                Fixed { height, .. } => {
+                ScalingMode::Fixed { height, .. } => {
                     aspect_ratio_y = height;
                 }
                 _ => {}

@@ -1,7 +1,7 @@
-#import bevy_pbr::mesh_vertex_output            MeshVertexOutput
-#import "shaders/sd_shapes.wgsl"                sdCircle, sdEquilateralTriangle, sdIsoscelesTriangle, sdTriangle, sdPentagon, sdHexagon, sdOctagon, sdHexagram, sdStar, sdPie
-#import bevy_pbr::utils                         PI, HALF_PI
-#import bevy_render::view                       View
+#import bevy_pbr::forward_io::VertexOutput
+#import "shaders/sd_shapes.wgsl"::{sdCircle, sdEquilateralTriangle, sdIsoscelesTriangle, sdTriangle, sdPentagon, sdHexagon, sdOctagon, sdHexagram, sdStar, sdPie}
+#import bevy_pbr::utils::{PI, HALF_PI}
+#import bevy_render::view::View
 
 @group(0) @binding(0) var<uniform> view: View;
 
@@ -10,7 +10,7 @@
 
 // -----------------------------------------------------------------------------
 @fragment
-fn fragment(in: MeshVertexOutput,) -> @location(0) vec4<f32> {
+fn fragment(in: VertexOutput,) -> @location(0) vec4<f32> {
     var uv = in.uv.xy;
 
     var d = sdEquilateralTriangle(uv - vec2(0.2), 0.08);

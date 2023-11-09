@@ -16,7 +16,11 @@ use crate::ui::UIPlugin;
 use bevy::{
     prelude::*,
     // diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin},
-    render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
+    render::{
+        render_resource::WgpuFeatures,
+        settings::{RenderCreation, WgpuSettings},
+        RenderPlugin,
+    },
     window::*,
 };
 use bevy_hanabi::prelude::*;
@@ -49,7 +53,9 @@ fn main() -> Result<(), Box<dyn Error>> {
                     }),
                     ..default()
                 })
-                .set(RenderPlugin { wgpu_settings }),
+                .set(RenderPlugin {
+                    render_creation: RenderCreation::from(wgpu_settings),
+                }),
             // LogDiagnosticsPlugin::default(),
             // FrameTimeDiagnosticsPlugin,
             // my plugins

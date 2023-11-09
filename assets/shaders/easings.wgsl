@@ -1,4 +1,4 @@
-#import bevy_pbr::utils     PI, HALF_PI
+#import bevy_pbr::utils::{PI, HALF_PI}
 
 // Robert Penner's easing functions in GLSL
 // https://github.com/stackgl/glsl-easings

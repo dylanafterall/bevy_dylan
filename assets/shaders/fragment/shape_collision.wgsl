@@ -1,7 +1,7 @@
-#import bevy_pbr::mesh_vertex_output            MeshVertexOutput
-#import bevy_sprite::mesh2d_view_bindings       globals
-#import bevy_render::view                       View
-#import "shaders/distance_field_shapes.wgsl"    smoothen
+#import bevy_pbr::forward_io::VertexOutput
+#import bevy_sprite::mesh2d_view_bindings::globals
+#import "shaders/distance_field_shapes.wgsl"::smoothen
+#import bevy_render::view::View
 
 @group(0) @binding(0) var<uniform> view: View;
 
@@ -10,7 +10,7 @@
 
 // -----------------------------------------------------------------------------
 @fragment
-fn fragment(in: MeshVertexOutput,) -> @location(0) vec4<f32> {
+fn fragment(in: VertexOutput,) -> @location(0) vec4<f32> {
     var uv = in.uv.xy;
     let t = globals.time * 0.75;
 

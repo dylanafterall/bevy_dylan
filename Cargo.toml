@@ -8,7 +8,7 @@ authors = [
 
 [dependencies]
 # remove bevy dynamic_linking feature for release builds
-bevy = { version = "0.11.0", features = [
+bevy = { version = "0.12.0", features = [
     "dynamic_linking",
     "trace",
     "detailed_trace",
@@ -18,15 +18,15 @@ bevy = { version = "0.11.0", features = [
     "jpeg",
     "wav",
 ] }
-bevy_rapier2d = { version = "0.22.0", features = [
+bevy_rapier2d = { version = "0.23.0", features = [
     "debug-render-2d",
     "simd-nightly",
     "parallel",
     "serde-serialize",
 ] }
-bevy-inspector-egui = "0.19.0"
-bevy_hanabi = "0.7.0"
-bevy_prototype_lyon = "0.9.0"
+bevy-inspector-egui = "0.21.0"
+bevy_hanabi = "0.8.0"
+bevy_prototype_lyon = "0.10.0"
 #big-brain
 #bevy_spine
 #leafwing_input_manager
